@@ -1,12 +1,12 @@
 <template>
   <div class="fluid">
-    <h1 class="app-title">Cadastrar Série</h1>
+    <h1 class="app-title">Cadastrar Aluno</h1>
 
     <b-row>
       <b-col md="12">
         <b-card>
           <div slot="header">
-            <b>Informações da série</b>
+            <b>Informações do aluno</b>
             <b-badge variant="mute" class="float-right small">(*) Obrigatório</b-badge>
           </div>
 
@@ -15,16 +15,16 @@
             <b-row>
               <b-col lg="6" sm="12">
                 <b-form-group
-                  label="Nome da série:"
+                  label="Nome do aluno:"
                   label-for="nome"
                   class="text-label required"
                 >
 
                   <b-form-input id="nome"
-                  v-model="serie.nome"
+                  v-model="Aluno.nome"
                   v-validate="'required|min:8'"
                   data-vv-name="nome"
-                  data-vv-as="Nome Série"
+                  data-vv-as="Nome Aluno"
                   :error-messages="errors.collect('nome')"
                   :state="errors.has('nome')==false?null:!errors.has('nome')"
                   trim
@@ -38,13 +38,13 @@
           </b-form>
 
           <div slot="footer" class="center-xy">
-            <b-button v-if="serie.idSerie" @click="alterarSerie()" variant="primary">
+            <b-button v-if="Aluno.idAluno" @click="alterarAluno()" variant="primary">
               <i class="far fa-save"></i> Alterar
             </b-button>
 
             <b-button
               v-else
-              @click="salvarSerie()"
+              @click="salvarAluno()"
               variant="primary"
               size="md"
             ><i class="far fa-save"></i> Salvar</b-button>
@@ -62,11 +62,11 @@
 </template>
 
 <script>
-import ApiExemplo from '@/api/vue-exemplo'
+import Api from '@/api/pedagogico'
 import events from '@/util/events'
 
 export default {
-  name: 'EditarSerie',
+  name: 'EditarAluno',
   data () {
     return {
       valid: false,
@@ -74,22 +74,22 @@ export default {
     }
   },
   computed: {
-    serie: {
+    Aluno: {
       get () {
-        return this.$store.getters.getSerie
+        return this.$store.getters.getAluno
       },
       set () {
-        this.$store.commit('setSerie', this.serie)
+        this.$store.commit('setAluno', this.Aluno)
       }
     }
   },
   methods: {
-    salvarSerie () {
+    salvarAluno () {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          ApiExemplo.salvarSerie(this.serie)
+          Api.salvarAluno(this.Aluno)
             .then(() => {
-              events.$emit('serieAlterada', this.serie)
+              events.$emit('AlunoAlterada', this.Aluno)
               this.clear()
               this.$store.commit('setMessages', { message: 'Sucesso ao cadastrar série', variant: 'success' })
             }).catch(err => {
@@ -98,14 +98,14 @@ export default {
         }
       })
     },
-    alterarSerie () {
+    alterarAluno () {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          ApiExemplo.alterarSerie(this.serie)
+          Api.alterarAluno(this.Aluno)
             .then(() => {
-              events.$emit('serieAlterada', this.serie)
+              events.$emit('AlunoAlterada', this.Aluno)
               this.clear()
-              this.$store.dispatch('novaSerie')
+              this.$store.dispatch('novaAluno')
               this.$store.commit('setMessages', { message: 'Sucesso ao alterar série', variant: 'success' })
             }).catch(err => {
               this.$store.commit('setMessages', err.response.data)
@@ -115,7 +115,7 @@ export default {
     },
     clear () {
       this.$validator.reset()
-      this.$store.dispatch('novaSerie')
+      this.$store.dispatch('novaAluno')
       this.$store.dispatch('limparMensagens')
     }
   }

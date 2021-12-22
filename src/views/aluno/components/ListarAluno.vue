@@ -8,7 +8,7 @@
           hover="hover"
           striped="striped"
           fixed
-          :items="series"
+          :items="alunos"
           :fields="fields"
           :current-page="currentPage"
           :per-page="0"
@@ -25,14 +25,14 @@
             <b-link title="Alterar" @click="iniciarEditar(data.item)" class="btn btn-outline-info">
             <i class="fas fa-pencil-alt"></i>
             </b-link>&nbsp;
-            <b-link title="Excluir" @click="deletarSerie(data.item)" class="btn btn-outline-danger">
+            <b-link title="Excluir" @click="deletarAluno(data.item)" class="btn btn-outline-danger">
               <i class="fas fa-trash-alt"></i>
             </b-link>
             </div>
           </template>
         </b-table>
 
-        <b-row v-if="series.length > 0" class="my-1 center-xy">
+        <b-row v-if="alunos.length > 0" class="my-1 center-xy">
             <b-pagination
               v-model="currentPage"
               :total-rows="totalRows"
@@ -51,11 +51,11 @@
 </template>
 
 <script>
-import ApiExemplo from '@/api/vue-exemplo'
+import Api from '@/api/pedagogico'
 import events from '@/util/events'
 
 export default {
-  name: 'ListarSerie',
+  name: 'ListarAluno',
   data () {
     return {
       fields: [
@@ -74,32 +74,32 @@ export default {
     }
   },
   computed: {
-    series: {
+    alunos: {
       get () {
-        return this.$store.getters.getSeries
+        return this.$store.getters.getAlunos
       },
       set () {
-        this.$store.commit('setSeries', this.series)
+        this.$store.commit('setAlunos', this.alunos)
       }
     }
   },
   created () {
-    events.$on('serieAlterada', () => {
-      this.listarSeries()
+    events.$on('alunoAlterado', () => {
+      this.listarAlunos()
     })
   },
   mounted () {
-    this.listarSeries()
+    this.listarAlunos()
   },
   methods: {
-    deletarSerie (s) {
-      ApiExemplo.deletarSerie(s)
+    deletarAluno (s) {
+      Api.deletarAluno(s)
         .then(() => {
           this.currentPage = 1
           this.perPage = 5
-          this.listarSeries()
+          this.listarAlunos()
           this.$store.commit('setMessages', {
-            message: 'Sucesso ao excluir série',
+            message: 'Sucesso ao excluir aluno',
             variant: 'success'
           })
         })
@@ -107,44 +107,44 @@ export default {
           this.$store.commit('setMessages', err.response.data)
         })
     },
-    iniciarEditar (serie) {
-      let obj = JSON.parse(JSON.stringify(serie))
-      this.$store.commit('setSerie', obj)
+    iniciarEditar (aluno) {
+      let obj = JSON.parse(JSON.stringify(aluno))
+      this.$store.commit('setAluno', obj)
     },
-    listarSeries () {
+    listarAlunos () {
       this.pesquisando = true
-      ApiExemplo.getSeries(this.currentPage, this.perPage)
+      Api.getAlunos(this.currentPage, this.perPage)
         .then(res => {
-          this.$store.commit('setSeries', res.data)
+          this.$store.commit('setAlunos', res.data)
           this.totalRows = res.headers['pagination-count']
         })
         .catch(err => {
-          this.$store.commit('setSeries', [])
+          this.$store.commit('setAlunos', [])
           this.$store.commit('setMessages', err.response.data)
         })
       this.pesquisando = false
     },
     changePage () {
-      ApiExemplo.getSeries(
+      Api.getAlunos(
         this.currentPage,
         this.perPage,
         this.sortBy,
         this.sortDesc
       ).then(res => {
-        this.$store.commit('setSeries', res.data)
+        this.$store.commit('setAlunos', res.data)
         this.totalRows = res.headers['pagination-count']
       })
     },
     sortingChanged (ctx) {
       this.sortBy = ctx.sortBy
       this.sortDesc = ctx.sortDesc
-      ApiExemplo.getSeries(
+      Api.getAlunos(
         this.currentPage,
         this.perPage,
         this.sortBy,
         this.sortDesc
       ).then(res => {
-        this.$store.commit('setSeries', res.data)
+        this.$store.commit('setAlunos', res.data)
         this.totalRows = res.headers['pagination-count']
       })
     }

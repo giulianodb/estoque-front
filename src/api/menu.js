@@ -13,14 +13,14 @@ export default {
     },
 
     {
-      name: 'Menu principal',
+      name: 'Aluno',
       url: '#',
       icon: 'fas fa-chalkboard-teacher',
 
       children: [
         {
-          name: 'Menu filho',
-          url: '/serie'
+          name: 'Cadastrar Aluno',
+          url: '/aluno'
 
         }
       ]

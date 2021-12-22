@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store/store'
 
-const apiExemploUrl = process.env.VUE_APP_ROOT_API
+const apiURL = process.env.VUE_APP_ROOT_API
 
 // interceptor on request
 axios.interceptors.request.use(function (request) {
@@ -41,7 +41,7 @@ function (error) {
 
 export default {
 
-  getSeries: (page, perPage, sortBy, sortDesc) => {
+  getAlunos: (page, perPage, sortBy, sortDesc) => {
     if (page == null || page === undefined) {
       page = 1
     }
@@ -51,23 +51,23 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiExemploUrl}/v1/serie?page=${page}&perPage=${perPage}`)
+      return axios.get(`${apiURL}/alunos?page=${page}&linesPerPage=${perPage}`)
     } else {
-      let ordem = 'ASCENDING'
+      let ordem = 'ASC'
       if (sortDesc) {
-        ordem = 'DESCENDING'
+        ordem = 'DES'
       }
 
-      return axios.get(`${apiExemploUrl}/v1/serie?page=${page}&perPage=${perPage}&sortOrder=${ordem}&sortField=${sortBy}`)
+      return axios.get(`${apiURL}/alunos?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
-  salvarSerie: (serie) => {
-    return axios.post(`${apiExemploUrl}/v1/serie`, serie)
+  salvarAluno: (aluno) => {
+    return axios.post(`${apiURL}/aluno`, aluno)
   },
-  alterarSerie: (serie) => {
-    return axios.put(`${apiExemploUrl}/v1/serie`, serie)
+  alterarAluno: (aluno) => {
+    return axios.put(`${apiURL}/aluno`, aluno)
   },
-  deletarSerie: (serie) => {
-    return axios.delete(`${apiExemploUrl}/v1/serie/${serie.idSerie}`)
+  deletarAluno: (aluno) => {
+    return axios.delete(`${apiURL}/aluno/${aluno.idAluno}`)
   }
 }

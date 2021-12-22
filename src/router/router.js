@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/store'
 import Home from '@/views/home/Home.vue'
-import Serie from '@/views/serie/Serie.vue'
+import Aluno from '@/views/aluno/Aluno.vue'
 
-import apiCentralSeguranca from '@/api/centralseguranca'
+// import apiCentralSeguranca from '@/api/centralseguranca'
 
 // error pages
 import AccessDenied from '@/layout/errors/Deny'
@@ -51,14 +51,14 @@ const router = new Router({
       }
     },
     {
-      path: '/serie',
-      name: 'serie',
-      component: Serie,
+      path: '/aluno',
+      name: 'aluno',
+      component: Aluno,
       meta: {
         breadcrumb: true,
-        label: 'Coordenação / Incluir Serie',
-        requiresAuth: true,
-        groups: ['VJE-Administrador', 'VJE-Coordenacao']
+        label: 'Aluno / Incluir Aluno',
+        requiresAuth: false,
+        groups: ['']
       }
     },
     // error pages
