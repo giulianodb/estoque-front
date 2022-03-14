@@ -1,18 +1,18 @@
 export default {
 
   state: {
-    serie: {},
-    series: [],
+    aluno: {},
+    alunos: [],
     messages: Object
   },
 
   mutations: {
 
-    setSerie (state, payload) {
-      state.serie = payload
+    setAluno (state, payload) {
+      state.aluno = payload
     },
-    setSeries (state, payload) {
-      state.series = payload
+    setAlunos (state, payload) {
+      state.alunos = payload
     },
     setMessages (state, payload) {
       state.messages = payload
@@ -20,11 +20,11 @@ export default {
   },
 
   getters: {
-    getSerie (state) {
-      return state.serie
+    getAluno (state) {
+      return state.aluno
     },
-    getSeries (state) {
-      return state.series
+    getAlunos (state) {
+      return state.alunos
     },
     getProfessor (state) {
       return state.professor
@@ -35,8 +35,8 @@ export default {
   },
 
   actions: {
-    novaSerie (state) {
-      state.commit('setSerie', {})
+    novoAluno (state) {
+      state.commit('setAluno', {})
     },
     limparMensagens (state) {
       state.commit('setMessages', Object)

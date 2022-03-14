@@ -63,7 +63,7 @@
 import ClickOutside from 'vue-click-outside'
 // eslint-disable-next-line no-unused-vars
 import store from '@/store/store'
-import apiCentralSeguranca from '@/api/centralseguranca'
+// import apiCentralSeguranca from '@/api/centralseguranca'
 import { mediaBreakpoint } from '@/assets/defs.js'
 
 export default {
@@ -95,8 +95,6 @@ export default {
     },
     sair () {
       this.showMenu = false
-      window.location.href =
-        apiCentralSeguranca.authorizeUrl + '&force_login=true'
     },
     dark () {
       let theme = this.$store.getters.getTheme === '' ? 'dark' : ''
@@ -108,8 +106,8 @@ export default {
       window.open(process.env.VUE_APP_PERFIL_URL, '_blank')
     },
     nomeUsuario () {
-      return apiCentralSeguranca.decodeJwtToken(this.$store.getters.getJwtToken)
-        .name
+      //return apiCentralSeguranca.decodeJwtToken(this.$store.getters.getJwtToken).name
+      return 'Nome do usuário'
     }
   },
   computed: {

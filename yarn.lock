@@ -6176,6 +6176,11 @@
   dependencies:
     "js-tokens" "^3.0.0 || ^4.0.0"
 
+"lottie-web@^5.1.9":
+  "integrity" "sha512-3uKtU6BhIK6ZRCE/QyiXq/KuRvPeEAz/VFwqd99jPbpgFY9gHLw2krqvcuCFGepeW94BipS/B3TqIfTc9pUeZg=="
+  "resolved" "https://registry.npmjs.org/lottie-web/-/lottie-web-5.9.1.tgz"
+  "version" "5.9.1"
+
 "lower-case@^1.1.1":
   "integrity" "sha1-miyr0bno4K6ZOkv31YdcOcQujqw="
   "resolved" "https://registry.npmjs.org/lower-case/-/lower-case-1.1.4.tgz"
@@ -10309,6 +10314,13 @@
     "loader-utils" "^1.1.0"
     "vue-hot-reload-api" "^2.3.0"
     "vue-style-loader" "^4.1.0"
+
+"vue-lottie@^0.2.1":
+  "integrity" "sha512-zInUX69Ij8MhVR3XArpu4PqqBoufwKxS5UMutWCPm59VUaB5H6GtnaIzf9M+l6aYU+Kr8gF/W9dzWLgRuU6V+Q=="
+  "resolved" "https://registry.npmjs.org/vue-lottie/-/vue-lottie-0.2.1.tgz"
+  "version" "0.2.1"
+  dependencies:
+    "lottie-web" "^5.1.9"
 
 "vue-multiselect@^2.1.6":
   "integrity" "sha512-s7jmZPlm9FeueJg1RwJtnE9KNPtME/7C8uRWSfp9/yEN4M8XcS/d+bddoyVwVnvFyRh9msFo0HWeW0vTL8Qv+w=="

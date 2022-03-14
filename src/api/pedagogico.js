@@ -55,19 +55,19 @@ export default {
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
-        ordem = 'DES'
+        ordem = 'DESC'
       }
 
       return axios.get(`${apiURL}/alunos?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
   salvarAluno: (aluno) => {
-    return axios.post(`${apiURL}/aluno`, aluno)
+    return axios.post(`${apiURL}/alunos`, aluno)
   },
   alterarAluno: (aluno) => {
-    return axios.put(`${apiURL}/aluno`, aluno)
+    return axios.put(`${apiURL}/alunos`, aluno)
   },
   deletarAluno: (aluno) => {
-    return axios.delete(`${apiURL}/aluno/${aluno.idAluno}`)
+    return axios.delete(`${apiURL}/alunos/${aluno.idAluno}`)
   }
 }

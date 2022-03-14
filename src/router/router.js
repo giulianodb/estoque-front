@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import store from '@/store/store'
 import Home from '@/views/home/Home.vue'
 import Aluno from '@/views/aluno/Aluno.vue'
+import EditarFamilia from '@/views/familia/EditarFamilia.vue'
 
 // import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -26,8 +27,8 @@ const router = new Router({
       name: 'inicial',
       component: Home,
       meta: {
-        requiresAuth: true,
-        groups: ['VJE-Administrador', 'VJE-Coordenacao', 'VJE-Aluno', 'VJE-Professor', 'VJE-Secretaria']
+        requiresAuth: false,
+        groups: ['']
       }
     },
     {
@@ -35,8 +36,8 @@ const router = new Router({
       name: 'Informações',
       component: InformacoesLegais,
       meta: {
-        requiresAuth: true,
-        groups: ['VJE-Administrador', 'VJE-Coordenacao', 'VJE-Aluno', 'VJE-Professor', 'VJE-Secretaria']
+        requiresAuth: false,
+        groups: ['']
       }
     },
     {
@@ -46,8 +47,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Página Inicial',
-        requiresAuth: true,
-        groups: ['VJE-Administrador', 'VJE-Coordenacao', 'VJE-Aluno', 'VJE-Professor', 'VJE-Secretaria']
+        requiresAuth: false,
+        groups: ['']
       }
     },
     {
@@ -57,6 +58,17 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Aluno / Incluir Aluno',
+        requiresAuth: false,
+        groups: ['']
+      }
+    },
+    {
+      path: '/editar_familia',
+      name: 'editarFamilia',
+      component: EditarFamilia,
+      meta: {
+        breadcrumb: true,
+        label: 'Familia / Editar Família',
         requiresAuth: false,
         groups: ['']
       }

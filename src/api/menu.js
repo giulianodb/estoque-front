@@ -24,36 +24,24 @@ export default {
 
         }
       ]
+    },
+    {
+      name: 'Familia',
+      url: '#',
+      icon: 'fas fa-chalkboard-teacher',
+
+      children: [
+        {
+          name: 'Cadastrar Família',
+          url: '/editar_familia'
+
+        }
+      ]
     }
   ],
 
   itensAcesso (itens) {
-    var i
-    var permitidos = new Array()
-
-    var tokenGrupos = apiCentralSeguranca.decodeJwtToken(store.getters.getJwtToken).groups
-
-    for (i = 0; i < itens.length; i++) {
-      if (itens[i].groups === undefined || itens[i].groups.length === 0) {
-        if (itens[i].children !== undefined) {
-          itens[i].children = this.itensAcesso(itens[i].children)
-        }
-        permitidos.push(itens[i])
-      } else {
-        var y
-        for (y = 0; y < tokenGrupos.length; y++) {
-          if (itens[i].groups.includes(tokenGrupos[y])) {
-            if (itens[i].children !== undefined) {
-              itens[i].children = this.itensAcesso(itens[i].children)
-            }
-            permitidos.push(itens[i])
-            break
-          }
-        }
-      }
-    }
-
-    return permitidos
+    return itens
   },
 
   filtrar (itens, pesquisa) {

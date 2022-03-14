@@ -115,7 +115,7 @@ export default {
     },
     clear () {
       this.$validator.reset()
-      this.$store.dispatch('novaAluno')
+      this.$store.dispatch('novoAluno')
       this.$store.dispatch('limparMensagens')
     }
   }
