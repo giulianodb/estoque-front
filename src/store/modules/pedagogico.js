@@ -2,6 +2,7 @@ export default {
 
   state: {
     aluno: {},
+    familia: { motivo: {}, composicaoFamiliar:[], programas: {} },
     alunos: [],
     messages: Object
   },
@@ -13,6 +14,9 @@ export default {
     },
     setAlunos (state, payload) {
       state.alunos = payload
+    },
+    setFamilia (state, payload) {
+      state.familia = payload
     },
     setMessages (state, payload) {
       state.messages = payload
@@ -26,8 +30,8 @@ export default {
     getAlunos (state) {
       return state.alunos
     },
-    getProfessor (state) {
-      return state.professor
+    getFamilia (state) {
+      return state.familia
     },
     getMessages (state) {
       return state.messages
@@ -37,6 +41,9 @@ export default {
   actions: {
     novoAluno (state) {
       state.commit('setAluno', {})
+    },
+    novaFamilia (state) {
+      state.commit('setFamilia', {})
     },
     limparMensagens (state) {
       state.commit('setMessages', Object)

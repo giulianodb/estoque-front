@@ -3,28 +3,196 @@
     <h4>Identificação do Responsável</h4>
 
     <b-row class="my-2">
-      <b-col sm="12" lg="6">
+      <b-col sm="12" lg="3">
         <b-form-group
           id="input-group-1"
           label="CPF:"
-          v-model="form.cpf"
+          v-model="familia.cpf"
           label-for="txt-cpf"
           description="Informe seu nome completo"
         >
-          <b-form-input id="txt-cpf" v-model="form.cpf" required placeholder="Digite o CPF"></b-form-input>
+          <b-form-input id="txt-cpf" v-model="familia.cpf" required placeholder="Digite o CPF"></b-form-input>
         </b-form-group>
       </b-col>
-      <b-col sm="12" lg="4">
+
+      <b-col sm="12" lg="9">
         <b-form-group
           id="input-group-2"
-          label="Idade:"
-          v-model="form.idade"
-          label-for="txt-idade"
-          description="É preciso ser maior de 13 anos para se cadastrar."
+          label="Nome:"
+          v-model="familia.nome"
+          label-for="txt-nome"
+          description="Nome do responsável."
         >
-          <b-form-input id="txt-idade" type="number" required></b-form-input>
+          <b-form-input id="txt-nome" required></b-form-input>
         </b-form-group>
       </b-col>
+
+      <b-col sm="12" lg="3">
+        <b-form-group
+          id="input-group-3"
+          label="Data Nascimento:"
+          v-model="familia.nascimento"
+          label-for="txt-nascimento"
+          description="Data de nascimento"
+        >
+          <b-form-input id="txt-nascimento" required></b-form-input>
+        </b-form-group>
+      </b-col>
+
+
+      <b-col sm="12" lg="3">
+        <b-form-group
+          id="input-group-4"
+          label="Estado cívil:"
+          v-model="familia.estadoCivil"
+          label-for="txt-estadoCivil"
+          description="Estado cívil"
+        >
+          <b-form-input id="txt-estadoCivil" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="12" lg="6">
+        <b-form-group
+          id="input-group-5"
+          label="Nacionalidade:"
+          v-model="familia.nacionalidade"
+          label-for="txt-nacionalidade"
+          description="Nacionalidade"
+        >
+          <b-form-input id="txt-nacionalidade" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="12" lg="6">
+        <b-form-group
+          id="input-group-6"
+          label="Profissão:"
+          v-model="familia.profissao"
+          label-for="txt-profissao"
+          description="Profissão"
+        >
+          <b-form-input id="txt-profissao" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+
+      <b-col sm="12" lg="3">
+        <b-form-group
+          id="input-group-7"
+          label="RG:"
+          v-model="familia.rg"
+          label-for="txt-rg"
+          description="RG"
+        >
+          <b-form-input id="txt-rg" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+
+
+
+      <b-col sm="12" lg="6">
+        <b-form-group
+          id="input-group-9"
+          label="Endereço:"
+          v-model="familia.rua"
+          label-for="txt-rua"
+          description="Rua"
+        >
+          <b-form-input id="txt-rua" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+
+     <b-col sm="12" lg="6">
+        <b-form-group
+          id="input-group-9"
+          label="Bairro:"
+          v-model="familia.bairro"
+          label-for="txt-bairro"
+          description="Bairro"
+        >
+          <b-form-input id="txt-bairro" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="12" lg="3">
+        <b-form-group
+          id="input-group-10"
+          label="CEP:"
+          v-model="familia.cep"
+          label-for="txt-cep"
+          description="CEP"
+        >
+          <b-form-input id="txt-cep" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+
+
+       <b-col sm="12" lg="6">
+        <b-form-group
+          id="input-group-11"
+          label="Cidade:"
+          v-model="familia.cidade"
+          label-for="txt-cidade"
+          description="Cidade"
+        >
+          <b-form-input id="txt-cidade" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+
+     <b-col sm="12" lg="1">
+        <b-form-group
+          id="input-group-12"
+          label="UF:"
+          v-model="familia.uf"
+          label-for="txt-uf"
+          description="UF"
+        >
+          <b-form-input id="txt-uf" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="12" lg="3">
+        <b-form-group
+          id="input-group-13"
+          label="Telefone:"
+          v-model="familia.telefone"
+          label-for="txt-telefone"
+          description="Telefone"
+        >
+          <b-form-input id="txt-telefone" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="12" lg="3">
+        <b-form-group
+          id="input-group-14"
+          label="Celular:"
+          v-model="familia.celular"
+          label-for="txt-celular"
+          description="Celular"
+        >
+          <b-form-input id="txt-celular" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="12" lg="3">
+        <b-form-group
+          id="input-group-15"
+          label="Data cadastro:"
+          v-model="familia.dataCadastro"
+          label-for="txt-dataCadastro"
+          description="Cada Cadastro"
+        >
+          <b-form-input id="txt-cataCadastro" ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+
     </b-row>
   </div>
 </template>
@@ -34,13 +202,13 @@ export default {
   props: {
     index: Number
   },
-
-  data () {
-    return {
-      form: {
-        nome: '',
-        cpf: '',
-        idade: 0
+  computed: {
+    familia: {
+      get () {
+        return this.$store.getters.getFamilia
+      },
+      set () {
+        this.$store.commit('setFamilia', this.Familia)
       }
     }
   },
@@ -48,8 +216,8 @@ export default {
     onReset (evt) {
       evt.preventDefault()
       // Reset
-      this.form.nome = ''
-      this.form.idade = 0
+      this.familia.cpf = ''
+      this.familia.idade = 0
     }
   }
 }

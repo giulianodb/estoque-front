@@ -7,8 +7,8 @@
         <strong>Exemplo</strong>
       </div>
 
-      <b-row no-gutters>
-        <b-col md="12" no-gutters>
+      <b-row >
+        <b-col md="12">
           <form-wizard
             @on-complete="salvar"
             :start-index.sync="activeIndex"
@@ -22,9 +22,18 @@
             transition="slideInRight"
           >
 
-            <tab-content icon="fas fa-user" class="wizard-fixed-height mx-auto">
+            <tab-content icon="fas fa-user" >
               <EditarStep01 :index="activeIndex" />
             </tab-content>
+            
+            <tab-content icon="fas fa-user" >
+              <EditarStep02 :index="activeIndex" />
+            </tab-content>
+
+            <tab-content icon="fas fa-user" >
+              <EditarStep03 :index="activeIndex" />
+            </tab-content>
+
             <tab-content
               icon="fas fa-flag-checkered"
               class="wizard-fixed-height mx-auto"
@@ -42,6 +51,8 @@
 import { FormWizard, TabContent } from 'vue-form-wizard'
 
 import EditarStep01 from './components/EditarStep01.vue'
+import EditarStep02 from './components/EditarStep02.vue'
+import EditarStep03 from './components/EditarStep03.vue'
 import EditarEnd from './components/EditarEnd.vue'
 
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
@@ -51,6 +62,8 @@ export default {
     FormWizard,
     TabContent,
     EditarStep01,
+    EditarStep02,
+    EditarStep03,
     EditarEnd
   },
   data () {
