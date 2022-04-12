@@ -8,7 +8,6 @@
         :height="75"
         :width="75"
         v-on:animCreated="handleAnimation"
-        :v-if="animation"
       />
       <span class="concluido ml-4">Concluído!</span>
     </div>
