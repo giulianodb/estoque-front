@@ -38,11 +38,16 @@
               <EditarStep04 :index="activeIndex" />
             </tab-content>
 
+                  
+            <tab-content icon="fas fa-user" >
+              <EditarStep05 :index="activeIndex" />
+            </tab-content>
+
             <tab-content
               icon="fas fa-flag-checkered"
               class="wizard-fixed-height mx-auto"
             >
-              <EditarEnd v-if="activeIndex == 4" :index="activeIndex" />
+              <EditarEnd v-if="activeIndex == 5" :index="activeIndex" />
             </tab-content>
           </form-wizard>
         </b-col>
@@ -58,6 +63,7 @@ import EditarStep01 from './components/EditarStep01.vue'
 import EditarStep02 from './components/EditarStep02.vue'
 import EditarStep03 from './components/EditarStep03.vue'
 import EditarStep04 from './components/EditarStep04.vue'
+import EditarStep05 from './components/EditarStep05.vue'
 import EditarEnd from './components/EditarEnd.vue'
 
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
@@ -70,6 +76,7 @@ export default {
     EditarStep02,
     EditarStep03,
     EditarStep04,
+    EditarStep05,
     EditarEnd
   },
   data () {
