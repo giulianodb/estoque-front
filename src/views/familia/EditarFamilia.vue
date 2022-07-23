@@ -7,7 +7,7 @@
         <strong>Exemplo</strong>
       </div>
 
-      <b-row >
+      <b-row>
         <b-col md="12">
           <form-wizard
             @on-complete="salvar"
@@ -21,25 +21,23 @@
             color="#0073C0"
             transition="slideInRight"
           >
-
-            <tab-content icon="fas fa-user" >
+            <tab-content icon="fas fa-user">
               <EditarStep01 :index="activeIndex" />
             </tab-content>
-            
-            <tab-content icon="fas fa-user" >
+
+            <tab-content icon="fas fa-user">
               <EditarStep02 :index="activeIndex" />
             </tab-content>
 
-            <tab-content icon="fas fa-user" >
+            <tab-content icon="fas fa-user">
               <EditarStep03 :index="activeIndex" />
             </tab-content>
-            
-            <tab-content icon="fas fa-user" >
+
+            <tab-content icon="fas fa-user">
               <EditarStep04 :index="activeIndex" />
             </tab-content>
 
-                  
-            <tab-content icon="fas fa-user" >
+            <tab-content icon="fas fa-user">
               <EditarStep05 :index="activeIndex" />
             </tab-content>
 
@@ -57,16 +55,19 @@
 </template>
 
 <script>
-import { FormWizard, TabContent } from 'vue-form-wizard'
+import { FormWizard, TabContent } from "vue-form-wizard";
 
-import EditarStep01 from './components/EditarStep01.vue'
-import EditarStep02 from './components/EditarStep02.vue'
-import EditarStep03 from './components/EditarStep03.vue'
-import EditarStep04 from './components/EditarStep04.vue'
-import EditarStep05 from './components/EditarStep05.vue'
-import EditarEnd from './components/EditarEnd.vue'
+import EditarStep01 from "./components/EditarStep01.vue";
+import EditarStep02 from "./components/EditarStep02.vue";
+import EditarStep03 from "./components/EditarStep03.vue";
+import EditarStep04 from "./components/EditarStep04.vue";
+import EditarStep05 from "./components/EditarStep05.vue";
+import EditarEnd from "./components/EditarEnd.vue";
 
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import Api from "@/api/social";
+import events from "@/util/events";
+
+import "vue-form-wizard/dist/vue-form-wizard.min.css";
 
 export default {
   components: {
@@ -77,24 +78,46 @@ export default {
     EditarStep03,
     EditarStep04,
     EditarStep05,
-    EditarEnd
+    EditarEnd,
   },
-  data () {
+  data() {
     return {
       activeIndex: 0,
       componentInfo: {
-        title: 'Sobre o componente',
+        title: "Sobre o componente",
         text: `Os componentes do tipo <i>Wizard</i> são utilizados para quebrar formulários em etapas.`,
-        urls: ['https://github.com/BinarCode/vue-form-wizard']
-      }
-    }
+        urls: ["https://github.com/BinarCode/vue-form-wizard"],
+      },
+    };
   },
   methods: {
-    salvar () {
-      alert('Vamos salvar isso..!')
-    }
-  }
-}
+    salvar() {
+      alert("Vamos salvar isso..!");
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          console.log(this.$store.getters.getFamilia)
+          Api.salvarFamilia(this.$store.getters.getFamilia)
+            .then(() => {
+              //events.$emit('AlunoAlterada', this.Aluno)
+              this.clear();
+              this.$store.commit("setMessages", {
+                message: "Sucesso ao cadastrar Família",
+                variant: "success",
+              });
+            })
+            .catch((err) => {
+              this.$store.commit("setMessages", err.response.data);
+            });
+        }
+      });
+    },
+    clear() {
+      this.$validator.reset();
+      this.$store.dispatch("novaFamilia");
+      this.$store.dispatch("limparMensagens");
+    },
+  },
+};
 </script>
 
 <style scoped>

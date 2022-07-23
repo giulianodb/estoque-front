@@ -2,7 +2,7 @@ export default {
 
   state: {
     aluno: {},
-    familia: { motivo: {}, composicaoFamiliar:[], programasSociais: {}, moradia : {} },
+    familia: { motivo: {}, listMembroFamilia:[], programasSociais: {}, moradia : {} },
     alunos: [],
     messages: Object
   },

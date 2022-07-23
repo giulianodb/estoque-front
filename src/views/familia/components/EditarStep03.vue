@@ -23,7 +23,7 @@
                 >
 
                   <b-form-input id="nome"
-                  v-model="composicaoFamiliar.nome"
+                  v-model="listMembroFamilia.nome"
                   v-validate="'required|min:4'"
                   data-vv-name="nome"
                   data-vv-as="Nome"
@@ -44,7 +44,7 @@
                 >
 
                   <b-form-input   type="date" id="dataNascimento"
-                  v-model="composicaoFamiliar.dataNascimento"
+                  v-model="listMembroFamilia.dataNascimento"
                   v-validate="'required'"
                   data-vv-name="dataNascimento"
                   data-vv-as="Data Nascimento"
@@ -66,7 +66,7 @@
                 >
 
                   <b-form-input id="parentesco"
-                  v-model="composicaoFamiliar.parentesco"
+                  v-model="listMembroFamilia.parentesco"
                   v-validate="'required'"
                   data-vv-name="parentesco"
                   data-vv-as="Parentesco"
@@ -88,8 +88,8 @@
                   <b-form-select
                     id="escolaridade"
                     :plain="true"
-                    v-model="composicaoFamiliar.escolaridade"
-                    v-validate="'required|excluded:0'"
+                    v-model="listMembroFamilia.escolaridade"
+                    v-validate="'required|excluded:-1'"
                     data-vv-name="escolaridade"
                     data-vv-as="escolaridade"
                     :error-messages="errors.collect('escolaridade')"
@@ -98,14 +98,14 @@
                     "
                   >
                     <template slot="first">
-                      <option value="0">Escolaridade</option>
+                      <option value="-1">Escolaridade</option>
                     </template>
-                    <option :value="1"> Primeiro grau incompleto </option>
-                    <option :value="2"> Primeiro grau completo </option>
-                    <option :value="3"> Segundo grau incompleto </option>
-                    <option :value="4"> Segundo grau completo </option>
-                    <option :value="5"> Ensino superior incompleto </option>
-                    <option :value="6"> Ensino superior completp </option>
+                    <option :value="0"> Primeiro grau incompleto </option>
+                    <option :value="1"> Primeiro grau completo </option>
+                    <option :value="2"> Segundo grau incompleto </option>
+                    <option :value="3"> Segundo grau completo </option>
+                    <option :value="4"> Ensino superior incompleto </option>
+                    <option :value="5"> Ensino superior completp </option>
                   </b-form-select>
                   <span v-show="errors.has('escolaridade')" class="help is-danger">{{
                     errors.first("escolaridade")
@@ -122,7 +122,7 @@
                 >
 
                   <b-form-input id="ocupacao"
-                  v-model="composicaoFamiliar.ocupacao"
+                  v-model="listMembroFamilia.ocupacao"
                   data-vv-name="ocupacao"
                   data-vv-as="Ocupacao"
                   :error-messages="errors.collect('ocupacao')"
@@ -142,7 +142,7 @@
                 >
 
                   <b-form-input id="renda"
-                  v-model="composicaoFamiliar.renda"
+                  v-model="listMembroFamilia.renda"
                   data-vv-name="renda"
                   data-vv-as="Renda"
                   :error-messages="errors.collect('renda')"
@@ -159,7 +159,7 @@
           </b-form>
 
           <div slot="footer" class="center-xy">
-            <b-button v-if="composicaoFamiliar.alterar" @click="alterar()" variant="primary">
+            <b-button v-if="listMembroFamilia.alterar" @click="alterar()" variant="primary">
               <i class="far fa-save"></i> Alterar
             </b-button>
 
@@ -187,7 +187,7 @@
           hover="hover"
           striped 
           fixed
-          :items="familia.composicaoFamiliar"
+          :items="familia.listMembroFamilia"
           :fields="fields"
           :current-page="currentPage"
           :per-page="0"
@@ -234,7 +234,7 @@ export default {
   mixins: [formatar],
   data () {
     return {
-      composicaoFamiliar: {},
+      listMembroFamilia: {},
       fields: [
         { label: 'Nome', key: 'nome', sortable: true, sortDirection: 'desc' },
         { label: 'Parentesco', key: 'parentesco', sortable: true, sortDirection: 'desc' },
@@ -272,18 +272,18 @@ export default {
     adicionar () {
       alert('salvar')
       this.totalRows ++;
-      this.familia.composicaoFamiliar.push(this.composicaoFamiliar)
-      this.composicaoFamiliar = {}
+      this.familia.listMembroFamilia.push(this.listMembroFamilia)
+      this.listMembroFamilia = {}
       this.$validator.reset()
     },
     iniciarEditar(objeto) {
-      this.composicaoFamiliar = objeto
-      this.composicaoFamiliar.alterar = true
-      console.log( this.familia.composicaoFamiliar)
+      this.listMembroFamilia = objeto
+      this.listMembroFamilia.alterar = true
+      console.log( this.familia.listMembroFamilia)
     },
     alterar () {
       alert('alterar')
-      this.composicaoFamiliar = {}
+      this.listMembroFamilia = {}
       this.$validator.reset()
     },
     clear () {
@@ -292,7 +292,7 @@ export default {
     deletar(objeto) {
        var resultado = confirm("Deseja excluir o item: " + objeto.nome + " ?");
        if (resultado){
-         this.familia.composicaoFamiliar = this.arrayRemove (this.familia.composicaoFamiliar, objeto)
+         this.familia.listMembroFamilia = this.arrayRemove (this.familia.listMembroFamilia, objeto)
        }
     },
     changePage () {

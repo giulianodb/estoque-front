@@ -7,11 +7,11 @@
         <b-form-group
           id="input-group-1"
           label="CPF:"
-          v-model="familia.cpf"
+          v-model="familia.cpfResponsavel"
           label-for="txt-cpf"
           description="Informe seu nome completo"
         >
-          <b-form-input id="txt-cpf" v-model="familia.cpf" required placeholder="Digite o CPF"></b-form-input>
+          <b-form-input id="txt-cpf" v-model="familia.cpfResponsavel" required placeholder="Digite o CPF"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -19,11 +19,11 @@
         <b-form-group
           id="input-group-2"
           label="Nome:"
-          v-model="familia.nome"
+          v-model="familia.nomeResponsavel"
           label-for="txt-nome"
           description="Nome do responsável."
         >
-          <b-form-input id="txt-nome" required></b-form-input>
+          <b-form-input id="txt-nome" required v-model="familia.nomeResponsavel"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -35,7 +35,7 @@
           label-for="txt-nascimento"
           description="Data de nascimento"
         >
-          <b-form-input id="txt-nascimento" required></b-form-input>
+          <b-form-input id="txt-nascimento" required  v-model="familia.nascimento"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -48,7 +48,7 @@
           label-for="txt-estadoCivil"
           description="Estado cívil"
         >
-          <b-form-input id="txt-estadoCivil" ></b-form-input>
+          <b-form-input id="txt-estadoCivil" v-model="familia.estadoCivil" ></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -60,7 +60,7 @@
           label-for="txt-nacionalidade"
           description="Nacionalidade"
         >
-          <b-form-input id="txt-nacionalidade" ></b-form-input>
+          <b-form-input id="txt-nacionalidade"  v-model="familia.nacionalidade"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -72,7 +72,7 @@
           label-for="txt-profissao"
           description="Profissão"
         >
-          <b-form-input id="txt-profissao" ></b-form-input>
+          <b-form-input id="txt-profissao" v-model="familia.profissao"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -81,11 +81,11 @@
         <b-form-group
           id="input-group-7"
           label="RG:"
-          v-model="familia.rg"
+          v-model="familia.rgResponsavel"
           label-for="txt-rg"
           description="RG"
         >
-          <b-form-input id="txt-rg" ></b-form-input>
+          <b-form-input id="txt-rg"   v-model="familia.rgResponsavel"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -100,7 +100,7 @@
           label-for="txt-rua"
           description="Rua"
         >
-          <b-form-input id="txt-rua" ></b-form-input>
+          <b-form-input id="txt-rua"   v-model="familia.rua"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -113,7 +113,7 @@
           label-for="txt-bairro"
           description="Bairro"
         >
-          <b-form-input id="txt-bairro" ></b-form-input>
+          <b-form-input id="txt-bairro"  v-model="familia.bairro"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -125,7 +125,7 @@
           label-for="txt-cep"
           description="CEP"
         >
-          <b-form-input id="txt-cep" ></b-form-input>
+          <b-form-input id="txt-cep"  v-model="familia.cep"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -139,7 +139,7 @@
           label-for="txt-cidade"
           description="Cidade"
         >
-          <b-form-input id="txt-cidade" ></b-form-input>
+          <b-form-input id="txt-cidade"  v-model="familia.cidade"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -152,7 +152,7 @@
           label-for="txt-uf"
           description="UF"
         >
-          <b-form-input id="txt-uf" ></b-form-input>
+          <b-form-input id="txt-uf"  v-model="familia.uf"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -164,7 +164,7 @@
           label-for="txt-telefone"
           description="Telefone"
         >
-          <b-form-input id="txt-telefone" ></b-form-input>
+          <b-form-input id="txt-telefone" v-model="familia.telefone"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -176,7 +176,7 @@
           label-for="txt-celular"
           description="Celular"
         >
-          <b-form-input id="txt-celular" ></b-form-input>
+          <b-form-input id="txt-celular" v-model="familia.celular" ></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -188,7 +188,7 @@
           label-for="txt-dataCadastro"
           description="Cada Cadastro"
         >
-          <b-form-input id="txt-cataCadastro" ></b-form-input>
+          <b-form-input type="date"  id="txt-cataCadastro" v-model="familia.dataCadastro" ></b-form-input>
         </b-form-group>
       </b-col>
 

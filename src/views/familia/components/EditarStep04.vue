@@ -50,10 +50,9 @@
         <b-form-group
           id="cras"
           label="CRAS Referenciado:"
-          v-model="familia.programasSociais.cras"
           label-for="txt-cras"
         >
-          <b-form-input id="txt-cras" ></b-form-input>
+          <b-form-input id="txt-cras"  v-model="familia.programasSociais.cras"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -61,10 +60,10 @@
         <b-form-group
           id="nis"
           label="NIS:"
-          v-model="familia.programasSociais.nis"
+         
           label-for="txt-nis"
         >
-          <b-form-input id="txt-nis" ></b-form-input>
+          <b-form-input id="txt-nis"  v-model="familia.programasSociais.nis"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -72,10 +71,10 @@
         <b-form-group
           id="beneficio"
           label="Recebe algum benefício assistencial (gás,cesta básica,leite)? De quem? "
-          v-model="familia.programasSociais.beneficio"
+       
           label-for="txt-beneficio"
         >
-          <b-form-input id="txt-beneficio" ></b-form-input>
+          <b-form-input id="txt-beneficio"    v-model="familia.programasSociais.beneficio"></b-form-input>
         </b-form-group>
       </b-col>
     </b-row>

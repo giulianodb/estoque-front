@@ -24,7 +24,7 @@
           v-model="familia.motivo.outros"
           label-for="txt-outros"
         >
-          <b-form-input id="txt-outros" ></b-form-input>
+          <b-form-input id="txt-outros"    v-model="familia.motivo.outros" ></b-form-input>
         </b-form-group>
       </b-col>
     </b-row>
