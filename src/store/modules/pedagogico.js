@@ -2,8 +2,9 @@ export default {
 
   state: {
     aluno: {},
-    familia: { motivo: {}, listMembroFamilia:[], programasSociais: {}, moradia : {} },
     alunos: [],
+    familia: { motivo: {}, listMembroFamilia:[], programasSociais: {}, moradia : {} },
+    familias: [],
     messages: Object
   },
 
@@ -17,6 +18,9 @@ export default {
     },
     setFamilia (state, payload) {
       state.familia = payload
+    },
+    setFamilias (state, payload) {
+      state.familias = payload
     },
     setMessages (state, payload) {
       state.messages = payload
@@ -32,6 +36,9 @@ export default {
     },
     getFamilia (state) {
       return state.familia
+    },
+    getFamilias (state) {
+      return state.familias
     },
     getMessages (state) {
       return state.messages

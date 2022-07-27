@@ -66,6 +66,26 @@ export default {
     console.log(familia)
     return axios.post(`${apiURL}/familias`, familia)
   },
+  getFamilias: (page, perPage, sortBy, sortDesc) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}/familias?page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}/familias?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
   alterarAluno: (aluno) => {
     return axios.put(`${apiURL}/alunos`, aluno)
   },

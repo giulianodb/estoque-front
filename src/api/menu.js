@@ -35,6 +35,11 @@ export default {
           name: 'Cadastrar Família',
           url: '/editar_familia'
 
+        },
+        {
+          name: 'Listar Família',
+          url: '/listar_familia'
+
         }
       ]
     }

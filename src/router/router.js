@@ -4,6 +4,7 @@ import store from '@/store/store'
 import Home from '@/views/home/Home.vue'
 import Aluno from '@/views/aluno/Aluno.vue'
 import EditarFamilia from '@/views/familia/EditarFamilia.vue'
+import ListarFamilia from '@/views/familia/ListarFamilia.vue'
 
 // import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -73,6 +74,19 @@ const router = new Router({
         groups: ['']
       }
     },
+
+    {
+      path: '/listar_familia',
+      name: 'listarFamilia',
+      component: ListarFamilia,
+      meta: {
+        breadcrumb: true,
+        label: 'Familia / Listar Família',
+        requiresAuth: false,
+        groups: ['']
+      }
+    },
+
     // error pages
     {
       path: '/accessdenied',
