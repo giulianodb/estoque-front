@@ -99,11 +99,16 @@ export default {
           Api.salvarFamilia(this.$store.getters.getFamilia)
             .then(() => {
               //events.$emit('AlunoAlterada', this.Aluno)
-              this.clear();
+              // this.clear();
+              this.$validator.reset();
+              this.$store.dispatch("novaFamilia");
               this.$store.commit("setMessages", {
                 message: "Sucesso ao cadastrar Família",
                 variant: "success",
               });
+
+              this.$router.push("/listar_familia")
+
             })
             .catch((err) => {
               this.$store.commit("setMessages", err.response.data);

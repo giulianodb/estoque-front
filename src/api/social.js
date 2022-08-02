@@ -66,7 +66,10 @@ export default {
     console.log(familia)
     return axios.post(`${apiURL}/familias`, familia)
   },
-  getFamilias: (page, perPage, sortBy, sortDesc) => {
+  getFamilias: (page, perPage, sortBy, sortDesc, familiaPesquisa) => {
+    if (familiaPesquisa == null || familiaPesquisa.nomeRepresentante == null) {
+      familiaPesquisa.nomeRepresentante = ''
+    }
     if (page == null || page === undefined) {
       page = 1
     }
@@ -76,14 +79,14 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiURL}/familias?page=${page}&linesPerPage=${perPage}`)
+      return axios.get(`${apiURL}/familias?page=${page}&linesPerPage=${perPage}&nome=${familiaPesquisa.nomeRepresentante}`)
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
       }
 
-      return axios.get(`${apiURL}/familias?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+      return axios.get(`${apiURL}/familias?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}&nome=${familiaPesquisa.nomeRepresentante}`)
     }
   },
   alterarAluno: (aluno) => {

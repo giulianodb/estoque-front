@@ -1,4 +1,51 @@
 <template>
+<div>
+ <div class="fluid">
+      <b-row>
+      <b-col md="12">
+        <b-card>
+          <div slot="header">
+            <b>Pesquisar família</b>
+          </div>
+
+          <b-form >
+            <!-- Nome Série -->
+            <b-row>
+              <b-col lg="6" sm="12">
+                <b-form-group
+                  label="Nome representande família:"
+                  label-for="nome"
+                  class="text-label"
+                >
+
+                  <b-form-input id="nomeRepresentante"
+                  v-model="familiaPesquisa.nomeRepresentante"
+                  trim
+                  :autofocus="true"></b-form-input>
+
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+          </b-form>
+
+          <div slot="footer" class="center-xy">
+            <b-button
+              @click="listarFamilias()"
+              variant="primary"
+              size="md"
+            ><i class="far fa-save"></i> Pesquisar</b-button>
+
+            &nbsp;
+
+            <b-button outline @click="clear" size="md" variant="secondary">Limpar</b-button>
+          </div>
+
+         </b-card>
+      </b-col>
+    </b-row>
+ </div>
+
   <div class="fluid">
       <b-card>
 
@@ -22,12 +69,16 @@
         </div>
          <template v-slot:cell(acoes)="data">
            <div class="d-flex justify-content-end">
+               <b-link title="Crianças" @click="deletarFamilia(data.item)" class="btn btn-outline-info">
+              <i class="fas fa-shapes"></i>
+            </b-link>&nbsp;
             <b-link title="Alterar" @click="iniciarEditar(data.item)" class="btn btn-outline-info">
             <i class="fas fa-pencil-alt"></i>
             </b-link>&nbsp;
             <b-link title="Excluir" @click="deletarFamilia(data.item)" class="btn btn-outline-danger">
               <i class="fas fa-trash-alt"></i>
             </b-link>
+          
             </div>
           </template>
         </b-table>
@@ -48,6 +99,7 @@
 
       </b-card>
   </div>
+</div>
 </template>
 
 <script>
@@ -72,7 +124,8 @@ export default {
       sortDesc: false,
       sortDirection: 'asc',
       filter: null,
-      pesquisando: false
+      pesquisando: false,
+      familiaPesquisa: {}
     }
   },
   computed: {
@@ -117,7 +170,7 @@ export default {
     },
     listarFamilias () {
       this.pesquisando = true
-      Api.getFamilias(this.currentPage, this.perPage)
+      Api.getFamilias(this.currentPage, this.perPage,null,null, this.familiaPesquisa)
         .then(res => {
           this.$store.commit('setFamilias', res.data.content)
           console.log(res.data.content)
@@ -152,6 +205,9 @@ export default {
         this.$store.commit('setFamilias', res.data.content)
         this.totalRows = res.data.totalElements
       })
+    },
+     clear () {
+      this.familiaPesquisa = {}
     }
   }
 }
