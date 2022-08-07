@@ -106,7 +106,7 @@ export default {
       window.open(process.env.VUE_APP_PERFIL_URL, '_blank')
     },
     nomeUsuario () {
-      //return apiCentralSeguranca.decodeJwtToken(this.$store.getters.getJwtToken).name
+      // return apiCentralSeguranca.decodeJwtToken(this.$store.getters.getJwtToken).name
       return 'Nome do usuário'
     }
   },

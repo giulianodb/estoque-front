@@ -5,6 +5,7 @@ import Home from '@/views/home/Home.vue'
 import Aluno from '@/views/aluno/Aluno.vue'
 import EditarFamilia from '@/views/familia/EditarFamilia.vue'
 import ListarFamilia from '@/views/familia/ListarFamilia.vue'
+import Crianca from '@/views/familia/Crianca.vue'
 
 // import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -82,6 +83,18 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Familia / Listar Família',
+        requiresAuth: false,
+        groups: ['']
+      }
+    },
+
+    {
+      path: '/familia/:id/crianca',
+      name: 'crianca',
+      component: Crianca,
+      meta: {
+        breadcrumb: true,
+        label: 'Familia / Crianca',
         requiresAuth: false,
         groups: ['']
       }

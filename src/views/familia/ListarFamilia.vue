@@ -1,54 +1,51 @@
 <template>
-<div>
- <div class="fluid">
+  <div>
+    <div class="fluid">
       <b-row>
-      <b-col md="12">
-        <b-card>
-          <div slot="header">
-            <b>Pesquisar família</b>
-          </div>
+        <b-col md="12">
+          <b-card>
+            <div slot="header">
+              <b>Pesquisar família</b>
+            </div>
 
-          <b-form >
-            <!-- Nome Série -->
-            <b-row>
-              <b-col lg="6" sm="12">
-                <b-form-group
-                  label="Nome representande família:"
-                  label-for="nome"
-                  class="text-label"
-                >
+            <b-form>
+              <!-- Nome Série -->
+              <b-row>
+                <b-col lg="6" sm="12">
+                  <b-form-group
+                    label="Nome representande família:"
+                    label-for="nome"
+                    class="text-label"
+                  >
+                    <b-form-input
+                      id="nomeRepresentante"
+                      v-model="familiaPesquisa.nomeRepresentante"
+                      trim
+                      :autofocus="true"
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+            </b-form>
 
-                  <b-form-input id="nomeRepresentante"
-                  v-model="familiaPesquisa.nomeRepresentante"
-                  trim
-                  :autofocus="true"></b-form-input>
+            <div slot="footer" class="center-xy">
+              <b-button @click="listarFamilias()" variant="primary" size="md"
+                ><i class="far fa-save"></i> Pesquisar</b-button
+              >
 
-                </b-form-group>
-              </b-col>
-            </b-row>
+              &nbsp;
 
-          </b-form>
+              <b-button outline @click="clear" size="md" variant="secondary"
+                >Limpar</b-button
+              >
+            </div>
+          </b-card>
+        </b-col>
+      </b-row>
+    </div>
 
-          <div slot="footer" class="center-xy">
-            <b-button
-              @click="listarFamilias()"
-              variant="primary"
-              size="md"
-            ><i class="far fa-save"></i> Pesquisar</b-button>
-
-            &nbsp;
-
-            <b-button outline @click="clear" size="md" variant="secondary">Limpar</b-button>
-          </div>
-
-         </b-card>
-      </b-col>
-    </b-row>
- </div>
-
-  <div class="fluid">
+    <div class="fluid">
       <b-card>
-
         <b-table
           show-empty
           stacked="sm"
@@ -62,44 +59,63 @@
           @sort-changed="sortingChanged"
           :busy="pesquisando"
         >
-          <div slot="empty" colspan="2" align="center">Não existe conteúdo a ser exibido</div>
-             <div slot="table-busy" class="text-center text-danger my-2">
-          <b-spinner class="align-middle"></b-spinner>
-          <strong> Pesquisando...</strong>
-        </div>
-         <template v-slot:cell(acoes)="data">
-           <div class="d-flex justify-content-end">
-               <b-link title="Crianças" @click="deletarFamilia(data.item)" class="btn btn-outline-info">
-              <i class="fas fa-shapes"></i>
-            </b-link>&nbsp;
-            <b-link title="Alterar" @click="iniciarEditar(data.item)" class="btn btn-outline-info">
-            <i class="fas fa-pencil-alt"></i>
-            </b-link>&nbsp;
-            <b-link title="Excluir" @click="deletarFamilia(data.item)" class="btn btn-outline-danger">
-              <i class="fas fa-trash-alt"></i>
-            </b-link>
-          
+          <div slot="empty" colspan="2" align="center">
+            Não existe conteúdo a ser exibido
+          </div>
+          <div slot="table-busy" class="text-center text-danger my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <strong> Pesquisando...</strong>
+          </div>
+          <template v-slot:cell(acoes)="data">
+            <div class="d-flex justify-content-end">
+              <b-link
+                title="Crianças"
+                @click="listarCrianca(data.item)"
+                class="btn btn-outline-info"
+              >
+                <i class="fas fa-shapes"></i> </b-link
+              >&nbsp;
+              <b-link
+                title="Alterar"
+                @click="iniciarEditar(data.item)"
+                class="btn btn-outline-info"
+              >
+                <i class="fas fa-pencil-alt"></i> </b-link
+              >&nbsp;
+              <b-link
+                title="Excluir"
+                @click="deletarFamilia(data.item)"
+                class="btn btn-outline-danger"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </b-link>
             </div>
           </template>
         </b-table>
 
         <b-row v-if="familias.length > 0" class="my-1 center-xy">
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="totalRows"
-              :per-page="perPage"
-              :length="currentPage"
-              class="text-label"
-              @input="changePage"
-            >  </b-pagination>
-            <p
-              class="VuePagination__count text-center col-md-12"
-            >Mostrando {{currentPage * perPage - perPage +1}} a {{ (currentPage * perPage) > totalRows ? totalRows : currentPage * perPage}} de {{totalRows}} registros</p>
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            :length="currentPage"
+            class="text-label"
+            @input="changePage"
+          >
+          </b-pagination>
+          <p class="VuePagination__count text-center col-md-12">
+            Mostrando {{ currentPage * perPage - perPage + 1 }} a
+            {{
+              currentPage * perPage > totalRows
+                ? totalRows
+                : currentPage * perPage
+            }}
+            de {{ totalRows }} registros
+          </p>
         </b-row>
-
       </b-card>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -111,9 +127,24 @@ export default {
   data () {
     return {
       fields: [
-        { label: 'Nome Responsável', key: 'nomeResponsavel', sortable: true, sortDirection: 'desc' },
-        { label: 'CPF responsável', key: 'cpfResponsavel', sortable: true, sortDirection: 'desc' },
-        { label: 'Celular', key: 'celular', sortable: true, sortDirection: 'desc' },
+        {
+          label: 'Nome Responsável',
+          key: 'nomeResponsavel',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          label: 'CPF responsável',
+          key: 'cpfResponsavel',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          label: 'Celular',
+          key: 'celular',
+          sortable: true,
+          sortDirection: 'desc'
+        },
         { key: 'acoes', label: 'Ações' }
       ],
       totalRows: 1,
@@ -131,8 +162,6 @@ export default {
   computed: {
     familias: {
       get () {
-        console.log('TEste')
-        console.log(this.$store.getters.getFamilias)
         return this.$store.getters.getFamilias
       },
       set () {
@@ -160,7 +189,7 @@ export default {
             variant: 'success'
           })
         })
-        .catch(err => {
+        .catch((err) => {
           this.$store.commit('setMessages', err.response.data)
         })
     },
@@ -168,15 +197,24 @@ export default {
       let obj = JSON.parse(JSON.stringify(familia))
       this.$store.commit('setFamilia', obj)
     },
+    listarCrianca (familia) {
+      alert('no listar crianca')
+      // this.$router.push({ name: 'crianca', params: { cod: familia.id } })
+    },
     listarFamilias () {
       this.pesquisando = true
-      Api.getFamilias(this.currentPage, this.perPage,null,null, this.familiaPesquisa)
-        .then(res => {
+      Api.getFamilias(
+        this.currentPage,
+        this.perPage,
+        null,
+        null,
+        this.familiaPesquisa
+      )
+        .then((res) => {
           this.$store.commit('setFamilias', res.data.content)
-          console.log(res.data.content)
           this.totalRows = res.data.totalElements
         })
-        .catch(err => {
+        .catch((err) => {
           this.$store.commit('setFamilias', [])
           this.$store.commit('setMessages', err.response.data)
         })
@@ -188,7 +226,7 @@ export default {
         this.perPage,
         this.sortBy,
         this.sortDesc
-      ).then(res => {
+      ).then((res) => {
         this.$store.commit('setFamilias', res.data.content)
         this.totalRows = res.data.totalElements
       })
@@ -201,17 +239,16 @@ export default {
         this.perPage,
         this.sortBy,
         this.sortDesc
-      ).then(res => {
+      ).then((res) => {
         this.$store.commit('setFamilias', res.data.content)
         this.totalRows = res.data.totalElements
       })
     },
-     clear () {
+    clear () {
       this.familiaPesquisa = {}
     }
   }
 }
 </script>
 
-<style>
-</style>
+<style></style>

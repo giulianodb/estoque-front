@@ -179,13 +179,12 @@
       </b-col>
     </b-row>
 
-
     <b-card>
         <b-table
           show-empty
           stacked="sm"
           hover="hover"
-          striped 
+          striped
           fixed
           :items="familia.listMembroFamilia"
           :fields="fields"
@@ -213,11 +212,7 @@
           </template>
         </b-table>
 
-
       </b-card>
-
-
-
 
     <br><br>
   </div>
@@ -271,15 +266,15 @@ export default {
     },
     adicionar () {
       alert('salvar')
-      this.totalRows ++;
+      this.totalRows++
       this.familia.listMembroFamilia.push(this.listMembroFamilia)
       this.listMembroFamilia = {}
       this.$validator.reset()
     },
-    iniciarEditar(objeto) {
+    iniciarEditar (objeto) {
       this.listMembroFamilia = objeto
       this.listMembroFamilia.alterar = true
-      console.log( this.familia.listMembroFamilia)
+      console.log(this.familia.listMembroFamilia)
     },
     alterar () {
       alert('alterar')
@@ -289,11 +284,11 @@ export default {
     clear () {
       alert('Limpar')
     },
-    deletar(objeto) {
-       var resultado = confirm("Deseja excluir o item: " + objeto.nome + " ?");
-       if (resultado){
-         this.familia.listMembroFamilia = this.arrayRemove (this.familia.listMembroFamilia, objeto)
-       }
+    deletar (objeto) {
+      var resultado = confirm('Deseja excluir o item: ' + objeto.nome + ' ?')
+      if (resultado) {
+        this.familia.listMembroFamilia = this.arrayRemove(this.familia.listMembroFamilia, objeto)
+      }
     },
     changePage () {
       alert('changePage')

@@ -13,7 +13,6 @@
           v-model="familia.moradia.tipo"
           label-for="txt-tipo"
         >
-        
 
                     <b-form-select
                     id="tipo"
@@ -34,7 +33,7 @@
                     <option :value="2"> Casa </option>
                     <option :value="3"> Sobrado </option>
                   </b-form-select>
-        
+
         </b-form-group>
 </b-col>
 
@@ -49,9 +48,6 @@
         </b-form-group>
       </b-col>
 
-
-
-
 <b-col sm="3" lg="3">
         <b-form-group
           id="material"
@@ -59,7 +55,6 @@
           v-model="familia.moradia.material"
           label-for="txt-material"
         >
-        
 
                     <b-form-select
                     id="material"
@@ -80,10 +75,9 @@
                     <option :value="2"> Alvenaria </option>
                     <option :value="3"> Mista </option>
                   </b-form-select>
-        
+
         </b-form-group>
 </b-col>
-
 
 <b-col sm="3" lg="3">
         <b-form-group
@@ -112,10 +106,9 @@
                     <option :value="2"> Alugado </option>
                     <option :value="3"> Cedido </option>
                   </b-form-select>
-        
+
         </b-form-group>
 </b-col>
-
 
 <b-col sm="3" lg="3">
         <b-form-group
@@ -143,7 +136,7 @@
                     <option :value="2"> Irregular </option>
                     <option :value="3"> Legalizado </option>
                   </b-form-select>
-        
+
         </b-form-group>
 </b-col>
 

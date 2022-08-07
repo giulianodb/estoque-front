@@ -16,7 +16,7 @@
       <b-col sm="12" lg="12">
           <b-form-checkbox id="txt-ori"  v-model="familia.motivo.orientacaoTec" > Orientação Técnica/Encaminhamento </b-form-checkbox>
       </b-col>
-     
+
       <b-col sm="12" lg="12">
         <b-form-group
           id="input-group-1"

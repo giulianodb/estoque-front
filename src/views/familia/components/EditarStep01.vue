@@ -39,7 +39,6 @@
         </b-form-group>
       </b-col>
 
-
       <b-col sm="12" lg="3">
         <b-form-group
           id="input-group-4"
@@ -76,7 +75,6 @@
         </b-form-group>
       </b-col>
 
-
       <b-col sm="12" lg="3">
         <b-form-group
           id="input-group-7"
@@ -89,9 +87,6 @@
         </b-form-group>
       </b-col>
 
-
-
-
       <b-col sm="12" lg="6">
         <b-form-group
           id="input-group-9"
@@ -103,7 +98,6 @@
           <b-form-input id="txt-rua"   v-model="familia.rua"></b-form-input>
         </b-form-group>
       </b-col>
-
 
      <b-col sm="12" lg="6">
         <b-form-group
@@ -129,8 +123,6 @@
         </b-form-group>
       </b-col>
 
-
-
        <b-col sm="12" lg="6">
         <b-form-group
           id="input-group-11"
@@ -142,7 +134,6 @@
           <b-form-input id="txt-cidade"  v-model="familia.cidade"></b-form-input>
         </b-form-group>
       </b-col>
-
 
      <b-col sm="12" lg="1">
         <b-form-group
@@ -191,7 +182,6 @@
           <b-form-input type="date"  id="txt-cataCadastro" v-model="familia.dataCadastro" ></b-form-input>
         </b-form-group>
       </b-col>
-
 
     </b-row>
   </div>

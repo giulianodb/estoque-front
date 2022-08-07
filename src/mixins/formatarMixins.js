@@ -16,10 +16,10 @@ export default {
     formatarData (data) {
       return moment(data).format('DD/MM/YYYY')
     },
-    arrayRemove (arr, value) { 
-      return arr.filter(function (ele) { 
-          return ele != value
-      });
+    arrayRemove (arr, value) {
+      return arr.filter(function (ele) {
+        return ele != value
+      })
     }
   }
 }
