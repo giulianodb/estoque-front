@@ -1,16 +1,16 @@
 <template>
   <div>
-    <!-- <EditarCrianca />
-    <ListarCrianca /> -->
-    <div>User {{ $route.params.id }}</div>
-    <div>User {{ this.familia.nome }}</div>
-
+    <ListarCrianca />
+    <EditarCrianca />
   </div>
 </template>
 
 <script>
-import EditarCrianca from './components/EditarCrianca'
-import ListarCrianca from './components/ListarCrianca'
+import EditarCrianca from './components/crianca/EditarCrianca'
+import ListarCrianca from './components/crianca/ListarCrianca'
+
+import Api from '@/api/social'
+
 export default {
   name: 'Crianca',
   components: { EditarCrianca, ListarCrianca },
@@ -20,12 +20,37 @@ export default {
     }
   },
 
-  created () {},
-  mounted () {
-    alert(this.$route.params.id)
-    this.familia.nome = 'Teste'
+  created () {
+    this.listarCriancas(this.$route.params.idFamilia)
+    this.buscarFamilia(this.$route.params.idFamilia)
   },
-  methods: {}
+  mounted () {
+
+  },
+  methods: {
+    listarCriancas (idFamilia) {
+      Api.getCriancasPorFamilia(null, null, null, null, idFamilia)
+        .then((res) => {
+          this.$store.commit('setCriancas', res.data.content)
+        })
+        .catch((err) => {
+          this.$store.commit('setCriancas', [])
+          this.$store.commit('setMessages', err.response.data)
+        })
+    },
+    buscarFamilia (idFamilia) {
+      Api.getFamilia(idFamilia)
+        .then((res) => {
+          console.log(res.data)
+          this.$store.commit('setFamilia', res.data)
+        })
+        .catch((err) => {
+          this.$store.commit('setFamilia', [])
+          this.$store.commit('setMessages', err.response.data)
+        })
+    }
+
+  }
 }
 </script>
 

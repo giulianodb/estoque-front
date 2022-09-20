@@ -89,7 +89,7 @@ const router = new Router({
     },
 
     {
-      path: '/familia/:id/crianca',
+      path: '/familia/:idFamilia/crianca',
       name: 'crianca',
       component: Crianca,
       meta: {

@@ -51,20 +51,20 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiURL}/alunos?page=${page}&linesPerPage=${perPage}`)
+      return axios.get(`${apiURL}alunos?page=${page}&linesPerPage=${perPage}`)
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
       }
 
-      return axios.get(`${apiURL}/alunos?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+      return axios.get(`${apiURL}alunos?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
   salvarFamilia: (familia) => {
     alert(familia)
     console.log(familia)
-    return axios.post(`${apiURL}/familias`, familia)
+    return axios.post(`${apiURL}familias`, familia)
   },
   getFamilias: (page, perPage, sortBy, sortDesc, familiaPesquisa) => {
     if (familiaPesquisa == null || familiaPesquisa.nomeRepresentante == null) {
@@ -79,20 +79,48 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiURL}/familias?page=${page}&linesPerPage=${perPage}&nome=${familiaPesquisa.nomeRepresentante}`)
+      return axios.get(`${apiURL}familias?page=${page}&linesPerPage=${perPage}&nome=${familiaPesquisa.nomeRepresentante}`)
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
       }
 
-      return axios.get(`${apiURL}/familias?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}&nome=${familiaPesquisa.nomeRepresentante}`)
+      return axios.get(`${apiURL}familias?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}&nome=${familiaPesquisa.nomeRepresentante}`)
     }
   },
+  getFamilia: (idFamilia) => {
+    return axios.get(`${apiURL}familias/${idFamilia}`)
+  },
+  getCriancasPorFamilia: (page, perPage, sortBy, sortDesc, idFamilia) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}criancas/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}criancas/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+  salvarCrianca: (crianca, idFamilia) => {
+    crianca.familia = { id: idFamilia }
+    console.log(crianca)
+    return axios.post(`${apiURL}criancas`, crianca)
+  },
   alterarAluno: (aluno) => {
-    return axios.put(`${apiURL}/alunos`, aluno)
+    return axios.put(`${apiURL}alunos`, aluno)
   },
   deletarAluno: (aluno) => {
-    return axios.delete(`${apiURL}/alunos/${aluno.idAluno}`)
+    return axios.delete(`${apiURL}alunos/${aluno.idAluno}`)
   }
 }
