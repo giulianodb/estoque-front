@@ -112,10 +112,22 @@ export default {
       return axios.get(`${apiURL}criancas/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
+  getCrianca: (idCrianca) => {
+    return axios.get(`${apiURL}criancas/${idCrianca}`)
+  },
   salvarCrianca: (crianca, idFamilia) => {
     crianca.familia = { id: idFamilia }
     console.log(crianca)
     return axios.post(`${apiURL}criancas`, crianca)
+  },
+  getAvaliacaoContextoPorCrianca: (idCrianca) => {
+    return axios.get(`${apiURL}avaliacao_contexto/crianca/${idCrianca}/respostas`)
+  },
+  salvarAvaliacao: (avaliacaoContexto) => {
+    return axios.post(`${apiURL}avaliacao_contexto/`, avaliacaoContexto)
+  },
+  atualizarAvaliacao: (avaliacaoContexto) => {
+    return axios.put(`${apiURL}avaliacao_contexto/`, avaliacaoContexto)
   },
   alterarAluno: (aluno) => {
     return axios.put(`${apiURL}alunos`, aluno)

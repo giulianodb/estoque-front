@@ -6,6 +6,7 @@ import Aluno from '@/views/aluno/Aluno.vue'
 import EditarFamilia from '@/views/familia/EditarFamilia.vue'
 import ListarFamilia from '@/views/familia/ListarFamilia.vue'
 import Crianca from '@/views/familia/Crianca.vue'
+import AvaliacaoContexto from '@/views/familia/components/crianca/AvaliacaoContexto'
 
 // import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -95,6 +96,17 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Familia / Crianca',
+        requiresAuth: false,
+        groups: ['']
+      }
+    },
+    {
+      path: '/crianca/:idCrianca/avaliacao_contexto',
+      name: 'avaliacaoContexto',
+      component: AvaliacaoContexto,
+      meta: {
+        breadcrumb: true,
+        label: 'Crianca / Avaliacao Contexto',
         requiresAuth: false,
         groups: ['']
       }

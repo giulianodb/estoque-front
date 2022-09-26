@@ -132,7 +132,9 @@ export default {
       this.$store.commit('setCrianca', obj)
     },
     iniciarEditarAssistencial (crianca) {
-      this.$push("assistencial")
+      
+      this.$router.push(`/crianca/${crianca.id}/avaliacao_contexto`)
+      
     },
     listarCriancas () {
       this.pesquisando = true
