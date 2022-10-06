@@ -198,7 +198,7 @@ export default {
       this.$store.commit('setFamilia', obj)
     },
     listarCrianca (familia) {
-      this.$router.push({ name: 'crianca', params: { idFamilia: familia.id } })
+      this.$router.push({ name: 'criancaFamilia', params: { idFamilia: familia.id } })
     },
     listarFamilias () {
       this.pesquisando = true

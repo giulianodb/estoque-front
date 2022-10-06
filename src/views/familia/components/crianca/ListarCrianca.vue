@@ -1,6 +1,6 @@
 <template>
   <div class="fluid">
-    <h2 class="app-title">Crianças da família de {{this.familia.nomeResponsavel}}</h2>
+    <h2 v-if = "familia.nomeResponsavel != null" class="app-title">Crianças da família de {{this.familia.nomeResponsavel}}</h2>
       <b-card>
 
         <b-table
@@ -59,11 +59,12 @@
 </template>
 
 <script>
-import Api from '@/api/pedagogico'
+import Api from '@/api/social'
 import events from '@/util/events'
 
 export default {
   name: 'ListarCrianca',
+  props: ['porFamilia'],
   data () {
     return {
       fields: [
@@ -104,9 +105,15 @@ export default {
     }
   },
   created () {
-    // events.$on('criancaAlterada', () => {
-    //   this.listarCriancas()
-    // })
+    events.$on('pesquisarCrianca', () => {
+      this.listarCriancas()
+    })
+
+    events.$on('criancaAlterada', () => {
+      console.log("Evento acionado")
+      this.listarCriancas()
+    })
+    
   },
   mounted () {
     // this.listarCriancas()
@@ -130,6 +137,8 @@ export default {
     iniciarEditar (crianca) {
       let obj = JSON.parse(JSON.stringify(crianca))
       this.$store.commit('setCrianca', obj)
+      console.log(obj)
+       events.$emit('iniciarEditarCrianca')
     },
     iniciarEditarAssistencial (crianca) {
       
@@ -138,42 +147,101 @@ export default {
     },
     listarCriancas () {
       this.pesquisando = true
-      Api.getCriancas(this.currentPage, this.perPage)
-        .then(res => {
-          this.$store.commit('setCriancas', res.data.content)
-          console.log(res.data.content)
-          this.totalRows = res.data.totalElements
-        })
-        .catch(err => {
-          this.$store.commit('setCriancas', [])
-          this.$store.commit('setMessages', err.response.data)
-        })
+        console.log("testeee")
+        if (!this.porFamilia) {
+          let nome = this.$store.getters.getCriancaPesquisa.nome
+                 let projeto = this.$store.getters.getCriancaPesquisa.projeto
+          let matriculado = this.$store.getters.getCriancaPesquisa.matriculado
+          let espera =  this.$store.getters.getCriancaPesquisa.espera
+          //page, perPage, sortBy, sortDesc, nome
+          Api.getCriancas(this.currentPage, this.perPage, 'nome', this.sortDesc, nome,
+            projeto,
+            matriculado,
+            espera)
+            .then(res => {
+              //this.$store.commit('setCriancas', res.data.content)
+              this.$store.commit('setCriancas', res.data.content)
+              console.log(res.data.content)
+              this.totalRows = res.data.totalElements
+            })
+            .catch(err => {
+              this.$store.commit('setCriancas', [])
+              this.$store.commit('setMessages', err.response.data)
+            })
+        }    
       this.pesquisando = false
     },
     changePage () {
-      Api.getCriancas(
-        this.currentPage,
-        this.perPage,
-        this.sortBy,
-        this.sortDesc
-      ).then(res => {
-        this.$store.commit('setCriancas', res.data.content)
-        this.totalRows = res.data.totalElements
-      })
+
+      if (!this.porFamilia) {
+          let nome = this.$store.getters.getCriancaPesquisa.nome
+          let projeto = this.$store.getters.getCriancaPesquisa.projeto
+          let matriculado = this.$store.getters.getCriancaPesquisa.matriculado
+          let espera =  this.$store.getters.getCriancaPesquisa.espera
+          Api.getCriancas(
+            this.currentPage,
+            this.perPage,
+            this.sortBy,
+            this.sortDesc,
+            nome,
+            projeto,
+            matriculado,
+            espera
+          ).then(res => {
+            this.$store.commit('setCriancas', res.data.content)
+            this.totalRows = res.data.totalElements
+          })
+      } else {
+             Api.getCriancasPorFamilia(
+            this.currentPage,
+            this.perPage,
+            this.sortBy,
+            this.sortDesc,
+            this.familia.id
+          ).then(res => {
+            this.$store.commit('setCriancas', res.data.content)
+            this.totalRows = res.data.totalElements
+          })
+      }
+
+
     },
     sortingChanged (ctx) {
       this.sortBy = ctx.sortBy
       this.sortDesc = ctx.sortDesc
-      Api.getCriancas(
-        this.currentPage,
-        this.perPage,
-        this.sortBy,
-        this.sortDesc
-      ).then(res => {
-        this.$store.commit('setCriancas', res.data.content)
-        this.totalRows = res.data.totalElements
-      })
-    }
+      
+      if (!this.porFamilia) {
+          let nome = this.$store.getters.getCriancaPesquisa.nome
+          let projeto = this.$store.getters.getCriancaPesquisa.projeto
+          let matriculado = this.$store.getters.getCriancaPesquisa.matriculado
+          let espera =  this.$store.getters.getCriancaPesquisa.espera
+           
+           
+          Api.getCriancas(
+            this.currentPage,
+            this.perPage,
+            this.sortBy,
+            this.sortDesc,
+            nome,
+            projeto,
+            matriculado,
+            espera
+          ).then(res => {
+            this.$store.commit('setCriancas', res.data.content)
+            this.totalRows = res.data.totalElements
+          })
+    } else {
+            Api.getCriancasPorFamilia(
+            this.currentPage,
+            this.perPage,
+            this.sortBy,
+            this.sortDesc,
+            this.familia.id
+          ).then(res => {
+            this.$store.commit('setCriancas', res.data.content)
+            this.totalRows = res.data.totalElements
+          })
+    } }
   }
 }
 </script>

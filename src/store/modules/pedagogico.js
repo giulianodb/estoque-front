@@ -6,7 +6,8 @@ export default {
     familia: { motivo: {}, listMembroFamilia: [], programasSociais: {}, moradia: {} },
     familias: [],
     criancas: [],
-    crianca: {},
+    crianca: { listaEspera: false, matriculado: false },
+    criancaPesquisa: {},
     messages: Object
   },
 
@@ -30,6 +31,9 @@ export default {
     setCrianca (state, payload) {
       state.crianca = payload
     },
+    setCriancaPesquisa (state, payload) {
+      state.criancaPesquisa = payload
+    },
     setMessages (state, payload) {
       state.messages = payload
     }
@@ -51,6 +55,9 @@ export default {
     getCrianca (state) {
       return state.crianca
     },
+    getCriancaPesquisa (state) {
+      return state.criancaPesquisa
+    },
     getCriancas (state) {
       return state.criancas
     },
@@ -64,10 +71,13 @@ export default {
       state.commit('setAluno', {})
     },
     novaFamilia (state) {
-      state.commit('setFamilia', {})
+      state.commit('setFamilia', {motivo: {}, listMembroFamilia: [], programasSociais: {}, moradia: {} } )
     },
     novaCrianca (state) {
-      state.commit('setCrianca', {})
+      state.commit('setCrianca', { listaEspera: false, matriculado: false })
+    },
+    novaCriancaPesquisa (state) {
+      state.commit('setCriancaPesquisa', { nome : '' , projeto: "-1", matriculado: true, espera: false })
     },
     limparMensagens (state) {
       state.commit('setMessages', Object)

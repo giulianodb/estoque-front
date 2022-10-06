@@ -88,8 +88,8 @@
                     <template slot="first">
                       <option value="-1">Selecione</option>
                     </template>
-                    <option :value="0"> FOCAR </option>
-                    <option :value="1"> NFI  </option>
+                    <option value="FOCAR"> FOCAR </option>
+                    <option value="NFI"> NFI  </option>
                   </b-form-select>
 
                   <span v-show="errors.has('projeto')" class="help is-danger"> {{ errors.first("projeto") }}</span>
@@ -306,7 +306,7 @@
 
           <div slot="footer" class="center-xy">
             <b-button
-              v-if="crianca.idCrianca"
+              v-if="crianca.id"
               @click="alterarCrianca()"
               variant="primary"
             >
@@ -378,6 +378,7 @@ export default {
                 message: 'Sucesso ao cadastrar criança',
                 variant: 'success'
               })
+              events.$emit('criancaEditada')
             })
             .catch((err) => {
               this.$store.commit('setMessages', err.response.data)
@@ -390,13 +391,14 @@ export default {
         if (result) {
           Api.alterarCrianca(this.crianca)
             .then(() => {
-              events.$emit('CriancaAlterada', this.crianca)
+              events.$emit('criancaAlterada', this.crianca)
               this.clear()
               this.$store.dispatch('novaCrianca')
               this.$store.commit('setMessages', {
                 message: 'Sucesso ao alterar série',
                 variant: 'success'
               })
+              events.$emit('criancaEditada')
             })
             .catch((err) => {
               this.$store.commit('setMessages', err.response.data)

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ListarCrianca />
+    <ListarCrianca :porFamilia="true"/>
     <EditarCrianca />
   </div>
 </template>
@@ -23,6 +23,7 @@ export default {
   created () {
     this.listarCriancas(this.$route.params.idFamilia)
     this.buscarFamilia(this.$route.params.idFamilia)
+     this.$store.dispatch('novaCrianca')
   },
   mounted () {
 

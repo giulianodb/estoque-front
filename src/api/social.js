@@ -112,6 +112,26 @@ export default {
       return axios.get(`${apiURL}criancas/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
+  getCriancas: (page, perPage, sortBy, sortDesc, nome, projeto, matriculado, espera) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}criancas?nome=${nome}&projeto=${projeto}&matriculado=${matriculado}&espera=${espera}&page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}criancas?nome=${nome}&projeto=${projeto}&matriculado=${matriculado}&espera=${espera}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
   getCrianca: (idCrianca) => {
     return axios.get(`${apiURL}criancas/${idCrianca}`)
   },
@@ -119,6 +139,10 @@ export default {
     crianca.familia = { id: idFamilia }
     console.log(crianca)
     return axios.post(`${apiURL}criancas`, crianca)
+  },
+  alterarCrianca: (crianca) => {
+    console.log(crianca)
+    return axios.put(`${apiURL}criancas/${crianca.id}`, crianca)
   },
   getAvaliacaoContextoPorCrianca: (idCrianca) => {
     return axios.get(`${apiURL}avaliacao_contexto/crianca/${idCrianca}/respostas`)

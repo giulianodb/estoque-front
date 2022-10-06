@@ -13,14 +13,14 @@ export default {
     },
 
     {
-      name: 'Aluno',
+      name: 'Criança',
       url: '#',
       icon: 'fas fa-chalkboard-teacher',
 
       children: [
         {
-          name: 'Cadastrar Aluno',
-          url: '/aluno'
+          name: 'Listar Criança',
+          url: '/crianca'
 
         }
       ]
