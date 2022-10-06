@@ -64,7 +64,14 @@ export default {
   salvarFamilia: (familia) => {
     alert(familia)
     console.log(familia)
-    return axios.post(`${apiURL}familias`, familia)
+
+    if (familia.id == null) {
+      return axios.post(`${apiURL}familias`, familia)
+    } else {
+      return axios.put(`${apiURL}familias/${familia.id}`, familia)
+    }
+
+    
   },
   getFamilias: (page, perPage, sortBy, sortDesc, familiaPesquisa) => {
     if (familiaPesquisa == null || familiaPesquisa.nomeRepresentante == null) {

@@ -196,6 +196,9 @@ export default {
     iniciarEditar (familia) {
       let obj = JSON.parse(JSON.stringify(familia))
       this.$store.commit('setFamilia', obj)
+      console.log(obj)
+      this.$router.push({ name: 'editarFamilia', params: { idFamilia: familia.id } })
+
     },
     listarCrianca (familia) {
       this.$router.push({ name: 'criancaFamilia', params: { idFamilia: familia.id } })

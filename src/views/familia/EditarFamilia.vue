@@ -96,6 +96,8 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) {
           console.log(this.$store.getters.getFamilia)
+
+
           Api.salvarFamilia(this.$store.getters.getFamilia)
             .then(() => {
               // events.$emit('AlunoAlterada', this.Aluno)
@@ -103,7 +105,7 @@ export default {
               this.$validator.reset()
               this.$store.dispatch('novaFamilia')
               this.$store.commit('setMessages', {
-                message: 'Sucesso ao cadastrar Família',
+                message: 'Sucesso ao salvar Família',
                 variant: 'success'
               })
 
