@@ -15,7 +15,7 @@ export default {
     {
       name: 'Criança',
       url: '#',
-      icon: 'fas fa-chalkboard-teacher',
+      icon: 'fas fa-child', 
 
       children: [
         {
@@ -28,7 +28,7 @@ export default {
     {
       name: 'Familia',
       url: '#',
-      icon: 'fas fa-chalkboard-teacher',
+      icon: 'fas fa-users',
 
       children: [
         {

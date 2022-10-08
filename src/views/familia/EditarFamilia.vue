@@ -25,19 +25,19 @@
               <EditarStep01 :index="activeIndex" />
             </tab-content>
 
-            <tab-content icon="fa-solid fa-arrows-to-circle">
+            <tab-content icon="fa fa-crosshairs ">
               <EditarStep02 :index="activeIndex" />
             </tab-content>
 
-            <tab-content icon="fa-solid fa-people-roof">
+            <tab-content icon="fas fa-users">
               <EditarStep03 :index="activeIndex" />
             </tab-content>
             
-            <tab-content icon="fas fa-user">
+            <tab-content icon="fas fa-people-carry">
               <EditarStep04 :index="activeIndex" />
             </tab-content>
 
-            <tab-content icon="fas fa-user">
+            <tab-content icon="fas fa-home">
               <EditarStep05 :index="activeIndex" />
             </tab-content>
 
@@ -118,6 +118,8 @@ export default {
       this.$store.dispatch('novaFamilia')
       this.$store.dispatch('limparMensagens')
     }
+  },
+  created(){
   }
 }
 </script>

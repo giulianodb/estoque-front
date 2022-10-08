@@ -10,6 +10,12 @@ import VueTheMask from 'vue-the-mask'
 import PortalVue from 'portal-vue'
 import BackToTop from 'vue-backtotop'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 Vue.use(VueTheMask)
 Vue.use(PortalVue)
 
