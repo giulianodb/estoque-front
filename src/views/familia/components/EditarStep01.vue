@@ -31,11 +31,10 @@
         <b-form-group
           id="input-group-3"
           label="Data Nascimento:"
-          v-model="familia.nascimento"
           label-for="txt-nascimento"
           description="Data de nascimento"
         >
-          <b-form-input id="txt-nascimento" required  v-model="familia.nascimento"></b-form-input>
+          <b-form-input id="txt-nascimento" type="date" required  v-model="familia.dataNascimento"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -139,11 +138,10 @@
         <b-form-group
           id="input-group-12"
           label="UF:"
-          v-model="familia.uf"
           label-for="txt-uf"
           description="UF"
         >
-          <b-form-input id="txt-uf"  v-model="familia.uf"></b-form-input>
+          <b-form-input id="txt-uf"  v-model="familia.estado"></b-form-input>
         </b-form-group>
       </b-col>
 

@@ -10,11 +10,11 @@
       </b-col>
 
       <b-col sm="3" lg="12">
-          <b-form-checkbox id="txt-auxDoenca"  v-model="familia.programas.auxDoenca" > Auxílio doença </b-form-checkbox>
+          <b-form-checkbox id="txt-auxDoenca"  v-model="familia.programas.auxilioDoenca" > Auxílio doença </b-form-checkbox>
       </b-col>
 
       <b-col sm="3" lg="12">
-          <b-form-checkbox id="txt-scfv2"  v-model="familia.programas.scfv2" > SCFV </b-form-checkbox>
+          <b-form-checkbox id="txt-scfv2"  v-model="familia.programas.scfv" > SCFV </b-form-checkbox>
       </b-col>
 
             <b-col sm="3" lg="12">
@@ -38,7 +38,7 @@
       </b-col>
 
       <b-col sm="3" lg="12">
-          <b-form-checkbox id="txt-armazenFamilia"  v-model="familia.programas.armazenFamilia" > Armazém da família </b-form-checkbox>
+          <b-form-checkbox id="txt-armazenFamilia"  v-model="familia.programas.armazemFamilia" > Armazém da família </b-form-checkbox>
       </b-col>
 
     </br>
@@ -70,7 +70,7 @@
 
           label-for="txt-beneficio"
         >
-          <b-form-input id="txt-beneficio"    v-model="familia.programas.beneficio"></b-form-input>
+          <b-form-input id="txt-beneficio"    v-model="familia.programas.beneficioAssistencial"></b-form-input>
         </b-form-group>
       </b-col>
     </b-row>

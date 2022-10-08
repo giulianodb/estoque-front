@@ -4,7 +4,7 @@
 
     <b-card>
       <div slot="header">
-        <strong>Exemplo</strong>
+        <strong>Cadastro de Família</strong>
       </div>
 
       <b-row>
@@ -25,14 +25,14 @@
               <EditarStep01 :index="activeIndex" />
             </tab-content>
 
-            <tab-content icon="fas fa-user">
+            <tab-content icon="fa-solid fa-arrows-to-circle">
               <EditarStep02 :index="activeIndex" />
             </tab-content>
 
-            <tab-content icon="fas fa-user">
+            <tab-content icon="fa-solid fa-people-roof">
               <EditarStep03 :index="activeIndex" />
             </tab-content>
-
+            
             <tab-content icon="fas fa-user">
               <EditarStep04 :index="activeIndex" />
             </tab-content>
@@ -92,12 +92,8 @@ export default {
   },
   methods: {
     salvar () {
-      alert('Vamos salvar isso..!')
       this.$validator.validateAll().then((result) => {
         if (result) {
-          console.log(this.$store.getters.getFamilia)
-
-
           Api.salvarFamilia(this.$store.getters.getFamilia)
             .then(() => {
               // events.$emit('AlunoAlterada', this.Aluno)

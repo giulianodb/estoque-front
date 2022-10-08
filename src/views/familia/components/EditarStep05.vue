@@ -10,14 +10,13 @@
         <b-form-group
           id="tipo"
           label="Tipo:"
-          v-model="familia.moradia.tipo"
           label-for="txt-tipo"
         >
 
                     <b-form-select
                     id="tipo"
                     :plain="true"
-                    v-model="familia.moradia.tipo"
+                    v-model="familia.moradia.tipoMoradia"
                     v-validate="'required|excluded:0'"
                     data-vv-name="tipo"
                     data-vv-as="tipo"
@@ -29,9 +28,9 @@
                     <template slot="first">
                       <option value="0">Tipo</option>
                     </template>
-                    <option :value="1"> Apartamento </option>
-                    <option :value="2"> Casa </option>
-                    <option :value="3"> Sobrado </option>
+                    <option value="APARTAMENTO"> Apartamento </option>
+                    <option value="CASA"> Casa </option>
+                    <option value="SOBRADO"> Sobrado </option>
                   </b-form-select>
 
         </b-form-group>
@@ -41,10 +40,9 @@
         <b-form-group
           id="pecas"
           label="Quantidade de peças:"
-          v-model="familia.moradia.pecas"
           label-for="txt-pecass"
         >
-          <b-form-input id="txt-pecas" ></b-form-input>
+          <b-form-input id="txt-pecas"  v-model="familia.moradia.quantidadePecas" ></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -52,14 +50,13 @@
         <b-form-group
           id="material"
           label="Material:"
-          v-model="familia.moradia.material"
           label-for="txt-material"
         >
 
                     <b-form-select
                     id="material"
                     :plain="true"
-                    v-model="familia.moradia.material"
+                    v-model="familia.moradia.materialMoradia"
                     v-validate="'required|excluded:0'"
                     data-vv-name="material"
                     data-vv-as="material"
@@ -71,9 +68,9 @@
                     <template slot="first">
                       <option value="0">Material</option>
                     </template>
-                    <option :value="1"> Madeira </option>
-                    <option :value="2"> Alvenaria </option>
-                    <option :value="3"> Mista </option>
+                    <option value="MADEIRA"> Madeira </option>
+                    <option value="ALVENARIA"> Alvenaria </option>
+                    <option value="MISTA"> Mista </option>
                   </b-form-select>
 
         </b-form-group>
@@ -83,14 +80,13 @@
         <b-form-group
           id="propriedade"
           label="Propriedade:"
-          v-model="familia.moradia.propriedade"
           label-for="txt-propriedade"
         >
 
                     <b-form-select
                     id="propriedade"
                     :plain="true"
-                    v-model="familia.moradia.propriedade"
+                    v-model="familia.moradia.propriedadeMoradia"
                     v-validate="'required|excluded:0'"
                     data-vv-name="propriedade"
                     data-vv-as="propriedade"
@@ -102,9 +98,9 @@
                     <template slot="first">
                       <option value="0">Propriedade</option>
                     </template>
-                    <option :value="1"> Próprio </option>
-                    <option :value="2"> Alugado </option>
-                    <option :value="3"> Cedido </option>
+                    <option value="PROPRIA"> Próprio </option>
+                    <option value="ALUGADA"> Alugado </option>
+                    <option value="CEDIDA"> Cedido </option>
                   </b-form-select>
 
         </b-form-group>
@@ -114,13 +110,13 @@
         <b-form-group
           id="situacao"
           label="Situação:"
-          v-model="familia.moradia.situacao"
+          v-model="familia.moradia.situacaoMoradia"
           label-for="situacao"
         >
                     <b-form-select
                     id="situacao"
                     :plain="true"
-                    v-model="familia.moradia.situacao"
+                    v-model="familia.moradia.situacaoMoradia"
                     v-validate="'required|excluded:0'"
                     data-vv-name="situacao"
                     data-vv-as="situacao"
@@ -132,9 +128,9 @@
                     <template slot="first">
                       <option value="0">Situação</option>
                     </template>
-                    <option :value="1"> Insalubre </option>
-                    <option :value="2"> Irregular </option>
-                    <option :value="3"> Legalizado </option>
+                    <option value="INSALUBRE"> Insalubre </option>
+                    <option value="IRREGULAR"> Irregular </option>
+                    <option value="LEGALIZADA"> Legalizado </option>
                   </b-form-select>
 
         </b-form-group>
@@ -144,19 +140,19 @@
         <b-form-group
           id="tempo"
           label="Tempo de residência (anos):"
-          v-model="familia.moradia.tempo"
+         
           label-for="txt-tempo"
         >
-          <b-form-input id="txt-tempo" type="number" ></b-form-input>
+          <b-form-input id="txt-tempo"  v-model="familia.moradia.tempoResidencia"></b-form-input>
         </b-form-group>
       </b-col>
 
       <b-col sm="3" lg="12">
-          <b-form-checkbox id="txt-agua"  v-model="familia.moradia.agua" > Água encanada </b-form-checkbox>
+          <b-form-checkbox id="txt-agua"  v-model="familia.moradia.aguaEncanada" > Água encanada </b-form-checkbox>
       </b-col>
 
       <b-col sm="3" lg="12">
-          <b-form-checkbox id="txt-esgoto"  v-model="familia.moradia.esgoto" > Rede de esgoto </b-form-checkbox>
+          <b-form-checkbox id="txt-esgoto"  v-model="familia.moradia.redeEsgoto" > Rede de esgoto </b-form-checkbox>
       </b-col>
 
       <b-col sm="3" lg="12">
@@ -176,11 +172,11 @@
       </b-col>
 
       <b-col sm="3" lg="12">
-          <b-form-checkbox id="txt-lazer"  v-model="familia.moradia.lazer" > Acesso à áreas de lazer </b-form-checkbox>
+          <b-form-checkbox id="txt-lazer"  v-model="familia.moradia.areasLazer" > Acesso à áreas de lazer </b-form-checkbox>
       </b-col>
 
       <b-col sm="3" lg="12">
-          <b-form-checkbox id="txt-veiculo"  v-model="familia.moradia.veiculo" > Veículo próprio </b-form-checkbox>
+          <b-form-checkbox id="txt-veiculo"  v-model="familia.moradia.veiculoProprio" > Veículo próprio </b-form-checkbox>
       </b-col>
 
     </b-row>

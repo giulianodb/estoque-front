@@ -6,15 +6,15 @@
       <br>
     <b-row >
       <b-col sm="12" lg="12">
-          <b-form-checkbox id="txt-scfv"  v-model="familia.motivo.scfv" > Vaga no SCFV </b-form-checkbox>
+          <b-form-checkbox id="txt-scfv"  v-model="familia.motivo.vagaSCFV" > Vaga no SCFV </b-form-checkbox>
       </b-col>
 
       <b-col sm="12" lg="12">
-          <b-form-checkbox id="txt-solic"  v-model="familia.motivo.solicitacaoDoacao" > Solicitação de doações </b-form-checkbox>
+          <b-form-checkbox id="txt-solic"  v-model="familia.motivo.solicitacaoDoacoes" > Solicitação de doações </b-form-checkbox>
       </b-col>
 
       <b-col sm="12" lg="12">
-          <b-form-checkbox id="txt-ori"  v-model="familia.motivo.orientacaoTec" > Orientação Técnica/Encaminhamento </b-form-checkbox>
+          <b-form-checkbox id="txt-ori"  v-model="familia.motivo.orientacaoTecnica" > Orientação Técnica/Encaminhamento </b-form-checkbox>
       </b-col>
 
       <b-col sm="12" lg="12">

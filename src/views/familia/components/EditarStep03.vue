@@ -9,7 +9,7 @@
       <b-col md="12">
         <b-card>
           <div slot="header">
-            <b>Informações do aluno</b>
+            <b>Informações de membro familiar</b>
             <b-badge variant="mute" class="float-right small">(*) Obrigatório</b-badge>
           </div>
 
@@ -100,12 +100,12 @@
                     <template slot="first">
                       <option value="-1">Escolaridade</option>
                     </template>
-                    <option :value="0"> Primeiro grau incompleto </option>
-                    <option :value="1"> Primeiro grau completo </option>
-                    <option :value="2"> Segundo grau incompleto </option>
-                    <option :value="3"> Segundo grau completo </option>
-                    <option :value="4"> Ensino superior incompleto </option>
-                    <option :value="5"> Ensino superior completp </option>
+                    <option value="PRIMEIRO_IMCOMPLETO"> Primeiro grau incompleto </option>
+                    <option value="PRIMEIRO_COMPLETO"> Primeiro grau completo </option>
+                    <option value="SEGUNDO_IMCOMPLETO"> Segundo grau incompleto </option>
+                    <option value="SEGUNDO_COMPLETO"> Segundo grau completo </option>
+                    <option value="SUPERIOR_IMCOMPLETO"> Ensino superior incompleto </option>
+                    <option value="SUPERIOR_COMPLETO"> Ensino superior completp </option>
                   </b-form-select>
                   <span v-show="errors.has('escolaridade')" class="help is-danger">{{
                     errors.first("escolaridade")
@@ -265,7 +265,6 @@ export default {
       this.familia.idade = 0
     },
     adicionar () {
-      alert('salvar')
       this.totalRows++
       this.familia.listMembroFamilia.push(this.listMembroFamilia)
       this.listMembroFamilia = {}
@@ -277,12 +276,11 @@ export default {
       console.log(this.familia.listMembroFamilia)
     },
     alterar () {
-      alert('alterar')
       this.listMembroFamilia = {}
       this.$validator.reset()
     },
     clear () {
-      alert('Limpar')
+      this.listMembroFamilia = {}
     },
     deletar (objeto) {
       var resultado = confirm('Deseja excluir o item: ' + objeto.nome + ' ?')
@@ -291,10 +289,8 @@ export default {
       }
     },
     changePage () {
-      alert('changePage')
     },
     sortingChanged (ctx) {
-      alert('changeind sorting')
     }
   }
 }
