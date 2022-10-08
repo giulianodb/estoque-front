@@ -3,7 +3,7 @@ export default {
   state: {
     aluno: {},
     alunos: [],
-    familia: { motivo: {}, listMembroFamilia: [], programas: {}, moradia: {} },
+    familia: { estadoCivil: "-1" , motivo: {}, listMembroFamilia: [], programas: {}, moradia: {tipoMoradia: "-1",materialMoradia: "-1", propriedadeMoradia: "-1",situacaoMoradia:"-1"  } },
     familias: [],
     criancas: [],
     crianca: { listaEspera: false, matriculado: false },
@@ -71,7 +71,8 @@ export default {
       state.commit('setAluno', {})
     },
     novaFamilia (state) {
-      state.commit('setFamilia', {motivo: {}, listMembroFamilia: [], programas: {}, moradia: {} } )
+      state.commit('setFamilia', { estadoCivil: "-1" , motivo: {}, listMembroFamilia: [], programas: {}, moradia: {tipoMoradia: "-1",materialMoradia: "-1", propriedadeMoradia: "-1",situacaoMoradia:"-1" }})
+
     },
     novaCrianca (state) {
       state.commit('setCrianca', { listaEspera: false, matriculado: false })

@@ -26,7 +26,7 @@
                     "
                   >
                     <template slot="first">
-                      <option value="0">Tipo</option>
+                      <option value="-1">Selecione</option>
                     </template>
                     <option value="APARTAMENTO"> Apartamento </option>
                     <option value="CASA"> Casa </option>
@@ -66,7 +66,7 @@
                     "
                   >
                     <template slot="first">
-                      <option value="0">Material</option>
+                      <option value="-1">Selecione</option>
                     </template>
                     <option value="MADEIRA"> Madeira </option>
                     <option value="ALVENARIA"> Alvenaria </option>
@@ -96,7 +96,7 @@
                     "
                   >
                     <template slot="first">
-                      <option value="0">Propriedade</option>
+                      <option value="-1">Selecione</option>
                     </template>
                     <option value="PROPRIA"> Próprio </option>
                     <option value="ALUGADA"> Alugado </option>
@@ -126,7 +126,7 @@
                     "
                   >
                     <template slot="first">
-                      <option value="0">Situação</option>
+                      <option value="-1">Selecione</option>
                     </template>
                     <option value="INSALUBRE"> Insalubre </option>
                     <option value="IRREGULAR"> Irregular </option>

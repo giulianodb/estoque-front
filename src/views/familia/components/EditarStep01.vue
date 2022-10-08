@@ -40,14 +40,40 @@
 
       <b-col sm="12" lg="3">
         <b-form-group
-          id="input-group-4"
+          id="input-group-estadocivil"
           label="Estado cívil:"
-          v-model="familia.estadoCivil"
           label-for="txt-estadoCivil"
           description="Estado cívil"
         >
-          <b-form-input id="txt-estadoCivil" v-model="familia.estadoCivil" ></b-form-input>
-        </b-form-group>
+
+          <b-form-select
+                    id="estadoCivil"
+                    :plain="true"
+                    v-model="familia.estadoCivil"
+                    v-validate="'required|excluded:-1'"
+                    data-vv-name="estadoCivil"
+                    data-vv-as="estadoCivil"
+                    :error-messages="errors.collect('estadoCivil')"
+                    :state="
+                      errors.has('estadoCivil') == false ? null : !errors.has('estadoCivil')
+                    "
+                  >
+                    <template slot="first">
+                      <option value="-1">Selecione</option>
+                    </template>
+                    <option value="SOLTEIRA"> Solteira </option>
+                    <option value="CASADA"> Casada </option>
+                    <option value="DIVORCIADA"> Divorciada </option>
+                    <option value="VIUVA"> Viúva </option>
+                  </b-form-select>
+
+  </b-form-group>
+
+
+
+
+
+
       </b-col>
 
       <b-col sm="12" lg="6">

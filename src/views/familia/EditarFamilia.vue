@@ -120,6 +120,7 @@ export default {
     }
   },
   created(){
+     //this.$store.dispatch('novaFamilia')
   }
 }
 </script>
