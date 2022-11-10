@@ -4,8 +4,7 @@
       <b-link class="navbar-brand" to="/home">
         <div class="navbar-brand-full"></div>
         <div class="print-header print" >
-          <img src="https://www.pr.gov.br/logos/governo2019_145x63px.png"  alt />
-          <img src="https://www.pr.gov.br/logos/governo2019_145x63px.png" alt />
+          <img src="/logo.png"  alt />
         </div>
       </b-link>
 

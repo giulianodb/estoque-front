@@ -6,7 +6,9 @@ export default {
     familia: { estadoCivil: "-1" , motivo: {}, listMembroFamilia: [], programas: {}, moradia: {tipoMoradia: "-1",materialMoradia: "-1", propriedadeMoradia: "-1",situacaoMoradia:"-1"  } },
     familias: [],
     criancas: [],
-    crianca: { listaEspera: false, matriculado: false },
+    crianca: { projeto:"-1", sexo: "-1", listaEspera: false, matriculado: false },
+    atendimento: {crianca: {}},
+    atendimentos: [],
     criancaPesquisa: {},
     messages: Object
   },
@@ -33,6 +35,12 @@ export default {
     },
     setCriancaPesquisa (state, payload) {
       state.criancaPesquisa = payload
+    },
+    setAtendimento (state, payload) {
+      state.atendimento = payload
+    },
+    setAtendimentos (state, payload) {
+      state.atendimentos = payload
     },
     setMessages (state, payload) {
       state.messages = payload
@@ -61,6 +69,12 @@ export default {
     getCriancas (state) {
       return state.criancas
     },
+    getAtendimento (state) {
+      return state.atendimento
+    },
+    getAtendimentos (state) {
+      return state.atendimentos
+    },
     getMessages (state) {
       return state.messages
     }
@@ -75,10 +89,13 @@ export default {
 
     },
     novaCrianca (state) {
-      state.commit('setCrianca', { listaEspera: false, matriculado: false })
+      state.commit('setCrianca', {  projeto:"-1", sexo: "-1", listaEspera: false, matriculado: false })
     },
     novaCriancaPesquisa (state) {
       state.commit('setCriancaPesquisa', { nome : '' , projeto: "-1", matriculado: true, espera: false })
+    },
+    novoAtendimento (state) {
+      state.commit('setAtendimento', {crianca:{}})
     },
     limparMensagens (state) {
       state.commit('setMessages', Object)

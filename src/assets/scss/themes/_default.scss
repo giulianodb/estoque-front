@@ -1121,8 +1121,8 @@ $cel-header-bg: $white;
 $cel-header-client-name-color: $gray-600;
 $cel-header-application-name-color: $rhino;
 $cel-header-username-color: $body-color;
-$cel-header-brand: url('https://www.pr.gov.br/logos/governo/logo-governo-h.svg'); 
-$cel-header-brand-sm: url('https://www.pr.gov.br/logos/governo/logo-governo-h.svg'); 
+$cel-header-brand: url('/logo.png'); 
+$cel-header-brand-sm: url('/logo.png'); 
 $cel-header-brand-width: 208px;
 $cel-header-divider-border: $cel-layout-divider-border;
 
@@ -1152,7 +1152,7 @@ $cel-useraccount-username-color: $cel-useraccount-menu-item-color;
 $cel-useraccount-username-font-weight: bold;
 
 $cel-footer-bg: $white;
-$cel-footer-brand: url("https://www.pr.gov.br/logos/celepar/logo-celepar-h.svg");
+$cel-footer-brand: url("/logo.png");
 $cel-footer-brand-width: 120px;
 $cel-footer-brand-height: 34px;
 $cel-footer-brand-opacity: 1;
@@ -1195,5 +1195,5 @@ $cel-display-dark-only-flex: none;
 $cel-action-button-width: 32px;
 $cel-action-button-height: 32px;
 
-$cel-info-logo-1: url('https://www.pr.gov.br/logos/celepar/logo-celepargovtech-h.svg') no-repeat center;
+$cel-info-logo-1: url('/logo.png') no-repeat center;
 $cel-info-logo-2: $cel-header-brand no-repeat center;

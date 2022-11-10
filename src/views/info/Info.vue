@@ -23,23 +23,7 @@
                 :title="App.developer.name"
               />
             </b-col>
-            <b-col sm="12" md="3" class="my-2">
-              <span class="d-block text-center">Patrocinado pelo:</span>
-              <a
-                href="http://www.pr.gov.br"
-                target="_blank"
-                title="Governo do Estado do Paraná"
-                class="dont-print d-flex justify-content-center"
-              >
-                <div class="logo-org about-logo-2"></div>
-              </a>
-              <img
-                class="print"
-                style="width:220px;"
-                src="https://www.pr.gov.br/logos/logo-governo-white.svg"
-                title="Governo do Paraná"
-              />
-            </b-col>
+        
           </b-row>
         </b-card>
       </b-col>

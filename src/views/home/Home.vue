@@ -1,6 +1,6 @@
 <template>
     <div class="fluid">
-    <h1 class="app-title">Nome da aplicação</h1>
+    <h1 class="app-title">SADMU</h1>
 </div>
 
 </template>

@@ -1,21 +1,21 @@
 export var application = {
-  name: 'Nome da aplicação',
+  name: 'Sistema de Apoio - DMU',
   version: '1.0.0',
   description:
-    'Esta aplicação foi desenvolvida com o objetivo de demonstrar o Framework Vue Celepar.',
+    'Esta aplicação foi desenvolvida com o objetivo de demonstrar o Framework Vue.',
   brandLogoPath: 'https://www.pr.gov.br/logos/governo/logo-governo-h.svg',
   framework: {
-    name: 'Framework Vue.js Celepar',
+    name: 'Framework Vue.js',
     version: '1.0'
   },
   developer: {
-    name: 'Celepar',
-    href: 'http://www.celepar.pr.gov.br',
+    name: 'DMU',
+    href: 'https://demaosunidas.org.br',
     logo: 'https://www.pr.gov.br/logos/governo/logo-governo-h.svg'
   },
   customer: {
-    name: 'Celepar',
-    href: 'http://www.celepar.pr.gov.br',
+    name: 'DMU',
+    href: 'https://demaosunidas.org.br',
     showInHeader: false
   },
   credits: [

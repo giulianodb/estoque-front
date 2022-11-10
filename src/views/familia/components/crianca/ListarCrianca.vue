@@ -27,6 +27,9 @@
          </template>
          <template v-slot:cell(acoes)="data">
            <div class="d-flex justify-content-end">
+              <b-link title="Atendimento" @click="iniciarAtendimento(data.item)" class="btn btn-outline-info">
+              <i class="fas fa-heart"></i>
+            </b-link>&nbsp;
             <b-link title="Assistencial" @click="iniciarEditarAssistencial(data.item)" class="btn btn-outline-info">
               <i class="fas fa-hand-holding-heart"></i>
             </b-link>&nbsp;
@@ -143,6 +146,11 @@ export default {
     iniciarEditarAssistencial (crianca) {
       
       this.$router.push(`/crianca/${crianca.id}/avaliacao_contexto`)
+      
+    },
+    iniciarAtendimento (crianca) {
+      
+      this.$router.push(`/crianca/${crianca.id}/atendimento`)
       
     },
     listarCriancas () {

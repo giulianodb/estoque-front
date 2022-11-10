@@ -40,27 +40,6 @@ function (error) {
 })
 
 export default {
-
-  getAlunos: (page, perPage, sortBy, sortDesc) => {
-    if (page == null || page === undefined) {
-      page = 1
-    }
-
-    if (perPage == null || perPage === undefined) {
-      perPage = 50
-    }
-
-    if (sortBy == null) {
-      return axios.get(`${apiURL}alunos?page=${page}&linesPerPage=${perPage}`)
-    } else {
-      let ordem = 'ASC'
-      if (sortDesc) {
-        ordem = 'DESC'
-      }
-
-      return axios.get(`${apiURL}alunos?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
-    }
-  },
   salvarFamilia: (familia) => {
     alert(familia)
     console.log(familia)
@@ -160,10 +139,33 @@ export default {
   atualizarAvaliacao: (avaliacaoContexto) => {
     return axios.put(`${apiURL}avaliacao_contexto/`, avaliacaoContexto)
   },
-  alterarAluno: (aluno) => {
-    return axios.put(`${apiURL}alunos`, aluno)
+  getAtendimentos: (idCrianca, page, perPage, sortBy, sortDesc) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}/atendimento/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}/atendimento/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
   },
-  deletarAluno: (aluno) => {
-    return axios.delete(`${apiURL}alunos/${aluno.idAluno}`)
+  salvarAtendimento: (atendimento) => {
+    return axios.post(`${apiURL}/atendimento`, atendimento)
+  },
+  alterarAtendimento: (atendimento) => {
+    return axios.put(`${apiURL}/atendimento/${atendimento.id}`, atendimento)
+  },
+  deletarAtendimento: (atendimento) => {
+    return axios.delete(`${apiURL}/atendimento/${atendimento.id}`)
   }
 }

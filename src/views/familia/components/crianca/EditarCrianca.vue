@@ -379,10 +379,13 @@ export default {
                 variant: 'success'
               })
               events.$emit('criancaEditada')
+               window.scrollTo(0, 0);
             })
             .catch((err) => {
               this.$store.commit('setMessages', err.response.data)
+               window.scrollTo(0, 0);
             })
+            
         }
       })
     },
@@ -395,13 +398,15 @@ export default {
               this.clear()
               this.$store.dispatch('novaCrianca')
               this.$store.commit('setMessages', {
-                message: 'Sucesso ao alterar série',
+                message: 'Sucesso ao alterar criança',
                 variant: 'success'
               })
               events.$emit('criancaEditada')
+               window.scrollTo(0, 0);
             })
             .catch((err) => {
               this.$store.commit('setMessages', err.response.data)
+               window.scrollTo(0, 0);
             })
         }
       })

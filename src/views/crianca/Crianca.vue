@@ -27,7 +27,7 @@
                     v-model="criancaPesquisa.projeto"
                   >
                     <template slot="first">
-                      <b-form-select-option :value="-1" disabled>-- Please select an option --</b-form-select-option>
+                      <b-form-select-option :value="-1" disabled>Selecione </b-form-select-option>
                     </template>
                     <option :value="0"> FOCAR </option>
                     <option :value="1"> NFI  </option>
@@ -63,7 +63,7 @@
 
           <div slot="footer" class="center-xy">
             <b-button @click="pesquisarCrianca()" variant="primary">
-              <i class="far fa-save"></i> Pesquisar
+              <i class="fas fa-search"></i> Pesquisar
             </b-button>
 
             &nbsp;
@@ -131,6 +131,7 @@ export default {
     },
     mostrarEditarCrianca (mostrar) {
       this.showEditarCrianca = mostrar
+      window.scrollBy(1500, 3000);
     },
     clear () {
       this.$store.dispatch('novaCriancaPesquisa')

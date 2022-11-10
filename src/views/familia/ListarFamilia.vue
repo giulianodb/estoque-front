@@ -30,7 +30,7 @@
 
             <div slot="footer" class="center-xy">
               <b-button @click="listarFamilias()" variant="primary" size="md"
-                ><i class="far fa-save"></i> Pesquisar</b-button
+                ><i class="fas fa-search"></i> Pesquisar </b-button
               >
 
               &nbsp;
@@ -194,6 +194,7 @@ export default {
         })
     },
     iniciarEditar (familia) {
+      this.inserirObjetosFamilia(familia)
       let obj = JSON.parse(JSON.stringify(familia))
       this.$store.commit('setFamilia', obj)
       console.log(obj)
@@ -248,6 +249,17 @@ export default {
     },
     clear () {
       this.familiaPesquisa = {}
+    },
+    inserirObjetosFamilia(familia){
+      if (familia.motivo == null) {
+        familia.motivo = {}
+      }
+      if (familia.moradia == null) {
+        familia.moradia = {tipoMoradia: "-1",materialMoradia: "-1", propriedadeMoradia: "-1",situacaoMoradia:"-1" }
+      }
+      if (familia.programas == null) {
+        familia.programas = {}
+      }
     }
   }
 }
