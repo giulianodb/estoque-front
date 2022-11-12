@@ -12,36 +12,38 @@
           <form-wizard
             @on-complete="salvar"
             :start-index.sync="activeIndex"
+            ref="wizard"
             shape="circle"
             nextButtonText="Próximo"
             backButtonText="Anterior"
-            finishButtonText="Concluir"
+            finishButtonText="Salvar"
             title
             subtitle
             color="#0073C0"
             transition="slideInRight"
           >
-            <tab-content icon="fas fa-user">
+            <tab-content title="Identificação Responsável" icon="fas fa-user">
               <EditarStep01 :index="activeIndex" />
+
             </tab-content>
 
-            <tab-content icon="fa fa-crosshairs ">
+            <tab-content icon="fa fa-crosshairs " title="Motivo">
               <EditarStep02 :index="activeIndex" />
             </tab-content>
 
-            <tab-content icon="fas fa-users">
+            <tab-content icon="fas fa-users" title="Composição familiar">
               <EditarStep03 :index="activeIndex" />
             </tab-content>
             
-            <tab-content icon="fas fa-people-carry">
+            <tab-content icon="fas fa-people-carry" title="Programas sociais">
               <EditarStep04 :index="activeIndex" />
             </tab-content>
 
-            <tab-content icon="fas fa-home">
+            <tab-content icon="fas fa-home" title="Moradia">
               <EditarStep05 :index="activeIndex" />
             </tab-content>
 
-            <tab-content
+            <tab-content title="Finalizar"
               icon="fas fa-flag-checkered"
               class="wizard-fixed-height mx-auto"
             >
@@ -119,8 +121,13 @@ export default {
       this.$store.dispatch('limparMensagens')
     }
   },
-  created(){
+  mounted(){
      //this.$store.dispatch('novaFamilia')
+     var familia = this.$store.getters.getFamilia
+     console.log(familia)
+     if (familia.id != null || familia.id !== null || familia.id != undefined) {
+       this.$refs.wizard.activateAll();
+     }
   }
 }
 </script>
