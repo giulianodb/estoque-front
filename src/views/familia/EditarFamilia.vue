@@ -42,6 +42,10 @@
             <tab-content icon="fas fa-home" title="Moradia">
               <EditarStep05 :index="activeIndex" />
             </tab-content>
+            
+            <tab-content icon="fas fa-address-book" title="Visita domiciliar">
+              <EditarStep06 :index="activeIndex" />
+            </tab-content>
 
             <tab-content title="Finalizar"
               icon="fas fa-flag-checkered"
@@ -64,6 +68,7 @@ import EditarStep02 from './components/EditarStep02.vue'
 import EditarStep03 from './components/EditarStep03.vue'
 import EditarStep04 from './components/EditarStep04.vue'
 import EditarStep05 from './components/EditarStep05.vue'
+import EditarStep06 from './components/EditarStep06.vue'
 import EditarEnd from './components/EditarEnd.vue'
 
 import Api from '@/api/social'
@@ -80,6 +85,7 @@ export default {
     EditarStep03,
     EditarStep04,
     EditarStep05,
+    EditarStep06,
     EditarEnd
   },
   data () {

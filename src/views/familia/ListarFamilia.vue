@@ -260,6 +260,10 @@ export default {
       if (familia.programas == null) {
         familia.programas = {}
       }
+
+      if (familia.visitaDomiciliar == null) {
+        familia.visitaDomiciliar = {}
+      }
     }
   }
 }
