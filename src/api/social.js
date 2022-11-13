@@ -198,4 +198,35 @@ export default {
   deletarPlanoFamiliar: (plano) => {
     return axios.delete(`${apiURL}/plano_acao_familiar/${plano.id}`)
   }
+
+  ,
+  getListaSituacaoIdentificada: (idFamilia, page, perPage, sortBy, sortDesc) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}/situacao_identificada/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}/situacao_identificada/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+  salvarSituacaoIdentificada: (situacao) => {
+    return axios.post(`${apiURL}/situacao_identificada`, situacao)
+  },
+  alterarSituacaoIdentificada: (situacao) => {
+    return axios.put(`${apiURL}/situacao_identificada/${situacao.id}`, situacao)
+  },
+  deletarSituacaoIdentificada: (situacao) => {
+    return axios.delete(`${apiURL}/situacao_identificada/${situacao.id}`)
+  }
 }

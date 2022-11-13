@@ -68,14 +68,7 @@
           </div>
           <template v-slot:cell(acoes)="data">
             <div class="d-flex justify-content-end">
-             <b-link
-                title="Plano de ação familiar"
-                @click="listarPlanoFamiliar(data.item)"
-                class="btn btn-outline-info"
-              >
-                <i class="fas fa-shapes"></i> </b-link
-              >&nbsp;
-              
+       
               <b-link
                 title="Crianças"
                 @click="listarCrianca(data.item)"
@@ -83,6 +76,23 @@
               >
                 <i class="fas fa-shapes"></i> </b-link
               >&nbsp;
+
+             <b-link
+                title="Situações identificadas com a família"
+                @click="listarSituacaoIdentificada(data.item)"
+                class="btn btn-outline-info"
+              >
+                <i class="fas fa-tags"></i> </b-link
+              >&nbsp;
+
+             <b-link
+                title="Plano de ação familiar"
+                @click="listarPlanoFamiliar(data.item)"
+                class="btn btn-outline-info"
+              >
+                <i class="fas fa-location-arrow"></i> </b-link
+              >&nbsp;
+       
               <b-link
                 title="Alterar"
                 @click="iniciarEditar(data.item)"
@@ -215,6 +225,11 @@ export default {
     listarPlanoFamiliar (familia){
       this.$router.push({ name: 'planoFamiliar', params: { idFamilia: familia.id } })
     },
+
+   listarSituacaoIdentificada (familia){
+      this.$router.push({ name: 'situacaoIdentificada', params: { idFamilia: familia.id } })
+    },
+    
     listarFamilias () {
       this.pesquisando = true
       Api.getFamilias(

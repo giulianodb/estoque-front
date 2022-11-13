@@ -10,6 +10,7 @@ import Crianca from '@/views/crianca/Crianca.vue'
 import AvaliacaoContexto from '@/views/familia/components/crianca/AvaliacaoContexto'
 import Atendimento from '@/views/atendimento/Atendimento'
 import PlanoFamiliar from '@/views/plano_familiar/PlanoFamiliar'
+import SituacaoIdentificada from '@/views/situacao/Situacao'
 
 // import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -110,6 +111,17 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Família / Plano ação familiar',
+        requiresAuth: false,
+        groups: ['']
+      }
+    },
+    {
+      path: '/familia/:idFamilia/situacao_identificada_com_a_familia',
+      name: 'situacaoIdentificada',
+      component: SituacaoIdentificada,
+      meta: {
+        breadcrumb: true,
+        label: 'Família / Situação identificada com a família',
         requiresAuth: false,
         groups: ['']
       }

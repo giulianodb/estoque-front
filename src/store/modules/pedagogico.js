@@ -11,6 +11,8 @@ export default {
     atendimentos: [],
     planos: [],
     planoFamiliar: {familia:{}},
+    listaSituacaoIdentificada: [],
+    situacaoIdentificada: {familia:{}},
     criancaPesquisa: {},
     messages: Object
   },
@@ -51,6 +53,12 @@ export default {
       state.planos = payload
     },
 
+    setSituacaoIdentificada (state, payload) {
+      state.situacaoIdentificada = payload
+    },
+    setListaSituacaoIdentificada (state, payload) {
+      state.listaSituacaoIdentificada = payload
+    },
 
     setMessages (state, payload) {
       state.messages = payload
@@ -91,6 +99,14 @@ export default {
     getPlanos (state) {
       return state.planos
     },
+
+    getSituacaoIdentificada (state) {
+      return state.situacaoIdentificada
+    },
+    getListaSituacaoIdentificada (state) {
+      return state.listaSituacaoIdentificada
+    },
+
     getMessages (state) {
       return state.messages
     }
@@ -115,6 +131,9 @@ export default {
     },
     novoPlanoFamiliar (state) {
       state.commit('setPlanoFamiliar', {familia:{}})
+    },
+    novaSituacaoIdentificada (state) {
+      state.commit('setSituacaoIdentificada', {familia:{}})
     },
     limparMensagens (state) {
       state.commit('setMessages', Object)

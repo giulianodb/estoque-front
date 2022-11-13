@@ -20,6 +20,11 @@ export default {
       return arr.filter(function (ele) {
         return ele != value
       })
+    },
+    simNao(condicao){
+      if (condicao) 
+        return "Sim"
+      return "Não"
     }
   }
 }
