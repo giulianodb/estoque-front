@@ -168,4 +168,34 @@ export default {
   deletarAtendimento: (atendimento) => {
     return axios.delete(`${apiURL}/atendimento/${atendimento.id}`)
   }
+  ,
+  getPlanosFamiliar: (idFamilia, page, perPage, sortBy, sortDesc) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}/plano_acao_familiar/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}/plano_acao_familiar/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+  salvarPlanoFamiliar: (plano) => {
+    return axios.post(`${apiURL}/plano_acao_familiar`, plano)
+  },
+  alterarPlanoFamiliar: (plano) => {
+    return axios.put(`${apiURL}/plano_acao_familiar/${plano.id}`, plano)
+  },
+  deletarPlanoFamiliar: (plano) => {
+    return axios.delete(`${apiURL}/plano_acao_familiar/${plano.id}`)
+  }
 }

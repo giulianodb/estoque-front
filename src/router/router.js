@@ -9,6 +9,7 @@ import CriancaFamilia from '@/views/familia/CriancaFamilia.vue'
 import Crianca from '@/views/crianca/Crianca.vue'
 import AvaliacaoContexto from '@/views/familia/components/crianca/AvaliacaoContexto'
 import Atendimento from '@/views/atendimento/Atendimento'
+import PlanoFamiliar from '@/views/plano_familiar/PlanoFamiliar'
 
 // import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -98,6 +99,17 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Familia / Crianca',
+        requiresAuth: false,
+        groups: ['']
+      }
+    },
+    {
+      path: '/familia/:idFamilia/plano_acao_familiar',
+      name: 'planoFamiliar',
+      component: PlanoFamiliar,
+      meta: {
+        breadcrumb: true,
+        label: 'Família / Plano ação familiar',
         requiresAuth: false,
         groups: ['']
       }

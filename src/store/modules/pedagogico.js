@@ -9,6 +9,8 @@ export default {
     crianca: { projeto:"-1", sexo: "-1", listaEspera: false, matriculado: false },
     atendimento: {crianca: {}},
     atendimentos: [],
+    planos: [],
+    planoFamiliar: {familia:{}},
     criancaPesquisa: {},
     messages: Object
   },
@@ -42,6 +44,14 @@ export default {
     setAtendimentos (state, payload) {
       state.atendimentos = payload
     },
+    setPlanoFamiliar (state, payload) {
+      state.planoFamiliar = payload
+    },
+    setPlanos (state, payload) {
+      state.planos = payload
+    },
+
+
     setMessages (state, payload) {
       state.messages = payload
     }
@@ -75,6 +85,12 @@ export default {
     getAtendimentos (state) {
       return state.atendimentos
     },
+    getPlanoFamiliar (state) {
+      return state.planoFamiliar
+    },
+    getPlanos (state) {
+      return state.planos
+    },
     getMessages (state) {
       return state.messages
     }
@@ -96,6 +112,9 @@ export default {
     },
     novoAtendimento (state) {
       state.commit('setAtendimento', {crianca:{}})
+    },
+    novoPlanoFamiliar (state) {
+      state.commit('setPlanoFamiliar', {familia:{}})
     },
     limparMensagens (state) {
       state.commit('setMessages', Object)

@@ -68,6 +68,14 @@
           </div>
           <template v-slot:cell(acoes)="data">
             <div class="d-flex justify-content-end">
+             <b-link
+                title="Plano de ação familiar"
+                @click="listarPlanoFamiliar(data.item)"
+                class="btn btn-outline-info"
+              >
+                <i class="fas fa-shapes"></i> </b-link
+              >&nbsp;
+              
               <b-link
                 title="Crianças"
                 @click="listarCrianca(data.item)"
@@ -203,6 +211,9 @@ export default {
     },
     listarCrianca (familia) {
       this.$router.push({ name: 'criancaFamilia', params: { idFamilia: familia.id } })
+    },
+    listarPlanoFamiliar (familia){
+      this.$router.push({ name: 'planoFamiliar', params: { idFamilia: familia.id } })
     },
     listarFamilias () {
       this.pesquisando = true
