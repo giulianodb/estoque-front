@@ -78,6 +78,9 @@ export default {
   getFamilia: (idFamilia) => {
     return axios.get(`${apiURL}familias/${idFamilia}`)
   },
+  deletarFamilia: (familia) => {
+    return axios.delete(`${apiURL}/familias/${familia.id}`)
+  },
   getCriancasPorFamilia: (page, perPage, sortBy, sortDesc, idFamilia) => {
     if (page == null || page === undefined) {
       page = 1

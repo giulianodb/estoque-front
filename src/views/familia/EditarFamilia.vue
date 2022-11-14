@@ -129,11 +129,17 @@ export default {
   },
   mounted(){
      //this.$store.dispatch('novaFamilia')
+     console.log(this.$route.params.tipo)
      var familia = this.$store.getters.getFamilia
      console.log(familia)
-     if (familia.id != null || familia.id !== null || familia.id != undefined) {
+     if (familia.id) {
        this.$refs.wizard.activateAll();
      }
+  },
+  beforeMount(){
+    if (this.$route.params.tipo == undefined) {
+      this.$store.dispatch('novaFamilia')
+    }
   }
 }
 </script>

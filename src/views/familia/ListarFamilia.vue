@@ -197,33 +197,36 @@ export default {
   },
   methods: {
     deletarFamilia (s) {
-      Api.deletarFamilia(s)
-        .then(() => {
-          this.currentPage = 1
-          this.perPage = 5
-          this.listarFamilias()
-          this.$store.commit('setMessages', {
-            message: 'Sucesso ao excluir família',
-            variant: 'success'
-          })
-        })
-        .catch((err) => {
-          this.$store.commit('setMessages', err.response.data)
-        })
+     var resultado = confirm("Deseja excluir o item ?");
+        if (resultado == true) {
+            Api.deletarFamilia(s)
+              .then(() => {
+                this.currentPage = 1
+                this.perPage = 5
+                this.listarFamilias()
+                this.$store.commit('setMessages', {
+                  message: 'Sucesso ao excluir família',
+                  variant: 'success'
+                })
+              })
+              .catch((err) => {
+                this.$store.commit('setMessages', err.response.data)
+              })
+        }
     },
     iniciarEditar (familia) {
       this.inserirObjetosFamilia(familia)
       let obj = JSON.parse(JSON.stringify(familia))
       this.$store.commit('setFamilia', obj)
       console.log(obj)
-      this.$router.push({ name: 'editarFamilia', params: { idFamilia: familia.id } })
+      this.$router.push({ name: 'editarFamilia', params: { idFamilia: familia.id , tipo: "editar"} })
 
     },
     listarCrianca (familia) {
       this.$router.push({ name: 'criancaFamilia', params: { idFamilia: familia.id } })
     },
     listarPlanoFamiliar (familia){
-      this.$router.push({ name: 'planoFamiliar', params: { idFamilia: familia.id } })
+      this.$router.push({ name: 'planoFamiliar', params: { idFamilia: familia.id} })
     },
 
    listarSituacaoIdentificada (familia){

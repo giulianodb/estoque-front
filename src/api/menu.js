@@ -13,19 +13,6 @@ export default {
     },
 
     {
-      name: 'Criança',
-      url: '#',
-      icon: 'fas fa-child', 
-
-      children: [
-        {
-          name: 'Listar Criança',
-          url: '/crianca'
-
-        }
-      ]
-    },
-    {
       name: 'Familia',
       url: '#',
       icon: 'fas fa-users',
@@ -39,6 +26,19 @@ export default {
         {
           name: 'Listar Família',
           url: '/listar_familia'
+
+        }
+      ]
+    },
+    {
+      name: 'Criança',
+      url: '#',
+      icon: 'fas fa-child', 
+
+      children: [
+        {
+          name: 'Listar Criança',
+          url: '/crianca'
 
         }
       ]
