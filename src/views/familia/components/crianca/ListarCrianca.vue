@@ -75,6 +75,8 @@ export default {
         { label: 'Projeto', key: 'projeto', sortable: false, sortDirection: 'desc' },
         { label: 'Responsável', key: 'familia.nomeResponsavel', sortable: false, sortDirection: 'desc' },
         { label: 'Matriculado', key: 'matriculado', sortable: false, sortDirection: 'desc' },
+        { label: 'Total Afirmação', key: 'totalAfirmacao', sortable: false, sortDirection: 'desc' },
+        { label: 'Total Situação', key: 'totalSituacao', sortable: false, sortDirection: 'desc' },
         { key: 'acoes', label: 'Ações' }
       ],
       totalRows: 1,
