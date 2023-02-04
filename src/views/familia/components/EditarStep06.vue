@@ -6,14 +6,14 @@
       <br>
     <b-row >
 
-      <b-col sm="12" lg="12">
+      <b-col sm="3" lg="12" md="12" >
         <b-form-group
-          id="input-group-1"
+          id="input-group-55"
           label="Observações:"
           v-model="familia.visitaDomiciliar.observacoes"
           label-for="txt-obs"
         >
-          <b-form-input id="txt-obs"    v-model="familia.visitaDomiciliar.observacoes" ></b-form-input>
+          <b-form-textarea id="txt-obs"    v-model="familia.visitaDomiciliar.observacoes" ></b-form-textarea>
         </b-form-group>
       </b-col>
     </b-row>
