@@ -30,7 +30,7 @@
               <b-link title="Atendimento" @click="iniciarAtendimento(data.item)" class="btn btn-outline-info">
               <i class="fas fa-heart"></i>
             </b-link>&nbsp;
-            <b-link title="Assistencial" @click="iniciarEditarAssistencial(data.item)" class="btn btn-outline-info">
+            <b-link title="Avaliação de contexto" @click="iniciarEditarAvaliacaoContexto(data.item)" class="btn btn-outline-info">
               <i class="fas fa-hand-holding-heart"></i>
             </b-link>&nbsp;
             <b-link title="Alterar" @click="iniciarEditar(data.item)" class="btn btn-outline-info">
@@ -143,7 +143,7 @@ export default {
       console.log(obj)
        events.$emit('iniciarEditarCrianca')
     },
-    iniciarEditarAssistencial (crianca) {
+    iniciarEditarAvaliacaoContexto (crianca) {
       
       this.$router.push(`/crianca/${crianca.id}/avaliacao_contexto`)
       
