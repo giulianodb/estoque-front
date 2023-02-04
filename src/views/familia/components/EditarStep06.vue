@@ -5,45 +5,6 @@
       <br>
       <br>
     <b-row >
-      <b-col sm="4" lg="4">
-          <b-form-checkbox id="txt-segunda"  v-model="familia.visitaDomiciliar.segunda" > Segunda-feira </b-form-checkbox>
-      </b-col>
-
-      <b-col sm="4" lg="4">
-          <b-form-checkbox id="txt-terca"  v-model="familia.visitaDomiciliar.terca" > Terça-feira </b-form-checkbox>
-      </b-col>
-
-      <b-col sm="4" lg="4">
-          <b-form-checkbox id="txt-quarta"  v-model="familia.visitaDomiciliar.quarta" > Quarta-feira </b-form-checkbox>
-      </b-col>
-
-      <b-col sm="4" lg="4">
-          <b-form-checkbox id="txt-quinta"  v-model="familia.visitaDomiciliar.quinta" > Quinta-feira </b-form-checkbox>
-      </b-col>
-
-      <b-col sm="4" lg="4">
-          <b-form-checkbox id="txt-sexta"  v-model="familia.visitaDomiciliar.sexta" > Sexta-feira </b-form-checkbox>
-      </b-col>
-
-      <b-col sm="4" lg="4">
-          <b-form-checkbox id="txt-sabado"  v-model="familia.visitaDomiciliar.sabado" > Sábado </b-form-checkbox>
-      </b-col>
-
-   
-  <br><br><br>
-
-      <b-col sm="4" lg="4">
-          <b-form-checkbox id="txt-manha"  v-model="familia.visitaDomiciliar.manha" > Manhã </b-form-checkbox>
-      </b-col>
-
-
-
-      <b-col sm="4" lg="4">
-          <b-form-checkbox id="txt-tarde"  v-model="familia.visitaDomiciliar.tarde" > Tarde </b-form-checkbox>
-      </b-col>
-
-
-
 
       <b-col sm="12" lg="12">
         <b-form-group
