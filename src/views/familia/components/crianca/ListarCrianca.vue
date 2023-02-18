@@ -21,12 +21,11 @@
           <b-spinner class="align-middle"></b-spinner>
           <strong> Pesquisando...</strong>
         </div>
-         <template v-slot:cell(matriculado)="ma">
-          <span v-if="ma.item.matriculado">Sim</span>
-          <span v-else>Não</span>
-         </template>
          <template v-slot:cell(acoes)="data">
            <div class="d-flex justify-content-end">
+            <b-link title="Inscrição" @click="iniciarInscricao(data.item)" class="btn btn-outline-info">
+              <i class="fas fa-school"></i>
+            </b-link>&nbsp;
               <b-link title="Atendimento" @click="iniciarAtendimento(data.item)" class="btn btn-outline-info">
               <i class="fas fa-heart"></i>
             </b-link>&nbsp;
@@ -74,7 +73,6 @@ export default {
         { label: 'Nome', key: 'nome', sortable: false, sortDirection: 'desc' },
         { label: 'Projeto', key: 'projeto', sortable: false, sortDirection: 'desc' },
         { label: 'Responsável', key: 'familia.nomeResponsavel', sortable: false, sortDirection: 'desc' },
-        { label: 'Matriculado', key: 'matriculado', sortable: false, sortDirection: 'desc' },
         { label: 'Total Afirmação', key: 'totalAfirmacao', sortable: false, sortDirection: 'desc' },
         { label: 'Total Situação', key: 'totalSituacao', sortable: false, sortDirection: 'desc' },
         { key: 'acoes', label: 'Ações' }
@@ -138,6 +136,15 @@ export default {
         .catch(err => {
           this.$store.commit('setMessages', err.response.data)
         })
+    },
+    iniciarInscricao (crianca) {
+      // let obj = JSON.parse(JSON.stringify(crianca))
+      // this.$store.commit('setCrianca', obj)
+      // console.log(obj)
+      //  events.$emit('iniciarEditarCrianca')
+
+       this.$router.push(`/crianca/${crianca.id}/inscricao`)
+
     },
     iniciarEditar (crianca) {
       let obj = JSON.parse(JSON.stringify(crianca))

@@ -14,6 +14,8 @@ export default {
     listaSituacaoIdentificada: [],
     situacaoIdentificada: {familia:{}},
     criancaPesquisa: {},
+    inscricao: {},
+    listaInscricao: [],
     messages: Object
   },
 
@@ -59,7 +61,12 @@ export default {
     setListaSituacaoIdentificada (state, payload) {
       state.listaSituacaoIdentificada = payload
     },
-
+    setInscricao(state, payload){
+      state.inscricao = payload
+    },
+    setListaInscricao(state, payload){
+      state.listaInscricao = payload
+    },
     setMessages (state, payload) {
       state.messages = payload
     }
@@ -106,7 +113,12 @@ export default {
     getListaSituacaoIdentificada (state) {
       return state.listaSituacaoIdentificada
     },
-
+    getInscricao (state) {
+      return state.inscricao
+    },
+    getListaInscricao (state) {
+      return state.listaInscricao
+    },
     getMessages (state) {
       return state.messages
     }
@@ -137,6 +149,9 @@ export default {
     },
     limparMensagens (state) {
       state.commit('setMessages', Object)
+    },
+    novaInscricao (state) {
+      state.commit('setInscricao', {   })
     }
   }
 

@@ -231,5 +231,48 @@ export default {
   },
   deletarSituacaoIdentificada: (situacao) => {
     return axios.delete(`${apiURL}/situacao_identificada/${situacao.id}`)
-  }
+  },
+
+  getInscricaoPorCrianca: (page, perPage, sortBy, sortDesc, idCrianca) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}inscricao/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      ordem = 'DESC'
+      return axios.get(`${apiURL}inscricao/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+
+  salvarInscricao: (inscricao,idCrianca) => {
+    console.log(idCrianca)
+    inscricao.crianca = {id:idCrianca}
+    return axios.post(`${apiURL}/inscricao`, inscricao)
+  },
+
+  alterarInscricao: (inscricao) => {
+    //console.log(idCrianca)
+    //inscricao.crianca = {id:idCrianca}
+   // return axios.post(`${apiURL}/inscricao`, inscricao)
+    return axios.put(`${apiURL}/inscricao/${inscricao.id}`, inscricao)
+  },
+  deletarInscricao: (inscricao) => {
+    return axios.delete(`${apiURL}/inscricao/${inscricao.id}`)
+  },
+
+
+
+
+  
 }

@@ -11,6 +11,8 @@ import AvaliacaoContexto from '@/views/familia/components/crianca/AvaliacaoConte
 import Atendimento from '@/views/atendimento/Atendimento'
 import PlanoFamiliar from '@/views/plano_familiar/PlanoFamiliar'
 import SituacaoIdentificada from '@/views/situacao/Situacao'
+import InscricaoCrianca from '@/views/inscricao/InscricaoCrianca'
+
 
 // import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -144,6 +146,17 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Crianca / Atendimento',
+        requiresAuth: false,
+        groups: ['']
+      }
+    },
+    {
+      path: '/crianca/:idCrianca/inscricao',
+      name: 'Inscrição',
+      component: InscricaoCrianca,
+      meta: {
+        breadcrumb: true,
+        label: 'Crianca / Inscricao Crianca',
         requiresAuth: false,
         groups: ['']
       }

@@ -186,9 +186,31 @@
                 </b-form-group>
               </b-col>
 
+              <b-col lg="3" sm="6">
+                <b-form-group
+                  label="Religião: "
+                  label-for="religiao"
+                  class="text-label"
+                >
+                  <b-form-input
+                    id="religiao"
+                    v-model="crianca.religiao"
+                    data-vv-name="religiao"
+                    data-vv-as="religiao"
+                    :error-messages="errors.collect('religiao')"
+                    :state="errors.has('religiao') == false ? null : !errors.has('religiao')"
+                    trim
+                    :autofocus="true"
+                  ></b-form-input>
+                  <span v-show="errors.has('religiao')" class="help is-danger">{{ errors.first("religiao")}}</span>
+                </b-form-group>
+              </b-col>
+
              <b-col sm="12" lg="12">
               <b-form-checkbox id="alergia"  v-model="crianca.alergia" > Possuí alergia? </b-form-checkbox>
             </b-col>
+
+            
 
           <b-col lg="6" sm="2">
                 <b-form-group
@@ -234,72 +256,8 @@
                 </b-form-group>
               </b-col>
 
-          <b-col lg="3" sm="6">
-                <b-form-group
-                  label="Religião: "
-                  label-for="religiao"
-                  class="text-label"
-                >
-                  <b-form-input
-                    id="religiao"
-                    v-model="crianca.religiao"
-                    data-vv-name="religiao"
-                    data-vv-as="religiao"
-                    :error-messages="errors.collect('religiao')"
-                    :state="errors.has('religiao') == false ? null : !errors.has('religiao')"
-                    trim
-                    :autofocus="true"
-                  ></b-form-input>
-                  <span v-show="errors.has('religiao')" class="help is-danger">{{ errors.first("religiao")}}</span>
-                </b-form-group>
-              </b-col>
             <b-col />
-            <b-col sm="12" lg="3">
-                <b-form-group
-                  label="Lista de espera? :"
-                  label-for="listaEspera"
-                  class="text-label"
-                >
-              <b-form-checkbox id="listaEspera"  v-model="crianca.listaEspera" > </b-form-checkbox>
 
-              </b-form-group>
-            </b-col>
-
-            <b-col sm="12" lg="3">
-                <b-form-group
-                  label="Matriculado? :"
-                  label-for="matriculado"
-                  class="text-label"
-                >
-              <b-form-checkbox id="matriculado"  v-model="crianca.matriculado" >  </b-form-checkbox>
-              </b-form-group>
-            </b-col>
-
-              <b-col lg="3" sm="3">
-                <b-form-group
-                  label="Data de inscrição:"
-                  label-for="dataInscricao"
-                  class="text-label required"
-                >
-                  <b-form-input
-                    type="date"
-                    id="dataInscricao"
-                    v-model="crianca.dataInscricao"
-                    v-validate="'required'"
-                    data-vv-name="dataInscricao"
-                    data-vv-as="Data de Inscrição"
-                    :error-messages="errors.collect('dataInscricao')"
-                    :state="
-                      errors.has('dataInscricao') == false
-                        ? null
-                        : !errors.has('dataInscricao')
-                    "
-                    trim
-                    :autofocus="true"
-                  ></b-form-input>
-                  <span v-show="errors.has('dataInscricao')" class="help is-danger">{{ errors.first("dataInscricao") }}</span>
-                </b-form-group>
-              </b-col>
 
             </b-row>
           </b-form>
