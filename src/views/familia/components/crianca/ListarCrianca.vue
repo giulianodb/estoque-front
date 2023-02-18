@@ -1,6 +1,6 @@
 <template>
   <div class="fluid">
-    <h2 v-if = "familia.nomeResponsavel != null" class="app-title">Crianças da família de {{this.familia.nomeResponsavel}}</h2>
+    <h2 v-if = "familia.nomeResponsavel != null && porFamilia" class="app-title">Crianças da família de {{this.familia.nomeResponsavel}}</h2>
       <b-card>
 
         <b-table
@@ -108,6 +108,8 @@ export default {
     }
   },
   created () {
+    console.log("Criando componente Listar familia")
+    console.log(this.porFamilia)
     events.$on('pesquisarCrianca', () => {
       this.listarCriancas()
     })
