@@ -257,7 +257,8 @@ export default {
         this.currentPage,
         this.perPage,
         this.sortBy,
-        this.sortDesc
+        this.sortDesc,
+        this.familiaPesquisa
       ).then((res) => {
         this.$store.commit('setFamilias', res.data.content)
         this.totalRows = res.data.totalElements
@@ -270,7 +271,8 @@ export default {
         this.currentPage,
         this.perPage,
         this.sortBy,
-        this.sortDesc
+        this.sortDesc,
+        this.familiaPesquisa
       ).then((res) => {
         this.$store.commit('setFamilias', res.data.content)
         this.totalRows = res.data.totalElements

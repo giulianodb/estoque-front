@@ -41,7 +41,6 @@ function (error) {
 
 export default {
   salvarFamilia: (familia) => {
-    alert(familia)
     console.log(familia)
 
     if (familia.id == null) {
@@ -53,6 +52,7 @@ export default {
     
   },
   getFamilias: (page, perPage, sortBy, sortDesc, familiaPesquisa) => {
+    
     if (familiaPesquisa == null || familiaPesquisa.nomeRepresentante == null) {
       familiaPesquisa.nomeRepresentante = ''
     }
