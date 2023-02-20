@@ -66,36 +66,6 @@
                 </b-form-group>
               </b-col>
 
-           <b-col lg="3" sm="12">
-                <b-form-group
-                  label="Projeto:"
-                  label-for="projeto"
-                  class="text-label required"
-                >
-
-                <b-form-select
-                    id="projeto"
-                    :plain="true"
-                    v-model="crianca.projeto"
-                    v-validate="'required|excluded:-1'"
-                    data-vv-name="projeto"
-                    data-vv-as="projeto"
-                    :error-messages="errors.collect('projeto')"
-                    :state="
-                      errors.has('projeto') == false ? null : !errors.has('projeto')
-                    "
-                  >
-                    <template slot="first">
-                      <option value="-1">Selecione</option>
-                    </template>
-                    <option value="FOCAR"> FOCAR </option>
-                    <option value="NFI"> NFI  </option>
-                  </b-form-select>
-
-                  <span v-show="errors.has('projeto')" class="help is-danger"> {{ errors.first("projeto") }}</span>
-                </b-form-group>
-              </b-col>
-
             <b-col lg="3" sm="12">
                 <b-form-group
                   label="Sexo:"
@@ -336,7 +306,7 @@ export default {
                 message: 'Sucesso ao cadastrar criança',
                 variant: 'success'
               })
-              events.$emit('criancaEditada')
+              //events.$emit('criancaEditada')
                window.scrollTo(0, 0);
             })
             .catch((err) => {
@@ -359,7 +329,7 @@ export default {
                 message: 'Sucesso ao alterar criança',
                 variant: 'success'
               })
-              events.$emit('criancaEditada')
+             // events.$emit('criancaEditada')
                window.scrollTo(0, 0);
             })
             .catch((err) => {

@@ -111,7 +111,11 @@ export default {
   },
 
   created () {
+    console.log("COMPONENTE CRIANCA")
     this.$store.dispatch('novaCriancaPesquisa')
+
+    this.$store.commit('setCriancas', [])
+
     events.$on('iniciarEditarCrianca', () => {
        this.mostrarEditarCrianca(true)
     })
@@ -126,7 +130,7 @@ export default {
     pesquisarCrianca () {
       // this.$store.commit('setFamilia', res.data)
       //  this.nota.matricula = selecionado
-      console.log(this.criancaPesquisa)
+      //console.log(this.criancaPesquisa)
       events.$emit('pesquisarCrianca')
     },
     mostrarEditarCrianca (mostrar) {

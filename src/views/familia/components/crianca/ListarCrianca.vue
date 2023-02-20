@@ -91,7 +91,6 @@ export default {
   computed: {
     criancas: {
       get () {
-        console.log(this.$store.getters.getCriancas)
         return this.$store.getters.getCriancas
       },
       set () {
@@ -111,13 +110,24 @@ export default {
     console.log("Criando componente Listar familia")
     console.log(this.porFamilia)
     events.$on('pesquisarCrianca', () => {
+      console.log("Evento para pesquisar crianca iniciado..")
       this.listarCriancas()
+      console.log("apos listar criancas")
     })
 
     events.$on('criancaAlterada', () => {
+      console.log("porFamilia?: " + this.porFamilia)
       console.log("Evento acionado")
       this.listarCriancas()
     })
+
+    events.$on('criancaEditada', () => {
+      console.log("porFamilia?: " + this.porFamilia)
+      console.log("Evento acionado de novoa Crianca")
+      this.listarCriancas()
+    })
+
+    
     
   },
   mounted () {
@@ -166,7 +176,7 @@ export default {
     },
     listarCriancas () {
       this.pesquisando = true
-        console.log("testeee")
+       // console.log("testeee")
         if (!this.porFamilia) {
           let nome = this.$store.getters.getCriancaPesquisa.nome
                  let projeto = this.$store.getters.getCriancaPesquisa.projeto
@@ -187,7 +197,19 @@ export default {
               this.$store.commit('setCriancas', [])
               this.$store.commit('setMessages', err.response.data)
             })
-        }    
+        } else {
+             Api.getCriancasPorFamilia(
+            this.currentPage,
+            this.perPage,
+            this.sortBy,
+            this.sortDesc,
+            this.familia.id
+          ).then(res => {
+            this.$store.commit('setCriancas', res.data.content)
+            this.totalRows = res.data.totalElements
+          })
+      }
+
       this.pesquisando = false
     },
     changePage () {
