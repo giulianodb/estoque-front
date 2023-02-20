@@ -66,6 +66,7 @@ export default {
     return {
       fields: [
         { label: 'Projeto', key: 'projeto', sortable: false, sortDirection: 'desc' },
+        { label: 'Turno',  key: 'periodo', sortable: false, sortDirection: 'desc' },
         { label: 'Ano',  key: 'ano', sortable: false, sortDirection: 'desc' },
         { label: 'Lista de espera', key: 'listaEspera', sortable: false, sortDirection: 'desc' },
         { label: 'Data Inscrição', key: 'dataInscricao', sortable: false, sortDirection: 'desc' },
