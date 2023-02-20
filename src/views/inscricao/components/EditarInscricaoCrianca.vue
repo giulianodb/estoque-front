@@ -58,9 +58,48 @@
                     <option value="SCFV"> SCFV  </option>
                   </b-form-select>
 
+                  
+
                   <span v-show="errors.has('projeto')" class="help is-danger"> {{ errors.first("projeto") }}</span>
                 </b-form-group>
               </b-col>
+              
+
+
+
+              <b-col lg="3" sm="12">
+                <b-form-group
+                  label="Turno:"
+                  label-for="periodo"
+                  class="text-label required"
+                >
+
+                <b-form-select
+                    id="periodo"
+                    :plain="true"
+                    v-model="inscricao.periodo"
+                    v-validate="'required|excluded:-1'"
+                    data-vv-name="periodo"
+                    data-vv-as="periodo"
+                    :error-messages="errors.collect('periodo')"
+                    :state="
+                      errors.has('periodo') == false ? null : !errors.has('periodo')
+                    "
+                  >
+                    <template slot="first">
+                      <option value="-1">Selecione</option>
+                    </template>
+                    <option value="MANHA"> Manhã </option>
+                    <option value="TARDE"> Tarde  </option>
+                  </b-form-select>
+
+                  
+
+                  <span v-show="errors.has('periodo')" class="help is-danger"> {{ errors.first("periodo") }}</span>
+                </b-form-group>
+              </b-col>
+
+
 
             <b-col sm="12" lg="3">
                 <b-form-group
