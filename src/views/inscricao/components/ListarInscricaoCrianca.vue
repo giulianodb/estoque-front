@@ -70,6 +70,7 @@ export default {
         { label: 'Ano',  key: 'ano', sortable: false, sortDirection: 'desc' },
         { label: 'Lista de espera', key: 'listaEspera', sortable: false, sortDirection: 'desc' },
         { label: 'Data Inscrição', key: 'dataInscricao', sortable: false, sortDirection: 'desc' },
+        { label: 'Desligamento', key: 'dataDesligamento', sortable: false, sortDirection: 'desc' },
         { key: 'acoes', label: 'Ações' }
       ],
       totalRows: 1,
