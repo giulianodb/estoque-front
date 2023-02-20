@@ -155,8 +155,40 @@
                   <span v-show="errors.has('dataInscricao')" class="help is-danger">{{ errors.first("dataInscricao") }}</span>
                 </b-form-group>
               </b-col>
-
+               
+              
             </b-row>
+
+            <br/> <br/><br/>
+          <b-row>
+
+
+            <b-col lg="3" sm="3">
+                <b-form-group
+                  label="Data de desligamento:"
+                  label-for="dataDesligamento"
+                  class="text-label "
+                >
+                  <b-form-input
+                    type="date"
+                    id="dataDesligamento"
+                    v-model="inscricao.dataDesligamento"
+                    data-vv-name="dataDesligamento"
+                    data-vv-as="Data de Desligamento"
+                    :error-messages="errors.collect('dataDesligamento')"
+                    :state="
+                      errors.has('dataDesligamento') == false
+                        ? null
+                        : !errors.has('dataDesligamento')
+                    "
+                    trim
+                    :autofocus="true"
+                  ></b-form-input>
+                  <span v-show="errors.has('dataDesligamento')" class="help is-danger">{{ errors.first("dataDesligamento") }}</span>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
           </b-form>
 
           <div slot="footer" class="center-xy">
