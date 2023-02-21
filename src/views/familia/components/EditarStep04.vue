@@ -41,7 +41,6 @@
           <b-form-checkbox id="txt-armazenFamilia"  v-model="familia.programas.armazemFamilia" > Armazém da família </b-form-checkbox>
       </b-col>
 
-    </br>
       <b-col sm="3" lg="12">
         <b-form-group
           id="cras"

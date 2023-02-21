@@ -51,7 +51,7 @@
               icon="fas fa-flag-checkered"
               class="wizard-fixed-height mx-auto"
             >
-              <EditarEnd v-if="activeIndex == 5" :index="activeIndex" />
+              <EditarEnd v-if="activeIndex == 6" :index="activeIndex" />
             </tab-content>
           </form-wizard>
         </b-col>

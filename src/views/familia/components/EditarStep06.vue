@@ -13,7 +13,7 @@
           v-model="familia.visitaDomiciliar.observacoes"
           label-for="txt-obs"
         >
-          <b-form-textarea id="txt-obs"    v-model="familia.visitaDomiciliar.observacoes" ></b-form-textarea>
+          <textarea id="txt-obs"  v-model="familia.visitaDomiciliar.observacoes" ></textarea>
         </b-form-group>
       </b-col>
     </b-row>
@@ -49,4 +49,8 @@ export default {
 </script>
 
 <style>
+textarea {
+  width: 900px;
+  height: 300px;
+}
 </style>
