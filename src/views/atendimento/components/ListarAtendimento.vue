@@ -90,18 +90,22 @@ export default {
       get () {
         return this.$store.getters.getCrianca
       },
-      set () {
-        this.$store.commit('setCrianca', this.crianca)
+      set (crianca) {
+        this.$store.commit('setCrianca', crianca)
       }
     }
   },
   created () {
+    this.crianca = {id:this.$route.params.idCrianca}
+
+    console.log(this.crianca)
+    this.listarAtendimentos()
     events.$on('atendimentoAlterado', () => {
       this.listarAtendimentos()
     })
   },
   mounted () {
-    this.listarAtendimentos()
+    
   },
   methods: {
     deletar (s) {
