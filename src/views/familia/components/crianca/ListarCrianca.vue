@@ -24,7 +24,7 @@
          <template v-slot:cell(acoes)="data">
            <div class="d-flex justify-content-end">
             <b-link title="Inscrição" @click="iniciarInscricao(data.item)" class="btn btn-outline-info">
-              <i class="fas fa-school"></i>
+              <i class="fas fa-folder-open"></i>
             </b-link>&nbsp;
               <b-link title="Atendimento" @click="iniciarAtendimento(data.item)" class="btn btn-outline-info">
               <i class="fas fa-heart"></i>

@@ -44,6 +44,19 @@ export default {
       ]
     },
     {
+      name: 'Inscrição',
+      url: '#',
+      icon: 'fas fa-folder-open', 
+
+      children: [
+        {
+          name: 'Listar Inscrição',
+          url: '/inscricao'
+
+        }
+      ]
+    },
+    {
       name: 'Produto',
       url: '#',
       icon: 'fas fa-users',

@@ -271,7 +271,27 @@ export default {
     return axios.delete(`${apiURL}/inscricao/${inscricao.id}`)
   },
 
+  getInscricao: (page, perPage, sortBy, sortDesc, nome, projeto, matriculado, espera,ano) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
 
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}inscricao?nomeCrianca=${nome}&projeto=${projeto}&matriculado=${matriculado}&ano=${ano}&espera=${espera}&page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}inscricao?nomeCrianca=${nome}&projeto=${projeto}&matriculado=${matriculado}&ano=${ano}&espera=${espera}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+  
 
 
   

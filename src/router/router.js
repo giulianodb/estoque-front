@@ -12,7 +12,7 @@ import Atendimento from '@/views/atendimento/Atendimento'
 import PlanoFamiliar from '@/views/plano_familiar/PlanoFamiliar'
 import SituacaoIdentificada from '@/views/situacao/Situacao'
 import InscricaoCrianca from '@/views/inscricao/InscricaoCrianca'
-
+import Inscricao from '@/views/inscricao/Inscricao'
 
 // import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -168,6 +168,17 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Crianca',
+        requiresAuth: false,
+        groups: ['']
+      }
+    },
+    {
+      path: '/inscricao',
+      name: 'inscricao',
+      component: Inscricao,
+      meta: {
+        breadcrumb: true,
+        label: 'Inscrição',
         requiresAuth: false,
         groups: ['']
       }
