@@ -51,7 +51,7 @@
         </b-form-group>
       </b-col>
 
-      <b-col sm="3" lg="12">
+      <b-col sm="3" lg="9">
         <b-form-group
           id="nis"
           label="NIS:"
@@ -62,7 +62,20 @@
         </b-form-group>
       </b-col>
 
-            <b-col sm="12" lg="12">
+      <b-col sm="12" lg="3">
+        <b-form-group
+          id="input-group-15"
+          label="Data validade NIS:"
+          label-for="txt-dataValidadeNis"
+          description="Data validade NIS"
+        >
+          <b-form-input type="date"  id="txt-dataValidadeNis" v-model="familia.programas.dataValidadeNis" ></b-form-input>
+        </b-form-group>
+      </b-col>
+      
+      
+      
+      <b-col sm="12" lg="12">
         <b-form-group
           id="beneficio"
           label="Recebe algum benefício assistencial (gás,cesta básica,leite)? De quem? "

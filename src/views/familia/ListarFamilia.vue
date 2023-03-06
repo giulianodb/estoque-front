@@ -85,13 +85,13 @@
                 <i class="fas fa-tags"></i> </b-link
               >&nbsp;
 
-             <b-link
+             <!-- <b-link
                 title="Plano de ação familiar"
                 @click="listarPlanoFamiliar(data.item)"
                 class="btn btn-outline-info"
               >
-                <i class="fas fa-location-arrow"></i> </b-link
-              >&nbsp;
+                <i class="fas fa-location-arrow"></i> </b-link> -->
+
        
               <b-link
                 title="Alterar"
