@@ -8,15 +8,15 @@ export default {
     {
       name: 'Inicial',
       url: '/home',
-      icon: 'fas fa-chart-line'
-      // groups: ['VJE-Aluno', 'VJE-Administrador']
+      icon: 'fas fa-chart-line',
+      groups: ['ROLE_Administrador','ROLE_AssistenteSocial','ROLE_Estoque']
     },
 
     {
       name: 'Familia',
       url: '#',
       icon: 'fas fa-users',
-
+      groups: ['ROLE_Administrador','ROLE_AssistenteSocial'],
       children: [
         {
           name: 'Cadastrar Família',
@@ -34,7 +34,7 @@ export default {
       name: 'Criança',
       url: '#',
       icon: 'fas fa-child', 
-
+      groups: ['ROLE_Administrador','ROLE_AssistenteSocial'],
       children: [
         {
           name: 'Listar Criança',
@@ -47,7 +47,7 @@ export default {
       name: 'Inscrição',
       url: '#',
       icon: 'fas fa-folder-open', 
-
+      groups: ['ROLE_Administrador','ROLE_AssistenteSocial'],
       children: [
         {
           name: 'Listar Inscrição',
@@ -60,7 +60,7 @@ export default {
       name: 'Produto',
       url: '#',
       icon: 'fas fa-users',
-
+      groups: ['ROLE_Administrador','ROLE_Estoque'],
       children: [
         {
           name: 'Listar produtos',
@@ -93,7 +93,7 @@ export default {
     name: 'Campanha',
     url: '#',
     icon: 'fas fa-users',
-
+    groups: ['ROLE_Administrador','ROLE_Estoque'],
     children: [
       {
         name: 'Listar campanhas',
@@ -111,7 +111,7 @@ export default {
     name: 'Instituição',
     url: '#',
     icon: 'fas fa-users',
-
+    groups: ['ROLE_Administrador','ROLE_Estoque'],
     children: [
       {
         name: 'Listar instituição',
@@ -129,7 +129,7 @@ export default {
     name: 'Relatórios',
     url: '#',
     icon: 'fas fa-users',
-
+    groups: ['ROLE_Administrador','ROLE_Estoque'],
     children: [
       {
         name: 'Relatório 1',
@@ -146,7 +146,38 @@ export default {
   ],
 
   itensAcesso (itens) {
-    return itens
+    var i
+    var permitidos = new Array()
+
+    var token = apiCentralSeguranca.decodeJwtToken(store.getters.getJwtToken)
+    if (token != null) {
+      var tokenGrupos = token.groups
+
+      for (i = 0; i < itens.length; i++) {
+        if (itens[i].groups === undefined || itens[i].groups.length === 0) {
+          if (itens[i].children !== undefined) {
+            itens[i].children = this.itensAcesso(itens[i].children)
+          }
+          permitidos.push(itens[i])
+        } else {
+          var y
+          for (y = 0; y < tokenGrupos.length; y++) {
+            if (itens[i].groups.includes(tokenGrupos[y])) {
+              if (itens[i].children !== undefined) {
+                itens[i].children = this.itensAcesso(itens[i].children)
+              }
+              permitidos.push(itens[i])
+              break
+            }
+          }
+        }
+      }
+
+    }
+
+
+
+    return permitidos
   },
 
   filtrar (itens, pesquisa) {

@@ -4,7 +4,7 @@ export default {
 
   state: {
     jwtToken: localStorage.getItem(process.env.VUE_APP_CLIENT_ID) || '',
-    status: ''
+    status: '',
   },
 
   mutations: {
@@ -31,11 +31,14 @@ export default {
   getters: {
     isAuthenticated (state) {
       if (state.jwtToken === '') {
+        console.log("jwtToen igual aspas")
         return false
       }
       if ((state.jwtToken)) {
+        console.log("tem jwt")
         return true
       } else {
+        console.log("nao tem" + state.jwtToken)
         return false
       }
     },
@@ -49,14 +52,17 @@ export default {
 
   actions: {
     async authFilter ({ commit }) {
+      console.log("AuthFILTER")
       return new Promise((resolve, reject) => {
         commit('authRequest')
         const localStorageKey = process.env.VUE_APP_CLIENT_ID
         let jwtToken = localStorage.getItem(localStorageKey)
-        if (jwtToken !== '' && jwtToken !== undefined && jwtToken !== null) {
-        } else {
-          jwtToken = apiCentralSeguranca.getHashValue('access_token')
-        }
+        
+        // if (jwtToken !== '' && jwtToken !== undefined && jwtToken !== null) {
+        
+        // } else {
+        //   jwtToken = apiCentralSeguranca.getHashValue('access_token')
+        // }
 
         var jwtDecoded = jwtToken == null ? null : apiCentralSeguranca.decodeJwtToken(jwtToken)
 
@@ -73,8 +79,10 @@ export default {
           resolve(true)
         } else {
           localStorage.removeItem(localStorageKey)
-          reject(new Error('Token inválido'))
-          window.location.href = '' + apiCentralSeguranca.authorizeUrl
+          resolve(false)
+          //reject(new Error('Token inválido'))
+          //window.location.href = '' + apiCentralSeguranca.authorizeUrl
+         // window.getApp.$router.push('/login')
         }
       })
     },
@@ -83,7 +91,8 @@ export default {
       return new Promise((resolve) => {
         commit('authLogout')
         localStorage.removeItem(process.env.VUE_APP_CLIENT_ID)
-        window.getApp.$router.push('/')
+        // window.getApp.$router.push('/')
+        // this.$router.push({ name: 'inicial', })
         resolve()
       })
     }

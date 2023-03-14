@@ -137,9 +137,6 @@
               class="mb-0"
             >
               <!-- <b-form-textarea plaintext :value="App.description" rows="3" max-rows="6" class="text-bold" ></b-form-textarea> -->
-              <p class="text-bold my-2" v-html="App.description">
-                {{ App.description }}
-              </p>
             </b-form-group>
           </b-col>
         </b-col>

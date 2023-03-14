@@ -13,8 +13,9 @@ import PlanoFamiliar from '@/views/plano_familiar/PlanoFamiliar'
 import SituacaoIdentificada from '@/views/situacao/Situacao'
 import InscricaoCrianca from '@/views/inscricao/InscricaoCrianca'
 import Inscricao from '@/views/inscricao/Inscricao'
+import Login from '@/views/login/Login'
 
-// import apiCentralSeguranca from '@/api/centralseguranca'
+import apiCentralSeguranca from '@/api/centralseguranca'
 
 // error pages
 import AccessDenied from '@/layout/errors/Deny'
@@ -32,12 +33,21 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
+      path: '/login',
+      name: 'login',
+      component: Login,
+      meta: {
+        requiresAuth: false,
+        groups: []
+      }
+    },
+    {
       path: '/',
       name: 'inicial',
       component: Home,
       meta: {
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial','ROLE_Estoque']
       }
     },
     {
@@ -46,7 +56,7 @@ const router = new Router({
       component: InformacoesLegais,
       meta: {
         requiresAuth: false,
-        groups: ['']
+        groups: []
       }
     },
     {
@@ -56,8 +66,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Página Inicial',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial','ROLE_Estoque']
       }
     },
     {
@@ -67,8 +77,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Aluno / Incluir Aluno',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial','ROLE_Estoque']
       }
     },
     {
@@ -78,8 +88,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Familia / Editar Família',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
 
@@ -90,8 +100,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Familia / Listar Família',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
 
@@ -102,8 +112,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Familia / Crianca',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
     {
@@ -113,8 +123,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Família / Plano ação familiar',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
     {
@@ -124,8 +134,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Família / Situação identificada com a família',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
     {
@@ -135,8 +145,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Crianca / Avaliacao Contexto',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
     {
@@ -146,8 +156,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Crianca / Atendimento',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
     {
@@ -157,8 +167,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Crianca / Inscricao Crianca',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
     {
@@ -168,8 +178,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Crianca',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
     {
@@ -179,8 +189,8 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Inscrição',
-        requiresAuth: false,
-        groups: ['']
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
 
@@ -208,8 +218,77 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  store.commit('setMessages', null)
-  store.commit('setLayout', 'admin')
+
+ // protected access
+ if (to.meta.requiresAuth) {
+  (async () => {
+    if (await store.dispatch('authFilter')) {
+      if (store.getters.isAuthenticated === true) {
+        if (to.path === '/') {
+          store.commit('setLayout', 'admin')
+          next('/home')
+        }
+        // permission groups
+        if (to.meta.groups && to.meta.groups.length > 0) {
+          let userData = apiCentralSeguranca.decodeJwtToken(store.getters.getJwtToken)
+
+          if (userData.groups) {
+            let permission = false; let groupName = ''
+            for (let i = 0; i < userData.groups.length; i++) {
+              groupName = userData.groups[i]
+              if (to.meta.groups.indexOf(groupName) !== -1) {
+                permission = true
+                break
+              }
+            }
+            console.log("ssss- "+to.meta.groups)
+            console.log(to.meta.groups)
+            if (to.meta.groups === ['']) {
+              console.log("QUALQUER")
+              permission = true
+            }
+            if (permission) { // permission granted
+              store.commit('setLayout', 'admin')
+              next()
+            } else { // permission denied
+              console.log("sem permission")
+              store.commit('setLayout', 'blank')
+              next('/accessdenied')
+            }
+          // eslint-disable-next-line brace-style
+          }
+          // Sem grupos para função que exige grupo
+          else {
+            store.commit('setLayout', 'blank')
+            console.log("sem permission 2")
+            next('/accessdenied')
+          }
+        }
+      } else {
+        console.log("sem permission3")
+        store.commit('limparJwtTokenState')
+        store.commit('setLayout', 'blank')
+        next('/accessdenied')
+      }
+    }
+  else {
+    console.log("FALSEEE") 
+    store.commit('setLayout', 'blank')
+
+    next('/login')
+  }
+
+  })()
+} else {
+  if (to.name === 'AccessDenied' || to.name === 'NotFound' || to.name === 'login') {
+    store.commit('setLayout', 'blank')
+  } else {
+    store.commit('setLayout', 'admin')
+  }
+}
+
+  
+  
   // public access
   next()
 })

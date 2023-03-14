@@ -11,7 +11,7 @@
           label-for="txt-cpf"
           description="Informe seu nome completo"
         >
-          <b-form-input id="txt-cpf" v-model="familia.cpfResponsavel" required placeholder="Digite o CPF"></b-form-input>
+          <b-form-input @blur="pesquisarCpf()" id="txt-cpf" v-model="familia.cpfResponsavel" required placeholder="Digite o CPF"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -212,6 +212,10 @@
 </template>
 
 <script>
+
+import Api from '@/api/social'
+import events from '@/util/events'
+
 export default {
   props: {
     index: Number
@@ -221,8 +225,8 @@ export default {
       get () {
         return this.$store.getters.getFamilia
       },
-      set () {
-        this.$store.commit('setFamilia', this.Familia)
+      set (fam) {
+        this.$store.commit('setFamilia', fam)
       }
     }
   },
@@ -232,8 +236,40 @@ export default {
       // Reset
       this.familia.cpf = ''
       this.familia.idade = 0
+    },
+    pesquisarCpf(){
+          console.log("VAmos pesauisar esse cpf mandrake")
+         Api.getFamiliaPorCpf(this.familia.cpfResponsavel).then((res) => {
+              let f = res.data
+              f.status= "ATIVO"
+              this. inserirObjetosFamilia(f)
+              this.$store.commit('setFamilia', f)
+              if (f.id) {
+                events.$emit('familiaEncontrada')
+              }
+            })
+            .catch((err) => {
+              this.$store.commit('setMessages', err.response.data)
+            })
+    },
+    inserirObjetosFamilia(familia){
+      familia.status = "ATIVO"
+      if (familia.motivo == null) {
+        familia.motivo = {}
+      }
+      if (familia.moradia == null) {
+        familia.moradia = {tipoMoradia: "-1",materialMoradia: "-1", propriedadeMoradia: "-1",situacaoMoradia:"-1" }
+      }
+      if (familia.programas == null) {
+        familia.programas = {}
+      }
+
+      if (familia.visitaDomiciliar == null) {
+        familia.visitaDomiciliar = {}
+      }
     }
   }
+  
 }
 </script>
 

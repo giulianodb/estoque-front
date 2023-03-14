@@ -5,8 +5,10 @@ const apiURL = process.env.VUE_APP_ROOT_API
 
 // interceptor on request
 axios.interceptors.request.use(function (request) {
+  console.log("TOKEN: " + store.getters.getJwtToken)
   if (store.getters.getJwtToken) {
     request.headers.Authorization = `Bearer ${store.getters.getJwtToken}`
+   // request.headers.append('GET', 'POST', 'OPTIONS','PUT');
   }
   return request
 },
@@ -46,6 +48,7 @@ export default {
     if (familia.id == null) {
       return axios.post(`${apiURL}familias`, familia)
     } else {
+      console.log("PUT")
       return axios.put(`${apiURL}familias/${familia.id}`, familia)
     }
 
@@ -78,8 +81,11 @@ export default {
   getFamilia: (idFamilia) => {
     return axios.get(`${apiURL}familias/${idFamilia}`)
   },
+  getFamiliaPorCpf: (cpf) => {
+    return axios.get(`${apiURL}familias/cpf/${cpf}`)
+  },
   deletarFamilia: (familia) => {
-    return axios.delete(`${apiURL}/familias/${familia.id}`)
+    return axios.delete(`${apiURL}familias/${familia.id}`)
   },
   getCriancasPorFamilia: (page, perPage, sortBy, sortDesc, idFamilia) => {
     if (page == null || page === undefined) {
@@ -152,24 +158,24 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiURL}/atendimento/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}`)
+      return axios.get(`${apiURL}atendimento/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}`)
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
       }
 
-      return axios.get(`${apiURL}/atendimento/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+      return axios.get(`${apiURL}atendimento/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
   salvarAtendimento: (atendimento) => {
-    return axios.post(`${apiURL}/atendimento`, atendimento)
+    return axios.post(`${apiURL}atendimento`, atendimento)
   },
   alterarAtendimento: (atendimento) => {
-    return axios.put(`${apiURL}/atendimento/${atendimento.id}`, atendimento)
+    return axios.put(`${apiURL}atendimento/${atendimento.id}`, atendimento)
   },
   deletarAtendimento: (atendimento) => {
-    return axios.delete(`${apiURL}/atendimento/${atendimento.id}`)
+    return axios.delete(`${apiURL}atendimento/${atendimento.id}`)
   }
   ,
   getPlanosFamiliar: (idFamilia, page, perPage, sortBy, sortDesc) => {
@@ -182,24 +188,24 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiURL}/plano_acao_familiar/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}`)
+      return axios.get(`${apiURL}plano_acao_familiar/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}`)
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
       }
 
-      return axios.get(`${apiURL}/plano_acao_familiar/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+      return axios.get(`${apiURL}plano_acao_familiar/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
   salvarPlanoFamiliar: (plano) => {
-    return axios.post(`${apiURL}/plano_acao_familiar`, plano)
+    return axios.post(`${apiURL}plano_acao_familiar`, plano)
   },
   alterarPlanoFamiliar: (plano) => {
-    return axios.put(`${apiURL}/plano_acao_familiar/${plano.id}`, plano)
+    return axios.put(`${apiURL}plano_acao_familiar/${plano.id}`, plano)
   },
   deletarPlanoFamiliar: (plano) => {
-    return axios.delete(`${apiURL}/plano_acao_familiar/${plano.id}`)
+    return axios.delete(`${apiURL}plano_acao_familiar/${plano.id}`)
   }
 
   ,
@@ -213,24 +219,24 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiURL}/situacao_identificada/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}`)
+      return axios.get(`${apiURL}situacao_identificada/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}`)
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
       }
 
-      return axios.get(`${apiURL}/situacao_identificada/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+      return axios.get(`${apiURL}situacao_identificada/familia/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
   salvarSituacaoIdentificada: (situacao) => {
-    return axios.post(`${apiURL}/situacao_identificada`, situacao)
+    return axios.post(`${apiURL}situacao_identificada`, situacao)
   },
   alterarSituacaoIdentificada: (situacao) => {
-    return axios.put(`${apiURL}/situacao_identificada/${situacao.id}`, situacao)
+    return axios.put(`${apiURL}situacao_identificada/${situacao.id}`, situacao)
   },
   deletarSituacaoIdentificada: (situacao) => {
-    return axios.delete(`${apiURL}/situacao_identificada/${situacao.id}`)
+    return axios.delete(`${apiURL}situacao_identificada/${situacao.id}`)
   },
 
   getInscricaoPorCrianca: (page, perPage, sortBy, sortDesc, idCrianca) => {
@@ -258,17 +264,17 @@ export default {
   salvarInscricao: (inscricao,idCrianca) => {
     console.log(idCrianca)
     inscricao.crianca = {id:idCrianca}
-    return axios.post(`${apiURL}/inscricao`, inscricao)
+    return axios.post(`${apiURL}inscricao`, inscricao)
   },
 
   alterarInscricao: (inscricao) => {
     //console.log(idCrianca)
     //inscricao.crianca = {id:idCrianca}
    // return axios.post(`${apiURL}/inscricao`, inscricao)
-    return axios.put(`${apiURL}/inscricao/${inscricao.id}`, inscricao)
+    return axios.put(`${apiURL}inscricao/${inscricao.id}`, inscricao)
   },
   deletarInscricao: (inscricao) => {
-    return axios.delete(`${apiURL}/inscricao/${inscricao.id}`)
+    return axios.delete(`${apiURL}inscricao/${inscricao.id}`)
   },
 
   getInscricao: (page, perPage, sortBy, sortDesc, nome, projeto, matriculado, espera,ano) => {
@@ -290,6 +296,16 @@ export default {
 
       return axios.get(`${apiURL}inscricao?nomeCrianca=${nome}&projeto=${projeto}&matriculado=${matriculado}&ano=${ano}&espera=${espera}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
+  },
+
+  autenticar: (usuario,senha) => {
+    let obj = {
+    
+    }
+    obj.login = usuario;
+    obj.senha = senha;
+
+    return axios.post(`${apiURL}login`, obj)
   },
   
 

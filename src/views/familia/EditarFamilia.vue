@@ -101,6 +101,9 @@ export default {
   methods: {
     salvar () {
       this.$validator.validateAll().then((result) => {
+        console.log("ANTES DE SALVAR")
+        console.log(this.$store.getters.getFamilia)
+
         if (result) {
           Api.salvarFamilia(this.$store.getters.getFamilia)
             .then(() => {
@@ -135,6 +138,14 @@ export default {
      if (familia.id) {
        this.$refs.wizard.activateAll();
      }
+  },
+  created(){
+    console.log("CREATED EDITAR FAMILIA")
+    var teste = this.$refs 
+    events.$on('familiaEncontrada', () => {
+      console.log("Olá!!!")
+       teste.wizard.activateAll();
+    })
   },
   beforeMount(){
     if (this.$route.params.tipo == undefined) {
