@@ -24,6 +24,8 @@
           <span v-if="ma.item.listaEspera">Sim</span>
           <span v-else>Não</span>
          </template>
+         <template v-slot:cell(dataInscricao)="data">{{formatarData(data.item.dataInscricao)}}</template>
+         <template v-slot:cell(dataDesligamento)="data">{{formatarData(data.item.dataDesligamento)}}</template>
          <template v-slot:cell(acoes)="data">
            <div class="d-flex justify-content-end">
          

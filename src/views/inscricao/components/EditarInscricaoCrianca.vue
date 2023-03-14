@@ -121,7 +121,18 @@
                   <b-form-input
                     id="ano"
                     aria-readonly="true"
+                    v-validate="'required'"
                     v-model="inscricao.ano"
+                    data-vv-name="ano"
+                    data-vv-as="ano"
+                    :error-messages="errors.collect('ano')"
+                    :state="
+                      errors.has('ano') == false
+                        ? null
+                        : !errors.has('ano')
+                    "
+                    trim
+                    :autofocus="true"
                   ></b-form-input>
                   <span v-show="errors.has('ano')" class="help is-danger">{{
                     errors.first("ano")
