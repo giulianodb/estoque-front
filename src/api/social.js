@@ -44,7 +44,22 @@ function (error) {
 export default {
   salvarFamilia: (familia) => {
     console.log(familia)
-
+    if (familia.moradia.tipoMoradia == -1) {
+      familia.moradia.tipoMoradia = null
+    }
+    if (familia.moradia.materialMoradia == -1) {
+      familia.moradia.materialMoradia = null
+    }
+    if (familia.moradia.propriedadeMoradia == -1) {
+      familia.moradia.propriedadeMoradia = null
+    }
+    if (familia.moradia.situacaoMoradia == -1) {
+      familia.moradia.situacaoMoradia = null
+    }
+    if (familia.estadoCivil == -1) {
+      familia.estadoCivil = null
+    }
+    
     if (familia.id == null) {
       return axios.post(`${apiURL}familias`, familia)
     } else {
