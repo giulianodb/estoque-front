@@ -64,6 +64,7 @@
             &nbsp;
 
             <b-button outline @click="clear" size="md" variant="secondary">Limpar</b-button>
+            <b-button outline @click="gerarPdf()" size="md" variant="secondary">Gerar PDF</b-button>
           </div>
 
          </b-card>
@@ -122,6 +123,8 @@
 
 import Api from '@/api/social'
 import events from '@/util/events'
+import jsPDF from 'jspdf'
+
 
 export default {
   name: 'Inscricao',
@@ -175,6 +178,7 @@ export default {
     getAno(){
       return new Date().getFullYear();
     },
+    
     pesquisarInscricao () {
       this.pesquisando = true
        // console.log("testeee")
@@ -249,8 +253,16 @@ export default {
               ).then(res => {
                 this.inscricoes = res.data.content
                 this.totalRows = res.data.totalElements
-              })
-}}}
+              })  
+   },
+   gerarPdf() {
+        let pdfName = 'test'; 
+        var doc = new jsPDF();
+        doc.text("Hello World", 10, 10);
+        doc.save(pdfName + '.pdf');
+    },
+
+}}
 </script>
 
 <style></style>
