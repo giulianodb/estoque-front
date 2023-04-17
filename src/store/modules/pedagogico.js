@@ -16,6 +16,10 @@ export default {
     criancaPesquisa: {},
     inscricao: {},
     listaInscricao: [],
+    listaConta: [],
+    fluxoCaixaPesquisa:{},
+    listaTransacao:[{}],
+    contaPesquisa:{},
     messages: Object
   },
 
@@ -67,6 +71,22 @@ export default {
     setListaInscricao(state, payload){
       state.listaInscricao = payload
     },
+    setListaInscricaoConta(state, payload){
+      state.listaConta = payload
+    },
+
+    setFluxoCaixaPesquisa(state, payload){
+      state.fluxoCaixaPesquisa = payload
+    },
+
+    setListaTransacao(state, payload){
+      state.listaTransacao = payload
+    },
+
+    setContaPesquisa(state, payload){
+      state.contaPesquisa = payload
+    },
+
     setMessages (state, payload) {
       state.messages = payload
     }
@@ -119,6 +139,20 @@ export default {
     getListaInscricao (state) {
       return state.listaInscricao
     },
+    getListaConta (state) {
+      return state.listaConta
+    },
+
+    getFluxoCaixaPesquisa(state) {
+      return state.fluxoCaixaPesquisa
+    },
+    getListaTransacao (state) {
+      return state.listaTransacao
+    },
+    getContaPesquisa (state) {
+      return state.contaPesquisa
+    },
+
     getMessages (state) {
       return state.messages
     }

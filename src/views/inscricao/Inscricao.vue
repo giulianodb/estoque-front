@@ -123,8 +123,9 @@
 
 import Api from '@/api/social'
 import events from '@/util/events'
-import jsPDF from 'jspdf'
-
+// import jsPDF from 'jspdf'
+// import jsPDFInvoiceTemplate from "jspdf-invoice-template";
+import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
 
 export default {
   name: 'Inscricao',
@@ -254,12 +255,152 @@ export default {
                 this.inscricoes = res.data.content
                 this.totalRows = res.data.totalElements
               })  
-   },
-   gerarPdf() {
-        let pdfName = 'test'; 
-        var doc = new jsPDF();
-        doc.text("Hello World", 10, 10);
-        doc.save(pdfName + '.pdf');
+        },
+            gerarPdf() {
+
+                  this.pesquisando = true
+                    // console.log("testeee")
+                        
+                        let nome = this.inscricaoPesquisa.nomeCrianca
+                        let projeto = this.inscricaoPesquisa.projeto
+                        let matriculado = this.inscricaoPesquisa.matriculado
+                        let espera =  this.inscricaoPesquisa.espera
+                        let ano =  this.inscricaoPesquisa.ano
+                        //page, perPage, sortBy, sortDesc, nome
+                        
+                        Api.getInscricaoRelatorio(this.currentPage, this.perPage, 'ano', this.sortDesc, nome,
+                          projeto,
+                          matriculado,
+                          espera,
+                          ano)
+                          .then(res => {
+                            //this.$store.commit('setCriancas', res.data.content)
+                            var dto = res.data
+                            console.log(dto)
+                            this.gerarPdfMesmo(dto);
+                          })
+                          .catch(err => {
+                            this.inscricoes = []
+                            console.log(err)
+                            this.$store.commit('setMessages', err.response.data)
+                          })
+
+                    this.pesquisando = false
+                        },
+
+              gerarPdfMesmo(dto) {
+                  // //or in browser
+                  // var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
+                  var teste = "15/03/2023"
+                  var props = {
+                      outputType: OutputType.Save,
+                      returnJsPDFDocObject: true,
+                      fileName: "Invoice 2021",
+                      orientationLandscape: false,
+                      compress: true,
+                      logo: {
+                          src: "http://localhost:8081/logo.png",
+                          type: 'PNG', //optional, when src= data:uri (nodejs case)
+                          width: 25, //aspect ratio = width/height
+                          height: 25,
+                          margin: {
+                              top: 0, //negative or positive num, from the current position
+                              left: 0 //negative or positive num, from the current position
+                          }
+                      },
+                      business: {
+                          name: "De Mãos Unidas "+teste,
+                          address: "Rua Raul Felix, 277",
+                          phone: "(41) 3079-2034",
+                          email: "contato@demaosunidas.org.br",
+                          website: "https://demaosunidas.org.br",
+                      },
+                      contact: {
+                        label: " ",
+                          name: "Inscrições",
+                          address: " "
+                      },
+                      invoice: {
+                          label: "Invoice #: ",
+                          headerBorder: false,
+                          tableBodyBorder: false,
+                          header: [
+                            {
+                              title: "#", 
+                              style: { 
+                                width: 10 
+                              } 
+                            }, 
+                            { 
+                              title: "Criança",
+                              style: {
+                                width: 30
+                              } 
+                            }, 
+                            { 
+                              title: "Projeto",
+                              style: {
+                                width: 80
+                              } 
+                            }, 
+                            { title: "Turno"},
+                          ],
+                          table: Array.from(dto.listInscricao, (item, index)=>([
+                              index + 1,
+                              item.crianca.nome,
+                             item.projeto,
+                             item.periodo
+                              
+                          ])),
+                          additionalRows: [{
+                              col1: 'Total:',
+                              col2: dto.totalInscritos.toString(),
+                              style: {
+                                  fontSize: 14 //optional, default 12
+                              }
+                          },
+                          {
+                              col1: 'Manhã:',
+                              col2: dto.totalManha.toString(),
+                              style: {
+                                  fontSize: 10 //optional, default 12
+                              }
+                          },
+                          {
+                              col1: 'Tarde:',
+                              col2: dto.totalTarde.toString(),
+                              style: {
+                                  fontSize: 10 //optional, default 12
+                              }
+                          },
+                          {
+                              col1: 'FOCAR:',
+                              col2: dto.totalFocar.toString(),
+                              style: {
+                                  fontSize: 10 //optional, default 12
+                              }
+                          },
+                          {
+                              col1: 'NFCS:',
+                              col2: dto.totalSCFV.toString(),
+                              style: {
+                                  fontSize: 10 //optional, default 12
+                              }
+                          },
+                        
+                           ],
+                          invDescLabel: " ",
+                          invDesc: " ",
+                      },
+                      footer: {
+                          text: "DMU",
+                      },
+                      pageEnable: true,
+                      pageLabel: "Página ",
+                };
+
+                const pdfObject = jsPDFInvoiceTemplate(props); //returns number of pages created
+
     },
 
 }}

@@ -276,6 +276,30 @@ export default {
     }
   },
 
+  getInscricaoPorCrianca: (page, perPage, sortBy, sortDesc, idCrianca) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}inscricao/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      ordem = 'DESC'
+      return axios.get(`${apiURL}inscricao/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+
+  
+
   salvarInscricao: (inscricao,idCrianca) => {
     console.log(idCrianca)
     inscricao.crianca = {id:idCrianca}
@@ -312,6 +336,51 @@ export default {
       return axios.get(`${apiURL}inscricao?nomeCrianca=${nome}&projeto=${projeto}&matriculado=${matriculado}&ano=${ano}&espera=${espera}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
+  getInscricaoRelatorio: (page, perPage, sortBy, sortDesc, nome, projeto, matriculado, espera,ano) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}inscricao/relatorio/pesquisa?nomeCrianca=${nome}&projeto=${projeto}&matriculado=${matriculado}&ano=${ano}&espera=${espera}&page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}inscricao/relatorio/pesquisa?nomeCrianca=${nome}&projeto=${projeto}&matriculado=${matriculado}&ano=${ano}&espera=${espera}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+  getTodasContas: () => {
+      return axios.get(`${apiURL}contas`)
+  },
+  getTodasContasPorTipo: () => {
+    return axios.get(`${apiURL}contas/tipo_conta/todos`)
+  },
+  
+  getTransacao(periodo,dataInicial,dataFinal,idConta){
+    let periodo30 = false;
+    let periodo60 = false;
+    let periodoCustomizado = true;
+    if (periodo == "30") {
+      periodo30 = true;
+      periodoCustomizado = false
+    } else if(periodo == "60") {
+      periodo60 = true
+      periodoCustomizado = false
+    }
+    if (periodoCustomizado) {
+      return axios.get(`${apiURL}transacoes?idConta=${idConta}&dataInicio=${dataInicial}&dataFim=${dataFinal}`)
+    } else {
+      return axios.get(`${apiURL}transacoes?idConta=${idConta}&dias30=${periodo30}&dias60=${periodo60}`)  
+    }
+  },
+
 
   autenticar: (usuario,senha) => {
     let obj = {

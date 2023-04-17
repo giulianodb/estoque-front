@@ -57,6 +57,18 @@ export default {
       ]
     },
     {
+      name: 'Conta',
+      url: '#',
+      icon: 'fas fa-folder-open', 
+      children: [
+        {
+          name: 'Fluxo Caixa',
+          url: '/fluxo_caixa'
+
+        }
+      ]
+    },
+    {
       name: 'Produto',
       url: '#',
       icon: 'fas fa-users',

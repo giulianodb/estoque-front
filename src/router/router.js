@@ -14,6 +14,7 @@ import SituacaoIdentificada from '@/views/situacao/Situacao'
 import InscricaoCrianca from '@/views/inscricao/InscricaoCrianca'
 import Inscricao from '@/views/inscricao/Inscricao'
 import Login from '@/views/login/Login'
+import FluxoCaixa from '@/views/conta/FluxoCaixa'
 
 import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -191,6 +192,17 @@ const router = new Router({
         label: 'Inscrição',
         requiresAuth: true,
         groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
+      }
+    },
+    {
+      path: '/fluxo_caixa',
+      name: 'fluxoCaixa',
+      component: FluxoCaixa,
+      meta: {
+        breadcrumb: true,
+        label: 'Fluxo de caixa',
+        requiresAuth: false,
+        //groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
       }
     },
 
