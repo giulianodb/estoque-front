@@ -20,6 +20,8 @@ export default {
     fluxoCaixaPesquisa:{},
     listaTransacao:[{}],
     contaPesquisa:{},
+    transacao: {},
+    contasPorTipo:[],
     messages: Object
   },
 
@@ -83,9 +85,19 @@ export default {
       state.listaTransacao = payload
     },
 
+    setTransacao(state, payload){
+      state.transacao = payload
+    },
+
     setContaPesquisa(state, payload){
       state.contaPesquisa = payload
     },
+
+    setContasPorTipo(state, payload){
+      state.contasPorTipo = payload
+    },
+
+    
 
     setMessages (state, payload) {
       state.messages = payload
@@ -152,6 +164,14 @@ export default {
     getContaPesquisa (state) {
       return state.contaPesquisa
     },
+    getTransacao (state) {
+      return state.transacao
+    },
+
+    getContasPorTipo (state) {
+      return state.contasPorTipo
+    },
+
 
     getMessages (state) {
       return state.messages

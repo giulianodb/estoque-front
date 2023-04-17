@@ -15,7 +15,7 @@
     </b-col>
     
     <b-col align-self="center">
-      <Transacao />
+      <Transacao  v-if="contaPesquisa.id>0"/>
     </b-col>
   </b-row>
 </template>
@@ -33,16 +33,23 @@ export default {
   data () {
     return {
       param: "",
-      contasPorTipo:[]
     }
   },
   computed: {
-    alunossw: {
+    contaPesquisa: {
       get () {
-        return this.$store.getters.getAlunos
+        return this.$store.getters.getContaPesquisa
       },
-      set () {
-        this.$store.commit('setAlunos', this.alunos)
+      set (c) {
+        this.$store.commit('setContaPesquisa', c)
+      }
+    },
+    contasPorTipo :{
+      get () {
+        return this.$store.getters.getContasPorTipo
+      },
+      set (c) {
+        this.$store.commit('setContasPorTipo', c)
       }
     }
   },
@@ -76,23 +83,29 @@ export default {
             this.$store.commit('setMessages', err.response.data)
           })
 
-      }
+      },
+      pesquisarContasPorTipo(){
+        Api.getTodasContasPorTipo()
+        .then(res => {
+            this.contasPorTipo = res.data
+          })
+          .catch(err => {
+            this.$store.commit('setMessages', err.response.data)
+          })
+      },
     },
     created(){
       events.$on('pesquisarTransacao', () => {
         this.pesquisarTransacao()
       })
 
-      Api.getTodasContasPorTipo()
-        .then(res => {
-            console.log(res.data)
-            this.contasPorTipo = res.data
-          })
-          .catch(err => {
-            this.$store.commit('setMessages', err.response.data)
-          })
+      events.$on('pesquisarContasPorTipo', () => {
+        this.pesquisarContasPorTipo()
+      })
 
-      // this.contas = JSON.stringify(Api.getTodasContas());
+    },
+    mounted(){
+      this.pesquisarContasPorTipo()
     }
 }
 </script>

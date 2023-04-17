@@ -17,6 +17,19 @@
           <b-spinner class="align-middle"></b-spinner>
           <strong> Pesquisando...</strong>
         </div>
+        <template v-slot:cell(data)="data">{{formatarData(data.item.data)}}</template>
+        <template v-slot:cell(acoes)="data">
+           <div class="d-flex justify-content-end">
+            <b-link title="Alterar" @click="iniciarEditar(data.item)" class="btn btn-outline-info">
+            <i class="fas fa-pencil-alt"></i>
+            </b-link>&nbsp;
+            <b-link title="Excluir" @click="deletar(data.item)" class="btn btn-outline-danger">
+              <i class="fas fa-trash-alt"></i>
+            </b-link>
+            </div>
+          </template>
+
+
         </b-table>
 
         <b-row v-if="alunos.length > 0" class="my-1 center-xy">
@@ -40,15 +53,20 @@
     
     
 // import Lottie from 'vue-lottie'
-
+import events from '@/util/events'
+import Api from '@/api/social'
+import formatar from '@/mixins/formatarMixins'
 export default {
   name: 'Transacao',
+  mixins: [formatar],
   data () {
     return {
       fields: [
         { label: 'Data', key: 'data', sortable: false, sortDirection: 'desc' },
+        { label: 'Descrição', key: 'descricao', sortable: false, sortDirection: 'desc' },
         { label: 'Valor', key: 'valor', sortable: false, sortDirection: 'desc' },
         { label: 'Saldo', key: 'saldo', sortable: false, sortDirection: 'desc' },
+        { key: 'acoes', label: 'Ações' }
       ],
       totalRows: 1,
       currentPage: 1,
@@ -110,7 +128,27 @@ export default {
         this.$nextTick(() => {
           this.$bvModal.hide('modal-prevent-closing')
         })
-      }
+      },
+      deletarAluno (s) {
+        Api.deletar(s)
+        .then(() => {
+          this.currentPage = 1
+          this.perPage = 5
+          this.listarAlunos()
+          this.$store.commit('setMessages', {
+            message: 'Sucesso ao excluir aluno',
+            variant: 'success'
+          })
+        })
+        .catch(err => {
+          this.$store.commit('setMessages', err.response.data)
+        })
+    },
+    iniciarEditar (obj) {
+      //let obj = JSON.parse(JSON.stringify(aluno))
+      this.$store.commit('setTransacao', obj)
+      events.$emit('editarTransacao', obj)
+    },
     }
 }
 </script>

@@ -2,7 +2,7 @@
     <b-card header="Configuracao" class="text-left">
       
       <b-form-group
-          id="periodog"
+          id="periodo"
           label="Período:"
           label-for="periodo"
         >
@@ -26,29 +26,83 @@
       
       
       <div>
-        <b-button v-b-modal.modal-prevent-closing>Open Modal</b-button>
+        <b-button v-b-modal.modal-prevent-closing @click="resetTransacao()">Nova Movimentação</b-button>
         <b-modal
           id="modal-prevent-closing"
           ref="modal"
-          title="Submit Your Name"
+          title="Movimentação financeira"
           @show="resetModal"
           @hidden="resetModal"
           @ok="handleOk"
         >
           <form ref="form" @submit.stop.prevent="handleSubmit">
             <b-form-group
-              label="Name"
-              label-for="name-input"
-              invalid-feedback="Name is required"
+              label="Descrição"
+              label-for="descricao"
+              invalid-feedback="Descrição necessário"
               :state="nameState"
             >
               <b-form-input
                 id="name-input"
-                v-model="name"
+                v-model="transacao.descricao"
                 :state="nameState"
                 required
               ></b-form-input>
             </b-form-group>
+            
+            <b-form-group
+              label="Valor"
+              label-for="valor"
+              invalid-feedback="Valor necessário"
+            >
+              <b-form-input
+                id="valor-input"
+                v-model="transacao.valor"
+                required
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+              label="Data"
+              label-for="data"
+              invalid-feedback="Data necessária"
+            >
+              <b-form-input
+                id="data-input"
+                v-model="transacao.data"
+                type="date"
+                required
+              ></b-form-input>
+            </b-form-group>
+
+
+            <b-form-group
+              label="Conta"
+              label-for="conta"
+            >
+            
+            
+            <b-form-select
+                    id="conta"
+                    :plain="true"
+                    v-model="transacao.conta"
+                    data-vv-name="conta"
+                    data-vv-as="conta"
+                    :error-messages="errors.collect('conta')"
+                    :state="
+                      errors.has('conta') == false ? null : !errors.has('conta')
+                    "
+                  >
+                  <option v-for="cs in contas" :value="cs" :key="cs.id" :selected="selecionado(cs)"> {{cs.nomeConta}}  </option>
+
+                  </b-form-select>
+
+            </b-form-group>
+
+
+
+
+
           </form>
         </b-modal>
       </div>
@@ -60,14 +114,16 @@
     
     
 // import Lottie from 'vue-lottie'
-
+import events from '@/util/events'
+import Api from '@/api/social'
 export default {
   name: 'Transacao',
   data () {
     return {
       name: '',
         nameState: null,
-        submittedNames: []
+        submittedNames: [],
+        contas:[]
     }
   },
   computed: {
@@ -78,6 +134,14 @@ export default {
       set (f) {
         this.$store.commit('setFluxoCaixaPesquisa', f)
       }
+    },
+    transacao: {
+      get () {
+        return this.$store.getters.getTransacao
+      },
+      set (valor) {
+        this.$store.commit('setTransacao', valor)
+      }
     }
   },
   methods: {
@@ -87,31 +151,89 @@ export default {
         return valid
       },
       resetModal() {
-        this.name = ''
-        this.nameState = null
+        //this.transacao = {}
+
+      },
+      resetTransacao() {
+        var objConta = this.$store.getters.getContaPesquisa
+        var thisExterno = this
+        
+        for(let i=1; i<=thisExterno.contas.length; i++){
+          if (thisExterno.contas[i].id == objConta.id) {
+            thisExterno.transacao = {conta:thisExterno.contas[i]}
+          }
+        }
       },
       handleOk(bvModalEvent) {
+        console.log("AQui?")
+        //this.salvar();
+
         // Prevent modal from closing
         bvModalEvent.preventDefault()
         // Trigger submit handler
         this.handleSubmit()
       },
+
       handleSubmit() {
         // Exit when the form isn't valid
         if (!this.checkFormValidity()) {
           return
         }
-        // Push the name to submitted names
-        this.submittedNames.push(this.name)
+
+        this.salvar();
+
         // Hide the modal manually
         this.$nextTick(() => {
           this.$bvModal.hide('modal-prevent-closing')
         })
+      },
+
+      salvar(){
+        Api.salvarTransacao(this.transacao)
+            .then(res => {
+              this.$store.commit('setMessages', {
+                message: 'Sucesso ao salvar Movimentação financeira',
+                variant: 'success'
+              })
+              events.$emit('pesquisarTransacao')
+              events.$emit('pesquisarContasPorTipo')
+          })
+          .catch(err => {
+            this.$store.commit('setMessages', err.response.data)
+          })
+      },
+
+      montarContas(){
+      
+
+        Api.getTodasContas()
+            .then(res => {
+                this.contas = res.data
+          })
+          .catch(err => {
+            this.$store.commit('setMessages', err.response.data)
+          })
+      
+      },
+      selecionado(obj){
+        var conta = this.$store.getters.getContaPesquisa
+        if (conta.id == obj.id){
+          return true;
+        }
       }
     },
     created(){
+
+      events.$on('editarTransacao', (t) => {
+        this.$bvModal.show('modal-prevent-closing')
+      }) 
+
       this.fluxoCaixaPesquisa = {periodo:"30"}
+      //this.montarContas();
       //this.$store.commit('setFluxoCaixaPesquisa',{periodo:"30"})
+    },
+    mounted(){
+      this.montarContas();
     }
 }
 </script>

@@ -5,7 +5,7 @@ const apiURL = process.env.VUE_APP_ROOT_API
 
 // interceptor on request
 axios.interceptors.request.use(function (request) {
-  console.log("TOKEN: " + store.getters.getJwtToken)
+  // console.log("TOKEN: " + store.getters.getJwtToken)
   if (store.getters.getJwtToken) {
     request.headers.Authorization = `Bearer ${store.getters.getJwtToken}`
   }

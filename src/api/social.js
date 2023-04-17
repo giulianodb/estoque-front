@@ -5,7 +5,7 @@ const apiURL = process.env.VUE_APP_ROOT_API
 
 // interceptor on request
 axios.interceptors.request.use(function (request) {
-  console.log("TOKEN: " + store.getters.getJwtToken)
+  // console.log("TOKEN: " + store.getters.getJwtToken)
   if (store.getters.getJwtToken) {
     request.headers.Authorization = `Bearer ${store.getters.getJwtToken}`
    // request.headers.append('GET', 'POST', 'OPTIONS','PUT');
@@ -378,6 +378,19 @@ export default {
       return axios.get(`${apiURL}transacoes?idConta=${idConta}&dataInicio=${dataInicial}&dataFim=${dataFinal}`)
     } else {
       return axios.get(`${apiURL}transacoes?idConta=${idConta}&dias30=${periodo30}&dias60=${periodo60}`)  
+    }
+  },
+  
+  salvarTransacao: (transacao) => {
+    let conta = {}
+    conta.id = transacao.conta.id
+    
+    console.log(transacao)
+    transacao.conta = conta
+    if (transacao.id > 0 ) {
+      return axios.put(`${apiURL}transacoes/${transacao.id}`, transacao)
+    } else {
+      return axios.post(`${apiURL}transacoes`, transacao)
     }
   },
 
