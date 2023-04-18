@@ -25,6 +25,21 @@ export default {
       if (condicao) 
         return "Sim"
       return "Não"
-    }
+    },
+    formatarMoeda(valor){
+      var f = valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+      return f
+    },
+    definirStyleValor(valor){
+      if (valor > 0 ) {
+        return "color:green"
+      } else {
+        return "color:red"
+      }
+    },
+    
+    formatarMoedaToServer(valor){
+      return valor.replaceAll(",",".")
+    },
   }
 }

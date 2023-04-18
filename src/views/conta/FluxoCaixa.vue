@@ -7,8 +7,7 @@
     <b-col md="3">
       <b-card v-for="item in contasPorTipo" :key="item.tipoConta.id" :header="mostrarHEader(item)" class="text-center"  >
         <b-card-text v-for="c in item.contas" :key="c.id" style="cursor: pointer;" @click="listarTransacao(c)">
-          
-          {{c.nomeConta}}  <label>R$ {{ c.saldo.valor }}</label>
+          {{c.nomeConta}} (<span :style="definirStyleValor(c.saldo.valor)">{{formatarMoeda(c.saldo.valor)}}</span>) 
         </b-card-text>
         
       </b-card>
@@ -27,9 +26,12 @@ import Transacao from './components/Transacao'
 import Api from '@/api/social'
 import events from '@/util/events'
 
+import formatar from '@/mixins/formatarMixins'
+
 export default {
   name: 'Conta',
   components: { Transacao, Configuracao },
+  mixins: [formatar],
   data () {
     return {
       param: "",
@@ -65,7 +67,7 @@ export default {
 
       },
       mostrarHEader(item){
-        let msg = item.tipoConta.descricao + "           " +item.saldoContas
+        let msg = item.tipoConta.descricao + "     (      " +this.formatarMoeda(item.saldoContas) + " )"
         return msg
       },
 

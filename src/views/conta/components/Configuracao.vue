@@ -1,29 +1,64 @@
 <template>
-    <b-card header="Configuracao" class="text-left">
+    <b-card header="Período e Nova Movimentação" class="text-left">
       
-      <b-form-group
-          id="periodo"
-          label="Período:"
-          label-for="periodo"
-        >
-                    <b-form-select
-                    id="periodo"
-                    :plain="true"
-                    v-model="fluxoCaixaPesquisa.periodo"
-                    data-vv-name="periodo"
-                    data-vv-as="periodo"
-                    :error-messages="errors.collect('periodo')"
-                    :state="
-                      errors.has('periodo') == false ? null : !errors.has('periodo')
-                    "
-                  >
-                    <option value="30"> 30 dias  </option>
-                    <option value="60"> 60 dias </option>
-                    <option value="0"> Personalizado </option>
-                  </b-form-select>
+      <b-row>
+        <b-col lg="2">
 
-        </b-form-group>
-      
+            <b-form-group
+                id="periodo"
+                label="Período:"
+                label-for="periodo"
+              >
+                  <b-form-select
+                          @change="atualizarTransacacoes()"
+                          id="periodo"
+                          :plain="true"
+                          v-model="fluxoCaixaPesquisa.periodo"
+                          data-vv-name="periodo"
+                          data-vv-as="periodo"
+                          :error-messages="errors.collect('periodo')"
+                          :state="
+                            errors.has('periodo') == false ? null : !errors.has('periodo')
+                          "
+                        >
+                          <option value=30 :selected="true"> 30 dias  </option>
+                          <option value=60> 60 dias </option>
+                          <option value=0> Personalizado </option>
+                        </b-form-select>
+
+              </b-form-group>
+            </b-col>
+
+            <b-col lg="2" v-if="fluxoCaixaPesquisa.periodo == 0">
+                <b-form-group
+                label="Data Inicial"
+                label-for="dataInicio"
+              >
+                <b-form-input
+                  @change="atualizarTransacacoes()"
+                  id="dataInicio-input"
+                  v-model="fluxoCaixaPesquisa.dataInicial"
+                  type="date"
+                ></b-form-input>
+              </b-form-group>
+          </b-col>
+
+          <b-col lg="2" v-if="fluxoCaixaPesquisa.periodo == 0">
+                <b-form-group
+                label="Data Final"
+                label-for="dataFinal"
+              >
+                <b-form-input
+                  @change="atualizarTransacacoes()"
+                  id="dataFinal-input"
+                  v-model="fluxoCaixaPesquisa.dataFinal"
+                  type="date"
+                ></b-form-input>
+              </b-form-group>
+          </b-col>
+
+
+          </b-row>
       
       <div>
         <b-button v-b-modal.modal-prevent-closing @click="resetTransacao()">Nova Movimentação</b-button>
@@ -57,6 +92,8 @@
             >
               <b-form-input
                 id="valor-input"
+                type="number"
+                step="0.01" 
                 v-model="transacao.valor"
                 required
               ></b-form-input>
@@ -116,8 +153,10 @@
 // import Lottie from 'vue-lottie'
 import events from '@/util/events'
 import Api from '@/api/social'
+import formatar from '@/mixins/formatarMixins'
 export default {
   name: 'Transacao',
+  mixins: [formatar],
   data () {
     return {
       name: '',
@@ -155,6 +194,11 @@ export default {
 
       },
       resetTransacao() {
+        this.transacao.valor = "0,00"
+        this.transacao.id = null
+        this.transacao.descricao = ""
+        this.transacao.data = null
+
         var objConta = this.$store.getters.getContaPesquisa
         var thisExterno = this
         
@@ -187,8 +231,14 @@ export default {
           this.$bvModal.hide('modal-prevent-closing')
         })
       },
+      atualizarTransacacoes(){
+        events.$emit('pesquisarTransacao')
+        events.$emit('pesquisarContasPorTipo')
 
+      },
       salvar(){
+        this.transacao.valor = this.formatarMoedaToServer(this.transacao.valor) 
+        
         Api.salvarTransacao(this.transacao)
             .then(res => {
               this.$store.commit('setMessages', {
@@ -234,6 +284,13 @@ export default {
     },
     mounted(){
       this.montarContas();
+      this.transacao.valor = "0,00"
+      const date= new Date()
+      const dateFin= new Date()
+      //this.fluxoCaixaPesquisa = {dataInicial:new Date(date.setMonth(date.getMonth() - 1).toISOString().substr(0, 10) ),dataFinal:date.toISOString().substr(0, 10)}
+      const dateIni = new Date(date.setMonth(date.getMonth() - 1))
+
+      this.fluxoCaixaPesquisa = {dataInicial:dateIni.toISOString().substr(0, 10),dataFinal:dateFin.toISOString().substr(0, 10),periodo:30}
     }
 }
 </script>

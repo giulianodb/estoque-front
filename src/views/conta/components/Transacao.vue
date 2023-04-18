@@ -1,5 +1,5 @@
 <template>
-         <b-card :header="`Movimentações conta - ${contaPesquisa.nomeConta}`" class="text-center">
+         <b-card :header="`Movimentações - ${contaPesquisa.nomeConta}`" class="text-center">
         <b-table
           show-empty
           stacked="sm"
@@ -18,6 +18,9 @@
           <strong> Pesquisando...</strong>
         </div>
         <template v-slot:cell(data)="data">{{formatarData(data.item.data)}}</template>
+        <template v-slot:cell(valor)="data"> <span :style="definirStyleValor(data.item.valor)">{{formatarMoeda(data.item.valor)}}</span> </template>
+        <template v-slot:cell(saldo)="data"> <span :style="definirStyleValor(data.item.saldo)">{{formatarMoeda(data.item.saldo)}}</span> </template>
+
         <template v-slot:cell(acoes)="data">
            <div class="d-flex justify-content-end">
             <b-link title="Alterar" @click="iniciarEditar(data.item)" class="btn btn-outline-info">
@@ -129,20 +132,22 @@ export default {
           this.$bvModal.hide('modal-prevent-closing')
         })
       },
-      deletarAluno (s) {
-        Api.deletar(s)
-        .then(() => {
-          this.currentPage = 1
-          this.perPage = 5
-          this.listarAlunos()
-          this.$store.commit('setMessages', {
-            message: 'Sucesso ao excluir aluno',
-            variant: 'success'
-          })
-        })
-        .catch(err => {
-          this.$store.commit('setMessages', err.response.data)
-        })
+      deletar (s) {
+        var resultado = confirm("Deseja excluir o item ?");
+        if (resultado == true) {
+            Api.deletarTransacao(s)
+            .then(() => {
+              events.$emit('pesquisarTransacao')
+              events.$emit('pesquisarContasPorTipo')
+              this.$store.commit('setMessages', {
+                message: 'Sucesso ao excluir movimentação',
+                variant: 'success'
+              })
+            })
+            .catch(err => {
+              this.$store.commit('setMessages', err.response.data)
+            })
+        }
     },
     iniciarEditar (obj) {
       //let obj = JSON.parse(JSON.stringify(aluno))

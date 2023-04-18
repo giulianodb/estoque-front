@@ -394,6 +394,10 @@ export default {
     }
   },
 
+  deletarTransacao: (transacao) => {
+    return axios.delete(`${apiURL}transacoes/${transacao.id}`)
+  },
+
 
   autenticar: (usuario,senha) => {
     let obj = {
