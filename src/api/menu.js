@@ -57,9 +57,10 @@ export default {
       ]
     },
     {
-      name: 'Finançeiro',
+      name: 'Financeiro',
       url: '#',
-      icon: 'fas fa-folder-open', 
+      icon: 'fas fa-folder-open',
+      groups: ['ROLE_Administrador','ROLE_Financeiro'],
       children: [
         {
           name: 'Contas',

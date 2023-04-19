@@ -22,7 +22,7 @@ export default {
     contaPesquisa:{},
     transacao: {},
     contasPorTipo:[],
-    conta: {tipoConta:{}},
+    conta: {tipoConta:{cod:0  }},
     contas:[{}],
     messages: Object
   },
@@ -222,7 +222,7 @@ export default {
       state.commit('setInscricao', {   })
     },
     novaConta (state) {
-      state.commit('setConta', { tipoConta:{}   })
+      state.commit('setConta', { tipoConta:{cod:0}   })
     }
   }
 

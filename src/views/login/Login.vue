@@ -92,7 +92,7 @@ export default {
         .catch((err) => {
           console.log(err)
           // this.$store.commit('setFamilias', [])
-          // this.$store.commit('setMessages', err.response.data)
+           this.$store.commit('setMessages', err.response.data)
         })
 
 

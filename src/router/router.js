@@ -203,7 +203,7 @@ const router = new Router({
         breadcrumb: true,
         label: 'Fluxo de caixa',
         requiresAuth: false,
-        //groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
+        groups: ['ROLE_Administrador','ROLE_Financeiro']
       }
     },
 
@@ -215,7 +215,7 @@ const router = new Router({
         breadcrumb: true,
         label: 'Conta',
         requiresAuth: false,
-        //groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
+        groups: ['ROLE_Administrador','ROLE_Financeiro']
       }
     },
 
