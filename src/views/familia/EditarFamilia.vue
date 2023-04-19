@@ -11,6 +11,7 @@
         <b-col md="12">
           <form-wizard
             @on-complete="salvar"
+            @on-error="handleErrorMessage"
             :start-index.sync="activeIndex"
             ref="wizard"
             shape="circle"
@@ -22,8 +23,8 @@
             color="#0073C0"
             transition="slideInRight"
           >
-            <tab-content title="Identificação Responsável" icon="fas fa-user">
-              <EditarStep01 :index="activeIndex" />
+            <tab-content title="Identificação Responsável" icon="fas fa-user" :before-change="()=>validateStep('EditarStep01')">
+              <EditarStep01 :index="activeIndex" ref="EditarStep01" />
 
             </tab-content>
 
@@ -90,12 +91,14 @@ export default {
   },
   data () {
     return {
+      valid: false,
+      error: Object,
       activeIndex: 0,
       componentInfo: {
         title: 'Sobre o componente',
         text: `Os componentes do tipo <i>Wizard</i> são utilizados para quebrar formulários em etapas.`,
         urls: ['https://github.com/BinarCode/vue-form-wizard']
-      }
+      },
     }
   },
   methods: {
@@ -110,20 +113,57 @@ export default {
               // events.$emit('AlunoAlterada', this.Aluno)
               // this.clear();
               this.$validator.reset()
-              this.$store.dispatch('novaFamilia')
+             
               this.$store.commit('setMessages', {
                 message: 'Sucesso ao salvar Família',
                 variant: 'success'
               })
 
               this.$router.push('/listar_familia')
+              // this.$store.dispatch('novaFamilia')
+              this.$store.commit('setFamilia',{nomeResponsavel:this.familia.nomeResponsavel})
             })
             .catch((err) => {
-              this.$store.commit('setMessages', err.response.data)
+              if (err.response != undefined) {
+                this.$store.commit('setMessages', err.response.data)
+              } else {
+                this.$store.commit('setMessages', err.response.data)
+              }
             })
         }
       })
     },
+    handleErrorMessage(errorMsg){
+      console.log("handleError: "+errorMsg)
+    },
+
+    validateStep(name) {
+      var refToValidate = this.$refs[name];
+      console.log(refToValidate)
+      return refToValidate.$validator.validate();
+    },
+
+    validateFirstStep(){
+      return new Promise((resolve, reject) => {
+        this.$validator.validate((valid) => {
+          resolve(valid);
+        });
+      })
+
+      this.$validator.validateAll().then((result) => {
+        alert(result)
+      })
+
+    },
+
+    validate() {
+      //this.$v.form.$touch();
+      // var isValid = !this.$v.form.$invalid
+      var isValid = this.$validator.validate
+      this.$emit('on-validate', this.$data, isValid)
+      return isValid
+    },
+
     clear () {
       this.$validator.reset()
       this.$store.dispatch('novaFamilia')

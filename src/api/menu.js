@@ -57,14 +57,17 @@ export default {
       ]
     },
     {
-      name: 'Conta',
+      name: 'Finançeiro',
       url: '#',
       icon: 'fas fa-folder-open', 
       children: [
         {
+          name: 'Contas',
+          url: '/conta'
+
+        }, {
           name: 'Fluxo Caixa',
           url: '/fluxo_caixa'
-
         }
       ]
     },

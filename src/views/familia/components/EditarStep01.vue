@@ -9,9 +9,18 @@
           label="CPF:"
           v-model="familia.cpfResponsavel"
           label-for="txt-cpf"
-          description="Informe seu nome completo"
-        >
-          <b-form-input @blur="pesquisarCpf()" id="txt-cpf" v-model="familia.cpfResponsavel" required placeholder="Digite o CPF"></b-form-input>
+          description="Informe seu nome completo">
+       
+          <b-form-input @blur="pesquisarCpf()" id="txt-cpf" 
+                v-validate="'required|min:3'" 
+                v-model="familia.cpfResponsavel" 
+                placeholder="Digite o CPF"
+                :error-messages="errors.collect('cpfResponsavel')" 
+                data-vv-name="cpfResponsavel"
+                data-vv-as="CPF Responsável"
+                :state="errors.has('cpfResponsavel')==false?null:!errors.has('cpfResponsavel')">
+           </b-form-input>
+           <span v-show="errors.has('cpfResponsavel')" class="help is-danger">{{ errors.first('cpfResponsavel') }}</span>
         </b-form-group>
       </b-col>
 
@@ -23,7 +32,17 @@
           label-for="txt-nome"
           description="Nome do responsável."
         >
-          <b-form-input id="txt-nome" required v-model="familia.nomeResponsavel"></b-form-input>
+          <b-form-input 
+            id="txt-nome" 
+            v-model="familia.nomeResponsavel"
+            v-validate="'required|min:3'" 
+            placeholder="Nome do Responsável"
+            :error-messages="errors.collect('nomeResponsavel')" 
+            data-vv-name="nomeResponsavel"
+            data-vv-as="Nome Responsável"
+            :state="errors.has('nomeResponsavel')==false?null:!errors.has('nomeResponsavel')">
+          </b-form-input>
+          <span v-show="errors.has('nomeResponsavel')" class="help is-danger">{{ errors.first('nomeResponsavel') }}</span>
         </b-form-group>
       </b-col>
 
@@ -34,7 +53,19 @@
           label-for="txt-nascimento"
           description="Data de nascimento"
         >
-          <b-form-input id="txt-nascimento" type="date" required  v-model="familia.dataNascimento"></b-form-input>
+          <b-form-input 
+            id="txt-nascimento" 
+            type="date" 
+            v-model="familia.dataNascimento"
+            v-validate="'required|min:3'" 
+            placeholder="Data nascimento do responsável"
+            :error-messages="errors.collect('dataNascimento')" 
+            data-vv-name="dataNascimento"
+            data-vv-as="Data nascimento"
+            :state="errors.has('dataNascimento')==false?null:!errors.has('dataNascimento')">
+          </b-form-input>
+
+          <span v-show="errors.has('dataNascimento')" class="help is-danger">{{ errors.first('dataNascimento') }}</span>
         </b-form-group>
       </b-col>
 
@@ -66,12 +97,9 @@
                     <option value="DIVORCIADA"> Divorciada </option>
                     <option value="VIUVA"> Viúva </option>
                   </b-form-select>
+                  <span v-show="errors.has('estadoCivil')" class="help is-danger">{{ errors.first('estadoCivil') }}</span>
 
-  </b-form-group>
-
-
-
-
+             </b-form-group>
 
 
       </b-col>
@@ -108,8 +136,17 @@
           label-for="txt-rg"
           description="RG"
         >
-          <b-form-input id="txt-rg"   v-model="familia.rgResponsavel"></b-form-input>
-        </b-form-group>
+          <b-form-input id="txt-rg" 
+            v-model="familia.rgResponsavel"
+            v-validate="'required|min:5'" 
+            placeholder="RG do Responsável"
+            :error-messages="errors.collect('rgResponsavel')" 
+            data-vv-name="rgResponsavel"
+            data-vv-as="RG Responsável"
+            :state="errors.has('rgResponsavel')==false?null:!errors.has('rgResponsavel')">
+          </b-form-input>
+          <span v-show="errors.has('rgResponsavel')" class="help is-danger">{{ errors.first('rgResponsavel') }}</span>
+      </b-form-group>
       </b-col>
 
       <b-col sm="12" lg="6">
@@ -120,7 +157,17 @@
           label-for="txt-rua"
           description="Rua"
         >
-          <b-form-input id="txt-rua"   v-model="familia.rua"></b-form-input>
+          <b-form-input id="txt-rua" 
+            v-model="familia.rua"
+            v-validate="'required|min:3'" 
+            placeholder="Rua"
+            :error-messages="errors.collect('rua')" 
+            data-vv-name="rua"
+            data-vv-as="Rua"
+            :state="errors.has('rua')==false?null:!errors.has('rua')">
+          </b-form-input>
+          <span v-show="errors.has('rua')" class="help is-danger">{{ errors.first('rua') }}</span>
+
         </b-form-group>
       </b-col>
 
@@ -132,8 +179,17 @@
           label-for="txt-bairro"
           description="Bairro"
         >
-          <b-form-input id="txt-bairro"  v-model="familia.bairro"></b-form-input>
+          <b-form-input id="txt-bairro" 
+            v-model="familia.bairro"
+            v-validate="'required|min:3'" 
+            placeholder="Bairro"
+            :error-messages="errors.collect('bairro')" 
+            data-vv-name="bairro"
+            data-vv-as="Bairro"
+            :state="errors.has('bairro')==false?null:!errors.has('bairro')">
+          </b-form-input>
         </b-form-group>
+        <span v-show="errors.has('bairro')" class="help is-danger">{{ errors.first('bairro') }}</span>
       </b-col>
 
       <b-col sm="12" lg="3">
@@ -144,8 +200,17 @@
           label-for="txt-cep"
           description="CEP"
         >
-          <b-form-input id="txt-cep"  v-model="familia.cep"></b-form-input>
+          <b-form-input id="txt-cep" 
+            v-model="familia.cep"
+            v-validate="'required|min:3'" 
+            placeholder="CEP"
+            :error-messages="errors.collect('cep')" 
+            data-vv-name="cep"
+            data-vv-as="CEP"
+            :state="errors.has('cep')==false?null:!errors.has('cep')">
+          </b-form-input>
         </b-form-group>
+        <span v-show="errors.has('cep')" class="help is-danger">{{ errors.first('cep') }}</span>
       </b-col>
 
        <b-col sm="12" lg="6">
@@ -156,8 +221,17 @@
           label-for="txt-cidade"
           description="Cidade"
         >
-          <b-form-input id="txt-cidade"  v-model="familia.cidade"></b-form-input>
+          <b-form-input id="txt-cidade" 
+            v-model="familia.cidade"
+            v-validate="'required|min:3'" 
+            placeholder="Cidade"
+            :error-messages="errors.collect('cidade')" 
+            data-vv-name="cidade"
+            data-vv-as="Cidade"
+            :state="errors.has('nomeRespocidadensavel')==false?null:!errors.has('cidade')">
+          </b-form-input>
         </b-form-group>
+        <span v-show="errors.has('cidade')" class="help is-danger">{{ errors.first('cidade') }}</span>
       </b-col>
 
      <b-col sm="12" lg="1">
@@ -167,8 +241,17 @@
           label-for="txt-uf"
           description="UF"
         >
-          <b-form-input id="txt-uf"  v-model="familia.estado"></b-form-input>
+          <b-form-input id="txt-uf" 
+            v-model="familia.estado"
+            v-validate="'required|min:2'" 
+            placeholder="Estado residência"
+            :error-messages="errors.collect('estado')" 
+            data-vv-name="estado"
+            data-vv-as="Estadp"
+            :state="errors.has('estado')==false?null:!errors.has('estado')">
+          </b-form-input>
         </b-form-group>
+        <span v-show="errors.has('estado')" class="help is-danger">{{ errors.first('estado') }}</span>
       </b-col>
 
       <b-col sm="12" lg="3">
@@ -187,12 +270,19 @@
         <b-form-group
           id="input-group-14"
           label="Celular:"
-          v-model="familia.celular"
           label-for="txt-celular"
-          description="Celular"
-        >
-          <b-form-input id="txt-celular" v-model="familia.celular" ></b-form-input>
+          description="Celular">
+          <b-form-input id="txt-celular" 
+            v-model="familia.celular" 
+            v-validate="'required|min:8'" 
+            placeholder="Celular"
+            :error-messages="errors.collect('celular')" 
+            data-vv-name="celular"
+            data-vv-as="Celular"
+            :state="errors.has('celular')==false?null:!errors.has('celular')">
+          </b-form-input>
         </b-form-group>
+        <span v-show="errors.has('celular')" class="help is-danger">{{ errors.first('celular') }}</span>
       </b-col>
 
       <b-col sm="12" lg="3">
@@ -203,8 +293,17 @@
           label-for="txt-dataCadastro"
           description="Cada Cadastro"
         >
-          <b-form-input type="date"  id="txt-cataCadastro" v-model="familia.dataCadastro" ></b-form-input>
+          <b-form-input type="date" id="txt-cataCadastro" 
+            v-model="familia.dataCadastro"
+            v-validate="'required|min:3'" 
+            placeholder="Data do cadastro"
+            :error-messages="errors.collect('dataCadastro')" 
+            data-vv-name="dataCadastro"
+            data-vv-as="Data Cadastro"
+            :state="errors.has('dataCadastro')==false?null:!errors.has('dataCadastro')">
+          </b-form-input>
         </b-form-group>
+        <span v-show="errors.has('dataCadastro')" class="help is-danger">{{ errors.first('dataCadastro') }}</span>
       </b-col>
 
     </b-row>
@@ -219,6 +318,12 @@ import events from '@/util/events'
 export default {
   props: {
     index: Number
+  },
+  data () {
+    return {
+      valid: false,
+      error: Object
+    }
   },
   computed: {
     familia: {

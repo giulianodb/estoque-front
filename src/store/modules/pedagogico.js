@@ -22,6 +22,8 @@ export default {
     contaPesquisa:{},
     transacao: {},
     contasPorTipo:[],
+    conta: {tipoConta:{}},
+    contas:[{}],
     messages: Object
   },
 
@@ -97,7 +99,13 @@ export default {
       state.contasPorTipo = payload
     },
 
-    
+    setConta(state, payload){
+      state.conta = payload
+    },
+
+    setContas(state, payload){
+      state.contas = payload
+    },
 
     setMessages (state, payload) {
       state.messages = payload
@@ -171,6 +179,12 @@ export default {
     getContasPorTipo (state) {
       return state.contasPorTipo
     },
+    getConta (state) {
+      return state.conta
+    },
+    getContas (state) {
+      return state.contas
+    },
 
 
     getMessages (state) {
@@ -206,6 +220,9 @@ export default {
     },
     novaInscricao (state) {
       state.commit('setInscricao', {   })
+    },
+    novaConta (state) {
+      state.commit('setConta', { tipoConta:{}   })
     }
   }
 

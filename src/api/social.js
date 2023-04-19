@@ -399,6 +399,33 @@ export default {
   },
 
 
+  salvarConta: (conta) => {
+    console.log(conta)
+    
+    var novaConta = JSON.parse(JSON.stringify(conta));
+    
+     novaConta.tipoConta = conta.tipoConta.cod
+
+    if (conta.id == null) {
+      return axios.post(`${apiURL}contas`, novaConta)
+    } else {
+      return axios.put(`${apiURL}contas/${conta.id}`, novaConta)
+    }
+
+    
+  },
+  getContas: () => {
+
+      return axios.get(`${apiURL}contas`)
+  },
+  getConta: (idConta) => {
+    return axios.get(`${apiURL}contas/${idConta}`)
+  },
+   deletaConta: (conta) => {
+    return axios.delete(`${apiURL}contas/${conta.id}`)
+  },
+
+
   autenticar: (usuario,senha) => {
     let obj = {
     

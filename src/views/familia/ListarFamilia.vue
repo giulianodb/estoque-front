@@ -13,7 +13,7 @@
               <b-row>
                 <b-col lg="6" sm="12">
                   <b-form-group
-                    label="Nome representande família:"
+                    label="Nome representante família:"
                     label-for="nome"
                     class="text-label"
                   >
@@ -193,6 +193,9 @@ export default {
     })
   },
   mounted () {
+    this.familiaPesquisa.nomeRepresentante = this.$store.getters.getFamilia.nomeResponsavel
+    console.log(this.$store.getters.getFamilia)
+    console.log(this.familiaPesquisa)
     this.listarFamilias()
   },
   methods: {
