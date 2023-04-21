@@ -38,6 +38,11 @@ function (error) {
     error = permiError
   }
 
+  if (error.response !== undefined && error.response.status === 500) {
+    var permiError = { response: { data: { message: '500 - Erro interno, por favor, entre em contato com o administrador.' } } }
+    error = permiError
+  }
+
   return Promise.reject(error)
 })
 
