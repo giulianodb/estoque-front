@@ -54,7 +54,7 @@
                     <template slot="first">
                       <option value="-1">Selecione</option>
                     </template>
-                    <option value="FOCAR"> FOCAR </option>
+                    <!-- <option value="FOCAR"> FOCAR ss</option> -->
                     <option value="SCFV"> SCFV  </option>
                   </b-form-select>
 
@@ -234,9 +234,11 @@
 <script>
 import Api from '@/api/social'
 import events from '@/util/events'
+import formatar from '@/mixins/formatarMixins'
 
 export default {
   name: 'EditarInscricao',
+  mixins: [formatar],
   data () {
     return {
       valid: false,

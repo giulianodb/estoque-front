@@ -29,8 +29,8 @@
                     <template slot="first">
                       <b-form-select-option :value="-1" >Selecione </b-form-select-option>
                     </template>
-                    <option :value="0"> FOCAR </option>
-                    <option :value="1"> NFI  </option>
+                    <!-- <option :value="0"> FOCAR sssss</option> -->
+                    <option :value="1"> SCFV  </option>
                   </b-form-select>
                 </b-form-group>
             </b-col>
@@ -42,13 +42,19 @@
               </b-col>
 
             <b-col lg="3" sm="12">
-                <b-form-group label="Fila de espera ?" label-for="espera">
-                <b-form-checkbox
-                    id="espera"
+                <b-form-group label="Situação: " label-for="espera">
+                  <b-form-select
+                    id="projeto"
+                    :plain="true"
                     v-model="inscricaoPesquisa.espera"
                   >
-                
-                  </b-form-checkbox>
+                    <template slot="first">
+                      <b-form-select-option :value=null >Inscrito e Espera </b-form-select-option>
+                    </template>
+                    <!-- <option :value="0"> FOCAR rrr</option> -->
+                    <option :value=false> Inscrito  </option>
+                    <option :value=true> Lista espera  </option>
+                  </b-form-select>
                 </b-form-group>
             </b-col>
 
@@ -63,7 +69,7 @@
 
             &nbsp;
 
-            <b-button outline @click="clear" size="md" variant="secondary">Limpar</b-button>
+            <b-button outline @click="clear" size="md" variant="secondary">Limpar</b-button>  &nbsp;
             <b-button outline @click="gerarPdf()" size="md" variant="secondary">Gerar PDF</b-button>
           </div>
 
@@ -285,17 +291,35 @@ export default {
                             this.$store.commit('setMessages', err.response.data)
                           })
 
-                    this.pesquisando = false
+                          this.pesquisando = false
+                        },
+
+                        descricaoTurno (item){
+                          if (item == 'MANHA') 
+                            return "Manhã"
+                          else
+                            return "Tarde"   
+              
+                        },
+                        descricaoSituacao(matriculado){
+                          if (matriculado)
+                            return 'Inscrita'
+                          else {
+                            return 'Fila de espera'
+                          }  
                         },
 
               gerarPdfMesmo(dto) {
                   // //or in browser
                   // var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
-                  var teste = "15/03/2023"
+                  console.log(dto)
+                  var data = new Date()
+                  var teste = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear();
+                  var fileName = "Inscrições - " +this.inscricaoPesquisa.ano;
                   var props = {
                       outputType: OutputType.Save,
                       returnJsPDFDocObject: true,
-                      fileName: "Invoice 2021",
+                      fileName: fileName,
                       orientationLandscape: false,
                       compress: true,
                       logo: {
@@ -317,7 +341,7 @@ export default {
                       },
                       contact: {
                         label: " ",
-                          name: "Inscrições",
+                          name: "Inscrições "  +this.inscricaoPesquisa.ano,
                           address: " "
                       },
                       invoice: {
@@ -338,22 +362,33 @@ export default {
                               } 
                             }, 
                             { 
+                              title: "Idade",
+                              style: {
+                                width: 30
+                              } 
+                            }, 
+                            { 
                               title: "Projeto",
                               style: {
-                                width: 80
+                                width: 60
                               } 
                             }, 
                             { title: "Turno"},
+                            { title: "Situação"},
+
                           ],
                           table: Array.from(dto.listInscricao, (item, index)=>([
                               index + 1,
                               item.crianca.nome,
-                             item.projeto,
-                             item.periodo
+                              item.crianca.idade,
+                              item.projeto,
+                              this.descricaoTurno(item.periodo),
+                              this.descricaoSituacao(item.matriculado)
                               
                           ])),
-                          additionalRows: [{
-                              col1: 'Total:',
+                          additionalRows: [
+                            {
+                              col1: 'Total inscritos:',
                               col2: dto.totalInscritos.toString(),
                               style: {
                                   fontSize: 14 //optional, default 12
@@ -374,14 +409,7 @@ export default {
                               }
                           },
                           {
-                              col1: 'FOCAR:',
-                              col2: dto.totalFocar.toString(),
-                              style: {
-                                  fontSize: 10 //optional, default 12
-                              }
-                          },
-                          {
-                              col1: 'NFCS:',
+                              col1: 'SCFV:',
                               col2: dto.totalSCFV.toString(),
                               style: {
                                   fontSize: 10 //optional, default 12

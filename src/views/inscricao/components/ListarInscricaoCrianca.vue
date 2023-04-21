@@ -25,7 +25,7 @@
           <span v-else>Não</span>
          </template>
          <template v-slot:cell(dataInscricao)="data">{{formatarData(data.item.dataInscricao)}}</template>
-         <template v-slot:cell(dataDesligamento)="data">{{formatarData(data.item.dataDesligamento)}}</template>
+         <template v-slot:cell(dataDesligamento)="data"> {{mostrarDataDesligamento(data.item.dataDesligamento)}}</template>
          <template v-slot:cell(acoes)="data">
            <div class="d-flex justify-content-end">
          
@@ -60,10 +60,12 @@
 <script>
 import Api from '@/api/social'
 import events from '@/util/events'
+import formatar from '@/mixins/formatarMixins'
 
 export default {
   name: 'ListarInscricaoCrianca',
   props: ['porCrianca'],
+  mixins: [formatar],
   data () {
     return {
       fields: [
@@ -208,6 +210,15 @@ export default {
       // }
 
     },
+    mostrarDataDesligamento(dataDesligamento) {
+      console.log(dataDesligamento)
+
+      if (dataDesligamento) {
+        return this.formatarData(dataDesligamento)
+      } else {
+        return " - "
+      }
+    }
 
   }
 }
