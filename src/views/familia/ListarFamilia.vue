@@ -238,6 +238,7 @@ export default {
     
     listarFamilias () {
       this.pesquisando = true
+      this.currentPage = 0
       Api.getFamilias(
         this.currentPage,
         this.perPage,
