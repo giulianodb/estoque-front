@@ -308,6 +308,133 @@ export default {
                             return 'Fila de espera'
                           }  
                         },
+                        additionalRows(dto) {
+                          
+                          var lista = [];
+                          
+                          if (this.inscricaoPesquisa.espera == false ) {  
+                            
+                            var objTotalInscrito = {
+                                col1: 'Total inscritos:',
+                                col2: dto.totalInscritos.toString(),
+                                style: {
+                                    fontSize: 14 //optional, default 12
+                                }
+                              }
+
+                              var objManha = {
+                                col1: 'Manhã inscritos:',
+                                col2: dto.totalManha.toString(),
+                                style: {
+                                    fontSize: 10 //optional, default 12
+                                }
+                              }
+
+                              var objTarde = {
+                                col1: 'Tarde inscritos:',
+                                col2: dto.totalTarde.toString(),
+                                style: {
+                                    fontSize: 10 //optional, default 12
+                                }
+                              }
+
+                              lista.push(objTotalInscrito)
+                              lista.push(objManha)
+                              lista.push(objTarde)
+
+
+                          } else if (this.inscricaoPesquisa.espera == true) {
+                                 
+                            var objTotalEspera = {
+                                col1: 'Total lista espera:',
+                                col2: dto.totalEspera.toString(),
+                                style: {
+                                    fontSize: 14 //optional, default 12
+                                }
+                              }
+
+                              var totalManhaEspera = {
+                                col1: 'Manhã lista espera:',
+                                col2: dto.totalManhaEspera.toString(),
+                                style: {
+                                    fontSize: 10 //optional, default 12
+                                }
+                              }
+
+                              var totalTardeEspera = {
+                                col1: 'Tarde lista espera:',
+                                col2: dto.totalTardeEspera.toString(),
+                                style: {
+                                    fontSize: 10 //optional, default 12
+                                }
+                              }
+
+                              lista.push(objTotalEspera)
+                              lista.push(totalManhaEspera)
+                              lista.push(totalTardeEspera)
+
+                          } else if (this.inscricaoPesquisa.espera == null) {
+
+                            var objTotalInscrito = {
+                                col1: 'Total inscritos:',
+                                col2: dto.totalInscritos.toString(),
+                                style: {
+                                    fontSize: 14 //optional, default 12
+                                }
+                              }
+
+                              var objManha = {
+                                col1: 'Manhã inscritos:',
+                                col2: dto.totalManha.toString(),
+                                style: {
+                                    fontSize: 10 //optional, default 12
+                                }
+                              }
+
+                              var objTarde = {
+                                col1: 'Tarde inscritos:',
+                                col2: dto.totalTarde.toString(),
+                                style: {
+                                    fontSize: 10 //optional, default 12
+                                }
+                              }
+
+                              lista.push(objTotalInscrito)
+                              lista.push(objManha)
+                              lista.push(objTarde)
+
+
+                            var objTotalEspera = {
+                                col1: 'Total lista espera:',
+                                col2: dto.totalEspera.toString(),
+                                style: {
+                                    fontSize: 14 //optional, default 12
+                                }
+                              }
+
+                              var totalManhaEspera = {
+                                col1: 'Manhã lista espera:',
+                                col2: dto.totalManhaEspera.toString(),
+                                style: {
+                                    fontSize: 10 //optional, default 12
+                                }
+                              }
+
+                              var totalTardeEspera = {
+                                col1: 'Tarde lista espera:',
+                                col2: dto.totalTardeEspera.toString(),
+                                style: {
+                                    fontSize: 10 //optional, default 12
+                                }
+                              }
+
+                              lista.push(objTotalEspera)
+                              lista.push(totalManhaEspera)
+                              lista.push(totalTardeEspera)
+
+                            }
+                            return lista;
+                        },
 
               gerarPdfMesmo(dto) {
                   // //or in browser
@@ -386,37 +513,7 @@ export default {
                               this.descricaoSituacao(item.matriculado)
                               
                           ])),
-                          additionalRows: [
-                            {
-                              col1: 'Total inscritos:',
-                              col2: dto.totalInscritos.toString(),
-                              style: {
-                                  fontSize: 14 //optional, default 12
-                              }
-                          },
-                          {
-                              col1: 'Manhã:',
-                              col2: dto.totalManha.toString(),
-                              style: {
-                                  fontSize: 10 //optional, default 12
-                              }
-                          },
-                          {
-                              col1: 'Tarde:',
-                              col2: dto.totalTarde.toString(),
-                              style: {
-                                  fontSize: 10 //optional, default 12
-                              }
-                          },
-                          {
-                              col1: 'SCFV:',
-                              col2: dto.totalSCFV.toString(),
-                              style: {
-                                  fontSize: 10 //optional, default 12
-                              }
-                          },
-                        
-                           ],
+                          additionalRows: this.additionalRows(dto),
                           invDescLabel: " ",
                           invDesc: " ",
                       },
