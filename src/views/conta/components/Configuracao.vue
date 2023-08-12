@@ -71,75 +71,203 @@
           @ok="handleOk"
         >
           <form ref="form" @submit.stop.prevent="handleSubmit">
-            <b-form-group
-              label="Descrição"
-              label-for="descricao"
-              invalid-feedback="Descrição necessário"
-              :state="nameState"
-            >
-              <b-form-input
-                id="name-input"
-                v-model="transacao.descricao"
-                :state="nameState"
-                required
-              ></b-form-input>
-            </b-form-group>
-            
-            <b-form-group
-              label="Valor"
-              label-for="valor"
-              invalid-feedback="Valor necessário"
-            >
-              <b-form-input
-                id="valor-input"
-                type="number"
-                step="0.01" 
-                v-model="transacao.valor"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group
-              label="Data"
-              label-for="data"
-              invalid-feedback="Data necessária"
-            >
-              <b-form-input
-                id="data-input"
-                v-model="transacao.data"
-                type="date"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-
-            <b-form-group
-              label="Conta"
-              label-for="conta"
-            >
-            
-            
-            <b-form-select
-                    id="conta"
-                    :plain="true"
-                    v-model="transacao.conta"
-                    data-vv-name="conta"
-                    data-vv-as="conta"
-                    :error-messages="errors.collect('conta')"
-                    :state="
-                      errors.has('conta') == false ? null : !errors.has('conta')
-                    "
+            <b-row>
+                <b-col lg="12" sm="12">
+                  <b-form-group
+                    label="Descrição"
+                    label-for="descricao"
+                    invalid-feedback="Descrição necessário"
                   >
-                  <option v-for="cs in contas" :value="cs" :key="cs.id" :selected="selecionado(cs)"> {{cs.nomeConta}}  </option>
+                    <b-form-input
+                      id="name-input"
+                      v-model="transacao.descricao"
+                      :state="descricaoState"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
 
-                  </b-form-select>
+                <b-col lg="6" sm="6">
+                    <b-form-group
+                      label="Valor"
+                      label-for="valor-input"
+                      invalid-feedback="Valor necessário"
+                    >
+                      <b-form-input
+                        id="valor-input"
+                        type="number"
+                        step="0.01" 
+                        v-model="transacao.valor"
+                        required
+                        :state="valorState"
+                      ></b-form-input>
+                    </b-form-group>
 
-            </b-form-group>
+                    <b-form-group
+                      label="Data"
+                      label-for="data"
+                      invalid-feedback="Data necessária"
+                    >
+                      <b-form-input
+                        id="data-input"
+                        v-model="transacao.data"
+                        type="date"
+                        :state="dataState"
+                        required
+                      ></b-form-input>
+                    </b-form-group>
+                </b-col>
+
+                <b-col lg="6" sm="6">
+                  <b-form-group
+                    label="Tipo"
+                    label-for="tipoTransacao"
+                    invalid-feedback="Tipo"
+                  >
+
+                  <b-form-select
+                          id="tipoTransacao"
+                          required
+                          :plain="true"
+                          v-model="transacao.tipoTransacaoEnum"
+                          data-vv-name="tipoTransacao"
+                          data-vv-as="tipoTransacao"
+                          :error-messages="errors.collect('tipoTransacao')"
+                          :state="tipoTransacaoState"
+                        >
+                        <template slot="first" >
+                          <option  value='RECEITA' > Receita  </option>
+                          </template> 
+                        
+                        
+                                <option  value='PAGAMENTO' > Pagamento  </option>
+
+                        </b-form-select>
+                  </b-form-group>
+                
+
+                  <b-form-group
+                    label="Conta"
+                    label-for="conta"
+                  >
+                  
+                  
+                  <b-form-select
+                          id="conta"
+                          required
+                          :plain="true"
+                          v-model="transacao.conta"
+                          data-vv-name="conta"
+                          data-vv-as="conta"
+                          :error-messages="errors.collect('conta')"
+                          :state="contaState"
+                        >
+                        <option v-for="cs in contas" :value="cs" :key="cs.id" > {{cs.nomeConta}}  </option>
+
+                        </b-form-select>
+
+                  </b-form-group>
+              </b-col>
+
+              <b-col lg="6" sm="6">
+
+              
+                
+                <b-form-group
+                    label="Clientes/Fornecedores"
+                    label-for="tipoParceiro"
+                    invalid-feedback="TipoParceiro"
+                  >
+
+                  <b-form-select
+                          id="tipoParceiro"
+                          required
+                          :plain="true"
+                          v-model="transacao.tipoParceiro"
+                          data-vv-name="tipoParceiro"
+                          data-vv-as="tipoParceiro"
+                          :error-messages="errors.collect('tipoParceiro')"
+                          :state="tipoParceiroState"
+                         :onchange="mostrarCombos()"
+                        >
+                        <template  #first>
+                          <b-form-select-option  value="FAMILIA" > Família  </b-form-select-option>
+                        </template> 
+                        
+                        
+                                <option  value='DOADOR' > Doador  </option>
+                                <option  value='INSTITUICAO' > Instituição  </option>
+
+                        </b-form-select>
+                  </b-form-group>
+
+              </b-col>
+              <b-col lg="12" sm="12">
+                  <b-form-group
+                    label="Doador"
+                    label-for="doador"
+                    v-if="mostrarDoador"
+                  >
+                  <model-list-select 
+                          id="doador"
+                          :plain="true"
+                          v-model="transacao.idDoador"
+                          :list="listaDoador"
+                          option-value="id"
+                          placeholder="Pesquise"
+                          option-text="nome"
+                          data-vv-name="doador"
+                          data-vv-as="doador"
+                          :error-messages="errors.collect('doador')"
+                          :state="doadorState"
+                        >
+                        </model-list-select >
+
+                  </b-form-group>
+
+                  <b-form-group
+                    label="Família"
+                    label-for="familia"
+                    v-if="mostrarFamilia"
+                  >
+                  <model-list-select 
+                          id="familia"
+                          :list="listaFamilia"
+                          option-value="id"
+                          option-text="nomeResponsavel"
+                          placeholder="Pesquise"
+                          v-model="transacao.idFamilia"
+                          data-vv-name="familia"
+                          data-vv-as="familia"
+                          :error-messages="errors.collect('familia')"
+                          :state="familiaState"
+                        >
+                        </model-list-select >
+
+                  </b-form-group>
 
 
 
-
-
+                  <b-form-group
+                    label="Instituição"
+                    label-for="instituicao"
+                    v-if="mostrarInstituicao"
+                  >
+                  <model-list-select 
+                          id="instituicao"
+                          :list="listaInstituicao"
+                          placeholder="Pesquise"
+                          option-value="id"
+                          option-text="nome"
+                          v-model="transacao.idInstituicao"
+                          data-vv-name="instituicao"
+                          data-vv-as="instituicao"
+                          :error-messages="errors.collect('instituicao')"
+                          :state="instituicaoState">
+                          </model-list-select>
+                  </b-form-group>
+              </b-col>
+            </b-row>
           </form>
         </b-modal>
       </div>
@@ -150,19 +278,41 @@
 <script>
     
     
-// import Lottie from 'vue-lottie'
 import events from '@/util/events'
 import Api from '@/api/social'
 import formatar from '@/mixins/formatarMixins'
+import { ModelSelect } from 'vue-search-select'
+import { ModelListSelect } from 'vue-search-select'
 export default {
+  components: {
+      ModelListSelect
+    },
   name: 'Transacao',
   mixins: [formatar],
   data () {
     return {
       name: '',
+      teste1:'FAMILIA',
         nameState: null,
+        descricaoState: null,
+        valorState: null,
+        dataState: null,
+        tipoTransacaoState: null,
+        contaState: null,
+        tipoParceiroState: null,
+        doadorState: null,
+        familiaState: null,
+        instituicaoState:null,
+        erros:[],
+        valorState: null,
         submittedNames: [],
-        contas:[]
+        contas:[],
+        listaInstituicao:[],
+        listaDoador:[],
+        listaFamilia:[],
+        mostrarFamilia:true,
+        mostrarDoador:false,
+        mostrarInstituicao:false
     }
   },
   computed: {
@@ -179,14 +329,69 @@ export default {
         return this.$store.getters.getTransacao
       },
       set (valor) {
+        console.log(valor)
         this.$store.commit('setTransacao', valor)
       }
     }
   },
   methods: {
       checkFormValidity() {
-        const valid = this.$refs.form.checkValidity()
-        this.nameState = valid
+        let valid = true
+
+        if (this.transacao.descricao == null || this.transacao.descricao == "" || this.transacao.descricao == undefined){
+          valid = false;
+          this.descricaoState= false;
+        } else {
+          this.descricaoState= true;
+        }
+
+        if (this.transacao.valor == null || this.transacao.valor == "" || this.transacao.valor == undefined){
+          valid = false;
+          this.valorState= false;
+        } else {
+          this.valorState= true;
+        }
+
+        if (this.transacao.data== null || this.transacao.data== "" || this.transacao.data == undefined){
+          valid = false;
+          this.dataState= false;
+        } else {
+          this.dataState= true;
+        }
+
+        if (this.transacao.tipoTransacaoEnum == null || this.transacao.tipoTransacaoEnum == "" || this.transacao.tipoTransacaoEnum == undefined){
+          valid = false;
+          this.tipoTransacaoState= false;
+        } else {
+          this.tipoTransacaoState= true;
+        }
+
+
+        if (this.transacao.conta == null || this.transacao.conta == "" || this.transacao.conta == undefined){
+          valid = false;
+          this.contaState= false;
+        } else {
+          this.contaState= true;
+        }
+
+        if (this.transacao.conta == null || this.transacao.conta == "" || this.transacao.conta == undefined){
+          valid = false;
+          this.contaState= false;
+        } else {
+          this.contaState= true;
+        }
+
+
+        if (this.transacao.tipoParceiro == 'FAMILIA' && ((this.transacao.idFamilia == null || this.transacao.idFamilia == "" || this.transacao.idFamilia == undefined))){
+          valid = false;
+          this.familiaState= false;
+        } else {
+          this.familiaState= true;
+        }
+
+
+        console.log(this.erros['descricao'])
+        //this.nameState = valid
         return valid
       },
       resetModal() {
@@ -201,12 +406,19 @@ export default {
 
         var objConta = this.$store.getters.getContaPesquisa
         var thisExterno = this
-        
-        for(let i=1; i<=thisExterno.contas.length; i++){
-          if (thisExterno.contas[i].id == objConta.id) {
-            thisExterno.transacao = {conta:thisExterno.contas[i]}
+       
+        if (objConta === null || objConta === undefined || objConta.id === undefined) {
+          this.transacao = {conta:thisExterno.contas[0]}
+        } else {
+          console.log(objConta.id)
+          for(let i=0; i<thisExterno.contas.length; i++){
+            if (thisExterno.contas[i].id == objConta.id) {
+              thisExterno.transacao = {conta:thisExterno.contas[i]}
+            }
           }
         }
+
+        console.log(this.transacao)
       },
       handleOk(bvModalEvent) {
         console.log("AQui?")
@@ -221,15 +433,19 @@ export default {
       handleSubmit() {
         // Exit when the form isn't valid
         if (!this.checkFormValidity()) {
+
+          console.log("algo nao validou")
           return
         }
 
-        this.salvar();
+          this.salvar();
 
-        // Hide the modal manually
-        this.$nextTick(() => {
-          this.$bvModal.hide('modal-prevent-closing')
-        })
+              // Hide the modal manually
+              this.$nextTick(() => {
+                this.$bvModal.hide('modal-prevent-closing')
+              })
+
+     
       },
       atualizarTransacacoes(){
         events.$emit('pesquisarTransacao')
@@ -237,8 +453,13 @@ export default {
 
       },
       salvar(){
+        console.log("§§§")
+        console.log(this.transacao.valor)
+        console.log("§§§ - fim")
         this.transacao.valor = this.formatarMoedaToServer(this.transacao.valor) 
-        
+        console.log("--")
+        console.log(this.transacao)
+       console.log("--")
         Api.salvarTransacao(this.transacao)
             .then(res => {
               this.$store.commit('setMessages', {
@@ -265,12 +486,54 @@ export default {
           })
       
       },
+      montarParceiros(){
+
+      Api.getParceiros()
+          .then(res => {
+
+              this.listaDoador = res.data.listaDoador;
+              this.listaFamilia = res.data.listaFamilia
+              this.listaInstituicao = res.data.listaInstituicaoDTOs
+        })
+        .catch(err => {
+          this.$store.commit('setMessages', err.response.data)
+        })
+    
+    },
       selecionado(obj){
         var conta = this.$store.getters.getContaPesquisa
         if (conta.id == obj.id){
           return true;
         }
+      },
+      mostrarCombos(){
+        if (this.transacao.tipoParceiro == 'DOADOR'){
+          this.mostrarInstituicao = false
+          this.mostrarFamilia = false
+          this.mostrarDoador = true
+
+          //this.transacao.familia = {id:null}
+          //this.transacao.instituicao = {id:null}
+
+        } else if(this.transacao.tipoParceiro == 'INSTITUICAO'){
+          this.mostrarInstituicao = true
+          this.mostrarFamilia = false
+          this.mostrarDoador = false
+
+          //this.transacao.familia = {id:null}
+          //this.transacao.doador = {id:null}
+
+        } else {
+          this.mostrarInstituicao = false
+          this.mostrarFamilia = true
+          this.mostrarDoador = false
+
+          //this.transacao.instituicao = {id:null}
+          //this.transacao.doador = {id:null}
+
+        }
       }
+      
     },
     created(){
 
@@ -279,11 +542,14 @@ export default {
       }) 
 
       this.fluxoCaixaPesquisa = {periodo:"30"}
+      this.montarParceiros();
+      this.mostrarCombos();
       //this.montarContas();
       //this.$store.commit('setFluxoCaixaPesquisa',{periodo:"30"})
     },
     mounted(){
       this.montarContas();
+      
       this.transacao.valor = "0,00"
       const date= new Date()
       const dateFin= new Date()

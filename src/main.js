@@ -10,6 +10,9 @@ import VueTheMask from 'vue-the-mask'
 import PortalVue from 'portal-vue'
 import BackToTop from 'vue-backtotop'
 
+import 'vue-search-select/dist/VueSearchSelect.css'
+
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { faHatWizard } from '@fortawesome/free-solid-svg-icons'

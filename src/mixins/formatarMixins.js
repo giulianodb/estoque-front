@@ -39,7 +39,7 @@ export default {
     },
     
     formatarMoedaToServer(valor){
-      return valor.replaceAll(",",".")
+      return String(valor).replaceAll(",",".")
     },
   }
 }

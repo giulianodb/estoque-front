@@ -384,6 +384,29 @@ export default {
   salvarTransacao: (transacao) => {
     let conta = {}
     conta.id = transacao.conta.id
+    let instituicao =  {}
+    let familia =  {}
+    let doador=  {}
+
+    /*
+    if (transacao.instituicao != undefined){
+      instituicao.id = transacao.instituicao
+      transacao.instituicao = instituicao
+    }
+    if (transacao.familia){
+      familia.id = transacao.familia
+      transacao.familia = familia
+
+    }
+
+    if (transacao.doador != undefined){
+      doador.id = transacao.doador
+      transacao.doador = doador
+
+    }
+*/
+
+    console.log("===============")
     
     console.log(transacao)
     transacao.conta = conta
@@ -417,6 +440,10 @@ export default {
   getContas: () => {
 
       return axios.get(`${apiURL}contas`)
+  },
+  getParceiros: () => {
+
+    return axios.get(`${apiURL}parceiros`)
   },
   getConta: (idConta) => {
     return axios.get(`${apiURL}contas/${idConta}`)
