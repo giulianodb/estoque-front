@@ -25,6 +25,21 @@
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
+
+                <b-col lg="3" sm="12" >
+                <b-form-group label="Familia Assistida ?" label-for="familiaassistida">
+                <b-form-checkbox
+                    id="familiaassistida"
+                    v-model="familiaPesquisa.familiaAssistida"
+                  >
+                  </b-form-checkbox>
+                </b-form-group>
+            </b-col>
+
+
+
+
+
               </b-row>
             </b-form>
 

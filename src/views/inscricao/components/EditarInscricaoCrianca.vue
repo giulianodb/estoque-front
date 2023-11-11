@@ -54,7 +54,6 @@
                     <template slot="first">
                       <option value="-1">Selecione</option>
                     </template>
-                    <option value="FOCAR"> FOCAR </option>
                     <option value="SCFV"> SCFV  </option>
                   </b-form-select>
 
@@ -220,10 +219,11 @@
             >
 
             &nbsp;
+            <b-button outline @click="clear()" size="md" variant="secondary">Limpar</b-button>
 
-            <b-button outline @click="clear" size="md" variant="secondary"
-              >Limpar</b-button
-            >
+            &nbsp;
+            <b-button outline @click="voltar()" size="md" variant="secondary">Voltar</b-button>
+
           </div>
         </b-card>
       </b-col>
@@ -248,16 +248,16 @@ export default {
       get () {
         return this.$store.getters.getCrianca
       },
-      set () {
-        this.$store.commit('setCrianca', this.crianca)
+      set (obj) {
+        this.$store.commit('setCrianca', obj)
       }
     },
     inscricao: {
       get () {
         return this.$store.getters.getInscricao
       },
-      set () {
-        this.$store.commit('setInscricao', this.inscricao)
+      set (obj) {
+        this.$store.commit('setInscricao', obj)
       }
     }
   },
@@ -314,6 +314,9 @@ export default {
       this.inscricao = {}
       // this.$store.dispatch('novaCrianca')
       this.$store.dispatch('limparMensagens')
+    },
+    voltar(){
+      this.$router.push(`/crianca`)
     }
   }
 }

@@ -150,12 +150,9 @@ export default {
         }
     },
     iniciarEditar (obj) {
-      //let obj = JSON.parse(JSON.stringify(aluno))
-      this.$store.commit('setTransacao', obj)
-      console.log("@@@")
-      console.log(obj)
-      console.log("@@@")
-      events.$emit('editarTransacao', obj)
+      let objNovo = {...obj}
+      this.$store.commit('setTransacao', objNovo)
+      events.$emit('editarTransacao', objNovo)
     },
     }
 }

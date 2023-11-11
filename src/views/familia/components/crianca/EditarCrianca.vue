@@ -124,7 +124,7 @@
                 >
                   <b-form-input
                     id="conducao"
-                    v-model="crianca.conducao"
+                    v-model="crianca.nomeConducao"
                     data-vv-name="conducao"
                     data-vv-as="conducao"
                     :error-messages="errors.collect('conducao')"

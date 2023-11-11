@@ -7,6 +7,7 @@
         <b-form-group
           id="input-group-1"
           label="CPF:"
+          v-mask="'###.###.###-##'"
           v-model="familia.cpfResponsavel"
           label-for="txt-cpf"
           description="Informe seu nome completo">
@@ -314,8 +315,10 @@
 
 import Api from '@/api/social'
 import events from '@/util/events'
+import {mask} from 'vue-the-mask'
 
 export default {
+  directives: {mask},
   props: {
     index: Number
   },
@@ -345,6 +348,7 @@ export default {
     pesquisarCpf(){
           console.log("VAmos pesauisar esse cpf mandrake")
          Api.getFamiliaPorCpf(this.familia.cpfResponsavel).then((res) => {
+              console.log(res)
               let f = res.data
               f.status= "ATIVO"
               this. inserirObjetosFamilia(f)
@@ -354,6 +358,7 @@ export default {
               }
             })
             .catch((err) => {
+              console.log(err)
               this.$store.commit('setMessages', err.response.data)
             })
     },

@@ -89,14 +89,11 @@ export default {
 
 
   created () {
-    console.log("CREATED")
     events.$on('contaAlterada', () => {
-      console.log("Chamei o evento de listar Contas aposta conta alterada")
       this.listarContas()
     })
   },
   mounted () {
-    console.log("monted")
     this.listarContas()
   },
   methods: {
@@ -124,7 +121,6 @@ export default {
       Api.getContas(this.currentPage, this.perPage)
         .then(res => {
           this.$store.commit('setContas', res.data)
-          console.log(res.data)
           this.totalRows = res.data.totalElements
         })
         .catch(err => {

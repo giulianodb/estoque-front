@@ -16,6 +16,7 @@ import Inscricao from '@/views/inscricao/Inscricao'
 import Login from '@/views/login/Login'
 import FluxoCaixa from '@/views/conta/FluxoCaixa'
 import Conta from '@/views/conta/Conta'
+import Razao from '@/views/conta/Razao'
 
 import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -49,7 +50,7 @@ const router = new Router({
       component: Home,
       meta: {
         requiresAuth: true,
-        groups: ['ROLE_Administrador','ROLE_AssistenteSocial','ROLE_Estoque']
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial','ROLE_Estoque','ROLE_Financeiro']
       }
     },
     {
@@ -69,7 +70,7 @@ const router = new Router({
         breadcrumb: true,
         label: 'Página Inicial',
         requiresAuth: true,
-        groups: ['ROLE_Administrador','ROLE_AssistenteSocial','ROLE_Estoque']
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial','ROLE_Estoque','ROLE_Financeiro']
       }
     },
     {
@@ -202,7 +203,7 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Fluxo de caixa',
-        requiresAuth: false,
+        requiresAuth: true,
         groups: ['ROLE_Administrador','ROLE_Financeiro']
       }
     },
@@ -214,11 +215,21 @@ const router = new Router({
       meta: {
         breadcrumb: true,
         label: 'Conta',
-        requiresAuth: false,
+        requiresAuth: true,
         groups: ['ROLE_Administrador','ROLE_Financeiro']
       }
     },
-
+    {
+      path: '/razao',
+       name: 'razao',
+       component: Razao,
+       meta: {
+         breadcrumb: true,
+         label: 'Razão',
+         requiresAuth: true,
+         groups: ['ROLE_Administrador','ROLE_Financeiro']
+       }
+     },
     // error pages
     {
       path: '/accessdenied',
@@ -266,10 +277,7 @@ router.beforeEach((to, from, next) => {
                 break
               }
             }
-            console.log("ssss- "+to.meta.groups)
-            console.log(to.meta.groups)
             if (to.meta.groups === ['']) {
-              console.log("QUALQUER")
               permission = true
             }
             if (permission) { // permission granted

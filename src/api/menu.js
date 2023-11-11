@@ -46,7 +46,7 @@ export default {
     {
       name: 'Inscrição',
       url: '#',
-      icon: 'fas fa-folder-open', 
+      icon: 'fas fa-paste', 
       groups: ['ROLE_Administrador','ROLE_AssistenteSocial'],
       children: [
         {
@@ -59,7 +59,7 @@ export default {
     {
       name: 'Financeiro',
       url: '#',
-      icon: 'fas fa-folder-open',
+      icon: 'fas fa-piggy-bank',
       groups: ['ROLE_Administrador','ROLE_Financeiro'],
       children: [
         {
@@ -69,96 +69,103 @@ export default {
         }, {
           name: 'Fluxo Caixa',
           url: '/fluxo_caixa'
-        }
+        },
+        
+        // {
+        //   name: 'Razão',
+        //   url: '/razao'
+        // }
       ]
     },
-    {
-      name: 'Produto',
-      url: '#',
-      icon: 'fas fa-users',
-      groups: ['ROLE_Administrador','ROLE_Estoque'],
-      children: [
-        {
-          name: 'Listar produtos',
-          url: '/'
+    
+  //   {
+  //     name: 'Produto',
+  //     url: '#',
+  //     icon: 'fas fa-users',
+  //     groups: ['ROLE_Administrador','ROLE_Estoque'],
+  //     children: [
+  //       {
+  //         name: 'Listar produtos',
+  //         url: '/'
 
-        },
-        {
-          name: 'Cadastrar produtos',
-          url: '/'
-        } ,
-        {
-          name: 'Entrada produto',
-          url: '/'
-        } ,
-        {
-          name: 'Saída produto',
-          url: '/'
-        } ,
-        {
-          name: 'Listar movimentações',
-          url: '/'
-        },
-        {
-          name: 'Pesquisar recibo',
-          url: '/'
-        }
-      ]
-    } ,
-    { 
-    name: 'Campanha',
-    url: '#',
-    icon: 'fas fa-users',
-    groups: ['ROLE_Administrador','ROLE_Estoque'],
-    children: [
-      {
-        name: 'Listar campanhas',
-        url: '/'
+  //       },
+  //       {
+  //         name: 'Cadastrar produtos',
+  //         url: '/'
+  //       } ,
+  //       {
+  //         name: 'Entrada produto',
+  //         url: '/'
+  //       } ,
+  //       {
+  //         name: 'Saída produto',
+  //         url: '/'
+  //       } ,
+  //       {
+  //         name: 'Listar movimentações',
+  //         url: '/'
+  //       },
+  //       {
+  //         name: 'Pesquisar recibo',
+  //         url: '/'
+  //       }
+  //     ]
+  //   } ,
+  //   { 
+  //   name: 'Campanha',
+  //   url: '#',
+  //   icon: 'fas fa-users',
+  //   groups: ['ROLE_Administrador','ROLE_Estoque'],
+  //   children: [
+  //     {
+  //       name: 'Listar campanhas',
+  //       url: '/'
 
-      },
-      {
-        name: 'Cadastrar campanhas',
-        url: '/'
-      } 
+  //     },
+  //     {
+  //       name: 'Cadastrar campanhas',
+  //       url: '/'
+  //     } 
       
-    ]
-  } ,
-  { 
-    name: 'Instituição',
-    url: '#',
-    icon: 'fas fa-users',
-    groups: ['ROLE_Administrador','ROLE_Estoque'],
-    children: [
-      {
-        name: 'Listar instituição',
-        url: '/'
+  //   ]
+  // } ,
+  // { 
+  //   name: 'Instituição',
+  //   url: '#',
+  //   icon: 'fas fa-users',
+  //   groups: ['ROLE_Administrador','ROLE_Estoque'],
+  //   children: [
+  //     {
+  //       name: 'Listar instituição',
+  //       url: '/'
 
-      },
-      {
-        name: 'Cadastrar instituição',
-        url: '/'
-      } 
+  //     },
+  //     {
+  //       name: 'Cadastrar instituição',
+  //       url: '/'
+  //     } 
       
-    ]
-  } ,
-  { 
-    name: 'Relatórios',
-    url: '#',
-    icon: 'fas fa-users',
-    groups: ['ROLE_Administrador','ROLE_Estoque'],
-    children: [
-      {
-        name: 'Relatório 1',
-        url: '/'
+  //   ]
+  // } ,
+  // { 
+  //   name: 'Relatórios',
+  //   url: '#',
+  //   icon: 'fas fa-users',
+  //   groups: ['ROLE_Administrador','ROLE_Estoque'],
+  //   children: [
+  //     {
+  //       name: 'Relatório 1',
+  //       url: '/'
 
-      },
-      {
-        name: 'Relatórios 2',
-        url: '/'
-      } 
+  //     },
+  //     {
+  //       name: 'Relatórios 2',
+  //       url: '/'
+  //     } 
       
-    ]
-  }
+  //   ]
+  // }
+
   ],
 
   itensAcesso (itens) {

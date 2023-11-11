@@ -60,10 +60,12 @@
 <script>
 import Api from '@/api/social'
 import events from '@/util/events'
+import formatar from '@/mixins/formatarMixins'
 
 export default {
   name: 'ListarInscricaoCrianca',
   props: ['porCrianca'],
+  mixins: [formatar],
   data () {
     return {
       fields: [
@@ -197,7 +199,7 @@ export default {
              Api.getInscricaoPorCrianca(
             this.currentPage,
             this.perPage,
-            this.sortBy,
+            'ano',
             this.sortDesc,
             this.crianca.id
           ).then(res => {

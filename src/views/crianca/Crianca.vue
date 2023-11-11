@@ -19,7 +19,7 @@
                 </b-form-group>
               </b-col>
 
-              <b-col lg="3" sm="12">
+              <b-col lg="3" sm="12" v-if="false">
                 <b-form-group label="Projeto:" label-for="projeto">
                 <b-form-select
                     id="projeto"
@@ -35,18 +35,17 @@
                 </b-form-group>
             </b-col>
 
-            <b-col lg="3" sm="12">
+            <b-col lg="3" sm="12" v-if="false">
                 <b-form-group label="Matriculado?" label-for="matriculado">
                 <b-form-checkbox
                     id="matriculado"
                     v-model="criancaPesquisa.matriculado"
                   >
-                
                   </b-form-checkbox>
                 </b-form-group>
             </b-col>
 
-            <b-col lg="3" sm="12">
+            <b-col lg="3" sm="12" v-if="false" >
                 <b-form-group label="Fila de espera ?" label-for="espera">
                 <b-form-checkbox
                     id="espera"
@@ -131,6 +130,7 @@ export default {
       // this.$store.commit('setFamilia', res.data)
       //  this.nota.matricula = selecionado
       //console.log(this.criancaPesquisa)
+      this.$store.dispatch('novaCrianca')
       events.$emit('pesquisarCrianca')
     },
     mostrarEditarCrianca (mostrar) {

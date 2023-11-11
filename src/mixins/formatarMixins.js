@@ -27,11 +27,16 @@ export default {
       return "Não"
     },
     formatarMoeda(valor){
-      var f = valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-      return f
+      if (valor !== undefined){
+        var f = valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+        return f
+      }
+      else {
+        return valor
+      }
     },
     definirStyleValor(valor){
-      if (valor > 0 ) {
+      if (valor !== undefined && valor > 0 ) {
         return "color:green"
       } else {
         return "color:red"

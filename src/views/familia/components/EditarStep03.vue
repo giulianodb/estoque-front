@@ -100,12 +100,10 @@
                     <template slot="first">
                       <option value="-1">Escolaridade</option>
                     </template>
-                    <option value="PRIMEIRO_IMCOMPLETO"> Primeiro grau incompleto </option>
-                    <option value="PRIMEIRO_COMPLETO"> Primeiro grau completo </option>
-                    <option value="SEGUNDO_IMCOMPLETO"> Segundo grau incompleto </option>
-                    <option value="SEGUNDO_COMPLETO"> Segundo grau completo </option>
-                    <option value="SUPERIOR_IMCOMPLETO"> Ensino superior incompleto </option>
-                    <option value="SUPERIOR_COMPLETO"> Ensino superior completp </option>
+                    <option value="ENSINO_MEDIO_IMCOMPLETO"> Ensino médio imcompleto </option>
+                    <option value="ENSINO_MEDIO_COMPLETO"> Ensino médio completo </option>
+                    <option value="SUPERIOR_IMCOMPLETO"> Superior incompleto</option>
+                    <option value="SUPERIOR_COMPLETO"> Superior completo </option>
                   </b-form-select>
                   <span v-show="errors.has('escolaridade')" class="help is-danger">{{
                     errors.first("escolaridade")

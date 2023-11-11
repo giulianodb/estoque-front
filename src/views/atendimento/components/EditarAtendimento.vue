@@ -79,6 +79,11 @@
             &nbsp;
 
             <b-button outline @click="clear" size="md" variant="secondary">Limpar</b-button>
+
+            &nbsp;
+
+            <b-button outline @click="voltar()" size="md" variant="secondary">Voltar</b-button>
+
           </div>
 
          </b-card>
@@ -159,6 +164,9 @@ export default {
       this.$validator.reset()
       this.$store.dispatch('novoAtendimento')
       this.$store.dispatch('limparMensagens')
+    },
+    voltar(){
+      this.$router.push(`/crianca`)
     }
   }
 }

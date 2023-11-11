@@ -74,7 +74,6 @@ export default {
       pesquisarTransacao(){
         let fluxoPesquisa = this.$store.getters.getFluxoCaixaPesquisa
         let contaPesquisa = this.$store.getters.getContaPesquisa
-
         Api.getTransacao (fluxoPesquisa.periodo, fluxoPesquisa.dataInicial,fluxoPesquisa.dataFinal,contaPesquisa.id)
 
         .then(res => {
@@ -84,6 +83,7 @@ export default {
           .catch(err => {
             this.$store.commit('setMessages', err.response.data)
           })
+
 
       },
       pesquisarContasPorTipo(){

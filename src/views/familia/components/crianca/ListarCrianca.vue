@@ -93,22 +93,31 @@ export default {
       get () {
         return this.$store.getters.getCriancas
       },
-      set () {
-        this.$store.commit('setCriancas', this.criancas)
+      set (obj) {
+        this.$store.commit('setCriancas', obj)
       }
     },
     familia: {
       get () {
         return this.$store.getters.getFamilia
       },
-      set () {
-        this.$store.commit('setFamilia', this.familia)
+      set (obj) {
+        this.$store.commit('setFamilia', obj)
       }
-    }
+    },
+    criancaStore: {
+      get () {
+        return this.$store.getters.getCrianca
+      },
+      set (obj) {
+        this.$store.commit('setCrianca', obj)
+      }
+    },
   },
   created () {
-    console.log("Criando componente Listar familia")
+    console.log("Criando componente Listar Criança ")
     console.log(this.porFamilia)
+
     events.$on('pesquisarCrianca', () => {
       console.log("Evento para pesquisar crianca iniciado..")
       this.listarCriancas()
@@ -128,10 +137,18 @@ export default {
     })
 
     
+    if (this.criancaStore !== null || this.criancaStore !== undefined){
+      console.log("Chamou essa coisa louca aqui")
+      this.listarCriancas()
+    }
     
   },
   mounted () {
     // this.listarCriancas()
+  },
+  beforeDestroy() {
+    // removing eventBus listener
+    events.$off('pesquisarCrianca')
   },
   methods: {
     deletarCrianca (s) {
@@ -175,22 +192,37 @@ export default {
       
     },
     listarCriancas () {
+      console.log("Chamei listar crianças")
       this.pesquisando = true
        // console.log("testeee")
         if (!this.porFamilia) {
           let nome = this.$store.getters.getCriancaPesquisa.nome
-                 let projeto = this.$store.getters.getCriancaPesquisa.projeto
+          let projeto = this.$store.getters.getCriancaPesquisa.projeto
           let matriculado = this.$store.getters.getCriancaPesquisa.matriculado
           let espera =  this.$store.getters.getCriancaPesquisa.espera
           //page, perPage, sortBy, sortDesc, nome
+
+          let idCrianca = 0
+          
+          if (this.criancaStore !== null || this.criancaStore !== undefined){
+            if (this.criancaStore.id !== null || this.criancaStore.id !== undefined){
+              idCrianca = this.criancaStore.id
+            } 
+            
+          }
+
+          console.log("idCri: " + idCrianca)
+
+
           Api.getCriancas(this.currentPage, this.perPage, 'nome', this.sortDesc, nome,
             projeto,
             matriculado,
-            espera)
+            espera, idCrianca)
             .then(res => {
               //this.$store.commit('setCriancas', res.data.content)
               this.$store.commit('setCriancas', res.data.content)
               console.log(res.data.content)
+              console.log("111111")
               this.totalRows = res.data.totalElements
             })
             .catch(err => {

@@ -29,8 +29,7 @@
                     <template slot="first">
                       <b-form-select-option :value="-1" >Selecione </b-form-select-option>
                     </template>
-                    <option :value="0"> FOCAR </option>
-                    <option :value="1"> NFI  </option>
+                    <option :value="1"> SCFV  </option>
                   </b-form-select>
                 </b-form-group>
             </b-col>
@@ -64,6 +63,8 @@
             &nbsp;
 
             <b-button outline @click="clear" size="md" variant="secondary">Limpar</b-button>
+            &nbsp;
+
             <b-button outline @click="gerarPdf()" size="md" variant="secondary">Gerar PDF</b-button>
           </div>
 

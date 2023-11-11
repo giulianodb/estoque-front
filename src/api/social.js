@@ -74,6 +74,11 @@ export default {
     if (familiaPesquisa == null || familiaPesquisa.nomeRepresentante == null) {
       familiaPesquisa.nomeRepresentante = ''
     }
+    if (familiaPesquisa == null || familiaPesquisa.familiaAssistida == null) {
+      familiaPesquisa.familiaAssistida = true
+    }
+
+    
     if (page == null || page === undefined) {
       page = 1
     }
@@ -83,14 +88,14 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiURL}familias?page=${page}&linesPerPage=${perPage}&nome=${familiaPesquisa.nomeRepresentante}`)
+      return axios.get(`${apiURL}familias?page=${page}&linesPerPage=${perPage}&nome=${familiaPesquisa.nomeRepresentante}&familiaAssistida=${familiaPesquisa.familiaAssistida}`)
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
       }
 
-      return axios.get(`${apiURL}familias?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}&nome=${familiaPesquisa.nomeRepresentante}`)
+      return axios.get(`${apiURL}familias?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}&nome=${familiaPesquisa.nomeRepresentante}&familiaAssistida=${familiaPesquisa.familiaAssistida}`)
     }
   },
   getFamilia: (idFamilia) => {
@@ -122,7 +127,12 @@ export default {
       return axios.get(`${apiURL}criancas/${idFamilia}?page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
     }
   },
-  getCriancas: (page, perPage, sortBy, sortDesc, nome, projeto, matriculado, espera) => {
+  getCriancas: (page, perPage, sortBy, sortDesc, nome, projeto, matriculado, espera,idCrianca) => {
+    console.log("ESTOU NA API PATA GET CRIANCAS")
+    if (idCrianca == null || idCrianca === undefined) {
+      idCrianca = 0
+    }
+    
     if (page == null || page === undefined) {
       page = 1
     }
@@ -132,14 +142,14 @@ export default {
     }
 
     if (sortBy == null) {
-      return axios.get(`${apiURL}criancas?nome=${nome}&projeto=${projeto}&matriculado=${matriculado}&espera=${espera}&page=${page}&linesPerPage=${perPage}`)
+      return axios.get(`${apiURL}criancas?nome=${nome}&projeto=${projeto}&matriculado=${matriculado}&espera=${espera}&page=${page}&linesPerPage=${perPage}&idCrianca=${idCrianca}`)
     } else {
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
       }
 
-      return axios.get(`${apiURL}criancas?nome=${nome}&projeto=${projeto}&matriculado=${matriculado}&espera=${espera}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+      return axios.get(`${apiURL}criancas?nome=${nome}&projeto=${projeto}&matriculado=${matriculado}&espera=${espera}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}&idCrianca=${idCrianca}`)
     }
   },
   getCrianca: (idCrianca) => {
@@ -266,6 +276,7 @@ export default {
     if (sortBy == null) {
       return axios.get(`${apiURL}inscricao/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}`)
     } else {
+      sortBy = 'ano'
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
@@ -288,6 +299,7 @@ export default {
     if (sortBy == null) {
       return axios.get(`${apiURL}inscricao/crianca/${idCrianca}?page=${page}&linesPerPage=${perPage}`)
     } else {
+      sortBy = 'ano'
       let ordem = 'ASC'
       if (sortDesc) {
         ordem = 'DESC'
@@ -434,9 +446,13 @@ export default {
     } else {
       return axios.put(`${apiURL}contas/${conta.id}`, novaConta)
     }
-
     
   },
+
+  deletarConta(c){
+    return axios.delete(`${apiURL}contas/${c.id}`)
+  },
+
   getContas: () => {
 
       return axios.get(`${apiURL}contas`)
@@ -445,11 +461,21 @@ export default {
 
     return axios.get(`${apiURL}parceiros`)
   },
+  getListaCentroCusto: () => {
+
+    return axios.get(`${apiURL}centrocusto`)
+  },
+
   getConta: (idConta) => {
     return axios.get(`${apiURL}contas/${idConta}`)
   },
    deletaConta: (conta) => {
     return axios.delete(`${apiURL}contas/${conta.id}`)
+  },
+
+  getListaGrupoCategoria: () => {
+
+    return axios.get(`${apiURL}transacaocategoria`)
   },
 
 
@@ -463,7 +489,61 @@ export default {
     return axios.post(`${apiURL}login`, obj)
   },
   
+  emitirRelatorioRazao (periodo,dataInicial,dataFinal){
+    let periodo30 = false;
+    let periodo60 = false;
+    let periodoCustomizado = true;
+    if (periodo == "30") {
+      periodo30 = true;
+      periodoCustomizado = false
+    } else if(periodo == "60") {
+      periodo60 = true
+      periodoCustomizado = false
+    }
+    if (periodoCustomizado) {
+      return axios.get(`${apiURL}transacoes/razao?dataInicio=${dataInicial}&dataFim=${dataFinal}`)
+    } else {
+      return axios.get(`${apiURL}transacoes/razao?&dias30=${periodo30}&dias60=${periodo60}`)  
+    }
 
+
+  } ,
+
+  teste22(periodo,dataInicial,dataFinal){
+    let periodo30 = false;
+    let periodo60 = false;
+    let periodoCustomizado = true;
+    if (periodo == "30") {
+      periodo30 = true;
+      periodoCustomizado = false
+    } else if(periodo == "60") {
+      periodo60 = true
+      periodoCustomizado = false
+    }
+    let url;
+    if (periodoCustomizado) {
+      url = (`${apiURL}transacoes/razao?dataInicio=${dataInicial}&dataFim=${dataFinal}`)
+    } else {
+      url =  (`${apiURL}transacoes/razao?&dias30=${periodo30}&dias60=${periodo60}`)  
+    }
+
+    axios.get(url, { responseType: 'blob' })
+  .then(response => {
+    const blob = new Blob([response.data], { type: 'arraybuffer' });
+    
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'teste.pdf');
+    document.body.appendChild(link);
+    link.click();
+  })
+  .catch(error => {
+    console.error('Erro ao baixar o arquivo', error);
+  });
+
+
+  }
 
   
 }

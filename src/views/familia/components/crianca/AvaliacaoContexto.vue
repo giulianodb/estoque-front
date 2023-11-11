@@ -66,9 +66,14 @@
 
             <br /><br />
 
-            <b-button @click="salvarAvaliacao()" variant="primary" size="md"
-              ><i class="far fa-save"></i> Salvar</b-button
-            >
+            <b-button @click="salvarAvaliacao()" variant="primary" size="md">
+                <i class="far fa-save"></i> Salvar
+            </b-button>
+            
+            &nbsp;
+
+            <b-button outline @click="voltar()" size="md" variant="secondary">Voltar</b-button>
+
           </b-form>
         </b-card>
       </b-col>
@@ -94,16 +99,16 @@ export default {
       get() {
         return this.$store.getters.getCrianca;
       },
-      set() {
-        this.$store.commit("setCrianca", this.crianca);
+      set(obj) {
+        this.$store.commit("setCrianca", obj);
       },
     },
     familia: {
       get() {
         return this.$store.getters.getFamilia;
       },
-      set() {
-        this.$store.commit("setFamilia", this.familia);
+      set(obj) {
+        this.$store.commit("setFamilia", obj);
       },
     },
   },
@@ -145,6 +150,9 @@ export default {
               message: "Sucesso ao salvar avaliação de contexo",
               variant: "success",
             });
+
+
+
           })
           .catch((err) => {
             this.avaliacaoContexto = {};
@@ -158,6 +166,9 @@ export default {
               message: "Sucesso ao atualizar avaliação de contexto",
               variant: "success",
             });
+
+
+
           })
           .catch((err) => {
             this.avaliacaoContexto = {};
@@ -211,10 +222,14 @@ export default {
       this.$store.dispatch("novaCrianca");
       this.$store.dispatch("limparMensagens");
     },
+    voltar(){
+      this.$router.push(`/crianca`)
+    }
   },
 
   created() {
     // this.buscarCrianca(this.$route.params.idCrianca)
+    this.crianca = {id:this.$route.params.idCrianca}
     this.buscarAvaliacaoContexto(this.$route.params.idCrianca);
   },
 };

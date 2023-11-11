@@ -34,7 +34,7 @@
                 label="Data Inicial"
                 label-for="dataInicio"
               >
-                <b-form-input
+              <b-form-input
                   @change="atualizarTransacacoes()"
                   id="dataInicio-input"
                   v-model="fluxoCaixaPesquisa.dataInicial"
@@ -62,7 +62,11 @@
       
       <div>
         <b-button v-b-modal.modal-prevent-closing @click="resetTransacao()">Nova Movimentação</b-button>
-        <b-modal
+        &nbsp; 
+     
+        <b-button @click="emitirRazao()">Emitir Razão</b-button> 
+        
+        <b-modal size="lg"
           id="modal-prevent-closing"
           ref="modal"
           title="Movimentação financeira"
@@ -127,21 +131,11 @@
 
                   <b-form-select
                           id="tipoTransacao"
-                          required
-                          :plain="true"
                           v-model="transacao.tipoTransacaoEnum"
-                          data-vv-name="tipoTransacao"
-                          data-vv-as="tipoTransacao"
-                          :error-messages="errors.collect('tipoTransacao')"
-                          :state="tipoTransacaoState"
+                          :onchange="montarGrupoCategoriaCombo()"
                         >
-                        <template slot="first" >
                           <option  value='RECEITA' > Receita  </option>
-                          </template> 
-                        
-                        
-                                <option  value='PAGAMENTO' > Pagamento  </option>
-
+                          <option  value='PAGAMENTO' > Pagamento  </option>
                         </b-form-select>
                   </b-form-group>
                 
@@ -267,6 +261,69 @@
                           </model-list-select>
                   </b-form-group>
               </b-col>
+
+              <b-col lg="6" sm="6">
+                  <b-form-group
+                      label="Centro de custo"
+                      label-for="centroCusto"
+                      invalid-feedback="centroCusto"
+                    >
+
+                    <b-form-select
+                            id="centroCusto"
+                            required
+                            v-model="transacao.centroCusto.id"
+                            data-vv-name="centroCusto"
+                            data-vv-as="centroCusto"
+                            :error-messages="errors.collect('centroCusto')"
+                            :state="centroCustoState"
+                          >
+                          <option  :value="-1" disabled  :selected="true" > Selecione  </option>
+                        
+                          <option v-for="cc in listaCentroCusto" :value="cc.id" :key="cc.id" > {{cc.nome}}  </option>
+
+                          </b-form-select>
+                    </b-form-group>
+
+                </b-col>
+
+                <b-col lg="6" sm="6">
+                  <b-form-group
+                      label="Categoria"
+                      label-for="categoria"
+                      invalid-feedback="categoria"
+                    >
+
+                          <b-form-select
+                            id="categoria"
+                            v-if="mostrarComboReceita"
+                            required
+                            v-model="transacao.categoria.id"
+                            data-vv-name="categoria"
+                            data-vv-as="categoria"
+                            :error-messages="errors.collect('categoria')"
+                            :state="centroCustoState"
+                            :options="grupoCategoriaReceitaCombo"
+                          />
+
+                          <b-form-select
+                            id="categoria"
+                            v-if="!mostrarComboReceita"
+                            required
+                            v-model="transacao.categoria.id"
+                            data-vv-name="categoria"
+                            data-vv-as="categoria"
+                            :error-messages="errors.collect('categoria')"
+                            :state="centroCustoState"
+                            :options="grupoCategoriaDespesaCombo"
+                          />
+                  
+                  
+                   </b-form-group>
+
+                </b-col>
+
+
             </b-row>
           </form>
         </b-modal>
@@ -299,6 +356,7 @@ export default {
         dataState: null,
         tipoTransacaoState: null,
         contaState: null,
+        centroCustoState: null,
         tipoParceiroState: null,
         doadorState: null,
         familiaState: null,
@@ -307,12 +365,20 @@ export default {
         valorState: null,
         submittedNames: [],
         contas:[],
+        listaCentroCusto:[],
         listaInstituicao:[],
         listaDoador:[],
         listaFamilia:[],
         mostrarFamilia:true,
         mostrarDoador:false,
-        mostrarInstituicao:false
+        mostrarInstituicao:false,
+        listaCategoriaDespesa:[],
+        listaCategoriaReceita:[],
+        grupoCategoriaCombo:[],
+        grupoCategoriaReceitaCombo:[],
+        grupoCategoriaPagamentoCombo:[],
+        mostrarComboReceita : true,
+        testeTipo:''
     }
   },
   computed: {
@@ -326,10 +392,9 @@ export default {
     },
     transacao: {
       get () {
-        return this.$store.getters.getTransacao
+         return this.$store.getters.getTransacao
       },
       set (valor) {
-        console.log(valor)
         this.$store.commit('setTransacao', valor)
       }
     }
@@ -390,7 +455,6 @@ export default {
         }
 
 
-        console.log(this.erros['descricao'])
         //this.nameState = valid
         return valid
       },
@@ -403,25 +467,26 @@ export default {
         this.transacao.id = null
         this.transacao.descricao = ""
         this.transacao.data = null
+        this.transacao.centroCusto = {}
+        
 
         var objConta = this.$store.getters.getContaPesquisa
         var thisExterno = this
        
         if (objConta === null || objConta === undefined || objConta.id === undefined) {
-          this.transacao = {conta:thisExterno.contas[0]}
+          this.transacao = {conta:thisExterno.contas[0],centroCusto:{}}
         } else {
-          console.log(objConta.id)
           for(let i=0; i<thisExterno.contas.length; i++){
             if (thisExterno.contas[i].id == objConta.id) {
-              thisExterno.transacao = {conta:thisExterno.contas[i]}
+              thisExterno.transacao = {conta:thisExterno.contas[i],centroCusto:{}}
             }
           }
         }
 
-        console.log(this.transacao)
+        this.transacao.categoria = {}
+
       },
       handleOk(bvModalEvent) {
-        console.log("AQui?")
         //this.salvar();
 
         // Prevent modal from closing
@@ -434,7 +499,6 @@ export default {
         // Exit when the form isn't valid
         if (!this.checkFormValidity()) {
 
-          console.log("algo nao validou")
           return
         }
 
@@ -453,13 +517,7 @@ export default {
 
       },
       salvar(){
-        console.log("§§§")
-        console.log(this.transacao.valor)
-        console.log("§§§ - fim")
         this.transacao.valor = this.formatarMoedaToServer(this.transacao.valor) 
-        console.log("--")
-        console.log(this.transacao)
-       console.log("--")
         Api.salvarTransacao(this.transacao)
             .then(res => {
               this.$store.commit('setMessages', {
@@ -486,20 +544,115 @@ export default {
           })
       
       },
+      montarGrupoCategoriaCombo(){
+          if (this.transacao.tipoTransacaoEnum === 'PAGAMENTO'){
+            this.mostrarComboReceita = false
+          } else if(this.transacao.tipoTransacaoEnum === 'RECEITA' ){
+            this.mostrarComboReceita = true
+          }
+
+      },
+      montarGrupoCategoriaComboAntigo(){
+        let lista = [];
+      //  if (this.transacao.tipoTransacaoEnum === null || this.transacao.tipoTransacaoEnum === undefined){
+      //   this.transacao.tipoTransacaoEnum = 'RECEITA'
+      //   this.testeTipo = 'RECEITA'
+      //  }
+       
+        if (this.transacao.tipoTransacaoEnum == 'PAGAMENTO' && this.testeTipo != 'PAGAMENTO'){
+          this.listaCategoriaDespesa.forEach(d => {
+            let options = [];
+            d.listaCategoria.forEach( c =>{
+              options.push({value:c,text:c.nome})
+            });
+            
+            lista.push({ label : d.nome, options: options})
+
+          });
+
+          this.testeTipo = 'PAGAMENTO'
+          this.grupoCategoriaCombo = lista;
+
+        } else if(this.transacao.tipoTransacaoEnum == 'RECEITA' && this.testeTipo != 'RECEITA'){
+
+              this.listaCategoriaReceita.forEach(d => {
+                let options = [];
+                d.listaCategoria.forEach( c =>{
+                  options.push({value:c,text:c.nome})
+                });
+                
+                lista.push({ label : d.nome, options: options})
+
+              });
+
+              this.grupoCategoriaCombo = lista;
+              this.testeTipo = 'RECEITA'
+        }
+
+
+      },
+      carregarListaCentroCusto(){
+        Api.getListaCentroCusto()
+            .then(res => {
+                this.listaCentroCusto = res.data;
+          })
+          .catch(err => {
+            this.$store.commit('setMessages', err.response.data)
+          })
+      },
       montarParceiros(){
+        Api.getParceiros()
+            .then(res => {
 
-      Api.getParceiros()
-          .then(res => {
-
-              this.listaDoador = res.data.listaDoador;
-              this.listaFamilia = res.data.listaFamilia
-              this.listaInstituicao = res.data.listaInstituicaoDTOs
-        })
-        .catch(err => {
-          this.$store.commit('setMessages', err.response.data)
-        })
+                this.listaDoador = res.data.listaDoador;
+                this.listaFamilia = res.data.listaFamilia
+                this.listaInstituicao = res.data.listaInstituicaoDTOs
+          })
+          .catch(err => {
+            this.$store.commit('setMessages', err.response.data)
+          })
     
-    },
+      },
+      montarCategoria(){
+        Api.getListaGrupoCategoria()
+            .then(res => {
+                this.listaCategoriaDespesa = res.data.despesas;
+                this.listaCategoriaReceita = res.data.receitas;
+
+                let listaR = [];
+                let listaD = [];
+                this.listaCategoriaDespesa.forEach(d => {
+                      let options = [];
+                      d.listaCategoria.forEach(c => {
+                        options.push({ value: c.id, text: c.nome })
+                      });
+
+                      listaD.push({ label: d.nome, options: options })
+
+                });
+                this.grupoCategoriaDespesaCombo = listaD;
+
+                this.listaCategoriaReceita.forEach(d => {
+                      let options = [];
+                      d.listaCategoria.forEach(c => {
+                        options.push({ value: c.id, text: c.nome })
+                      });
+
+                      listaR.push({ label: d.nome, options: options })
+
+                });
+                this.grupoCategoriaReceitaCombo = listaR;
+
+
+
+
+                this.montarGrupoCategoriaCombo()
+          })
+          .catch(err => {
+            this.$store.commit('setMessages', err.response.data)
+          })
+    
+      },
       selecionado(obj){
         var conta = this.$store.getters.getContaPesquisa
         if (conta.id == obj.id){
@@ -532,6 +685,29 @@ export default {
           //this.transacao.doador = {id:null}
 
         }
+      },
+
+      emitirRazao(){
+
+        let fluxoPesquisa = this.$store.getters.getFluxoCaixaPesquisa
+        let contaPesquisa = this.$store.getters.getContaPesquisa
+
+        Api.teste22(fluxoPesquisa.periodo, fluxoPesquisa.dataInicial,fluxoPesquisa.dataFinal);
+
+        // Api.emitirRelatorioRazao(fluxoPesquisa.periodo, fluxoPesquisa.dataInicial,fluxoPesquisa.dataFinal)
+        //     .then(res => {
+        //       const blob = new Blob([res.data], { type: 'application/pdf' });
+        //       console.log(blob)
+        //       const url = window.URL.createObjectURL(blob);
+        //       const link = document.createElement('a');
+        //       link.href = url;
+        //       link.setAttribute('download', 'teste.pdf');
+        //       document.body.appendChild(link);
+        //       link.click();
+        //       })
+        //   .catch(err => {
+        //     this.$store.commit('setMessages', err.response.data)
+        //   })
       }
       
     },
@@ -540,16 +716,23 @@ export default {
       events.$on('editarTransacao', (t) => {
         this.$bvModal.show('modal-prevent-closing')
       }) 
-
+      this.testeTipo = 'PAGAMENTO'
+      this.transacao.tipoTransacaoEnum = 'RECEITA'
+      this.transacao.centroCusto = {}
       this.fluxoCaixaPesquisa = {periodo:"30"}
+       
       this.montarParceiros();
       this.mostrarCombos();
-      //this.montarContas();
-      //this.$store.commit('setFluxoCaixaPesquisa',{periodo:"30"})
+      this.montarCategoria();
+      this.transacao.categoria = {}
     },
+    beforeDestroy() {
+    // removing eventBus listener
+    //events.$off('editarTransacao')
+  },
     mounted(){
       this.montarContas();
-      
+      this.carregarListaCentroCusto();
       this.transacao.valor = "0,00"
       const date= new Date()
       const dateFin= new Date()
@@ -557,6 +740,7 @@ export default {
       const dateIni = new Date(date.setMonth(date.getMonth() - 1))
 
       this.fluxoCaixaPesquisa = {dataInicial:dateIni.toISOString().substr(0, 10),dataFinal:dateFin.toISOString().substr(0, 10),periodo:30}
+
     }
 }
 </script>

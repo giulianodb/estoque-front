@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.use(VueTheMask)
 Vue.use(PortalVue)
 
+
 Vue.use(VueI18n)
 const i18n = new VueI18n({
   locale: 'ptBR'
