@@ -15,7 +15,7 @@
             <b-row>
               <b-col lg="6" sm="12">
                 <b-form-group
-                  label="Nome do conta:"
+                  label="Nome da conta:"
                   label-for="nome"
                   class="text-label required"
                 >
