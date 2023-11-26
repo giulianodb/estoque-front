@@ -17,6 +17,8 @@ import Login from '@/views/login/Login'
 import FluxoCaixa from '@/views/conta/FluxoCaixa'
 import Conta from '@/views/conta/Conta'
 import Razao from '@/views/conta/Razao'
+import ListarEmpresa from '@/views/empresa/ListarEmpresa'
+import EditarEmpresa from '@/views/empresa/EditarEmpresa'
 
 import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -230,6 +232,34 @@ const router = new Router({
          groups: ['ROLE_Administrador','ROLE_Financeiro']
        }
      },
+
+     {
+      path: '/empresa/listar',
+       name: 'listarEmpresa',
+       component: ListarEmpresa,
+       meta: {
+         breadcrumb: true,
+         label: 'ListarEmpresa',
+         requiresAuth: true,
+         groups: ['ROLE_Administrador','ROLE_Financeiro','ROLE_Estoque']
+       }
+     },
+
+     {
+      path: '/empresa/editar',
+       name: 'editarEmpresa',
+       component: EditarEmpresa,
+       meta: {
+         breadcrumb: true,
+         label: 'EditarEmpresa',
+         requiresAuth: true,
+         groups: ['ROLE_Administrador','ROLE_Financeiro','ROLE_Estoque']
+       }
+     },
+
+
+     
+
     // error pages
     {
       path: '/accessdenied',

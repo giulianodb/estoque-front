@@ -423,11 +423,17 @@ export default {
     console.log(transacao)
     transacao.conta = conta
     if (transacao.id > 0 ) {
-      return axios.put(`${apiURL}transacoes/${transacao.id}`, transacao)
+      return axios.put(`${apiURL}transacoes/${transacao.id}`, transacao,{ responseType: 'blob' })
     } else {
-      return axios.post(`${apiURL}transacoes`, transacao)
+      return axios.post(`${apiURL}transacoes`, transacao,{ responseType: 'blob' })
     }
   },
+
+
+  getRecibo: (transacao) => {
+      return axios.get(`${apiURL}transacoes/recibo?cod=${transacao.id}`,{ responseType: 'blob' })
+  },
+  
 
   deletarTransacao: (transacao) => {
     return axios.delete(`${apiURL}transacoes/${transacao.id}`)
@@ -509,14 +515,14 @@ export default {
 
   } ,
 
-  teste22(periodo,dataInicial,dataFinal){
+  teste22(periodo, dataInicial, dataFinal) {
     let periodo30 = false;
     let periodo60 = false;
     let periodoCustomizado = true;
     if (periodo == "30") {
       periodo30 = true;
       periodoCustomizado = false
-    } else if(periodo == "60") {
+    } else if (periodo == "60") {
       periodo60 = true
       periodoCustomizado = false
     }
@@ -524,26 +530,54 @@ export default {
     if (periodoCustomizado) {
       url = (`${apiURL}transacoes/razao?dataInicio=${dataInicial}&dataFim=${dataFinal}`)
     } else {
-      url =  (`${apiURL}transacoes/razao?&dias30=${periodo30}&dias60=${periodo60}`)  
+      url = (`${apiURL}transacoes/razao?&dias30=${periodo30}&dias60=${periodo60}`)
     }
 
     axios.get(url, { responseType: 'blob' })
-  .then(response => {
-    const blob = new Blob([response.data], { type: 'arraybuffer' });
-    
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'teste.pdf');
-    document.body.appendChild(link);
-    link.click();
-  })
-  .catch(error => {
-    console.error('Erro ao baixar o arquivo', error);
-  });
+      .then(response => {
+        const blob = new Blob([response.data], { type: 'arraybuffer' });
+
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'teste.pdf');
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch(error => {
+        console.error('Erro ao baixar o arquivo', error);
+      });
 
 
-  }
+  },
+
+  getEmpresa : (page, perPage, sortBy, sortDesc, nome, ) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}instituicoes?nome=${nome}&page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}instituicoes?nome=${nome}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+
+  salvarEmpresa: (e) => {
+    return axios.post(`${apiURL}instituicoes`, e)
+  },
+  alterarEmpresa: (e) => {
+    return axios.put(`${apiURL}instituicoes`, e)
+  },
 
   
 }

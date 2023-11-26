@@ -70,9 +70,13 @@
           id="modal-prevent-closing"
           ref="modal"
           title="Movimentação financeira"
-          @show="resetModal"
-          @hidden="resetModal"
+          @show="resetModalClose"
+          @hidden="resetModalClose"
           @ok="handleOk"
+          @close="resetModalClose"
+          @cancel="resetModalClose"
+          ok-title="Salvar"
+          cancel-title="Fechar"
         >
           <form ref="form" @submit.stop.prevent="handleSubmit">
             <b-row>
@@ -102,7 +106,7 @@
                         type="number"
                         step="0.01" 
                         v-model="transacao.valor"
-                        required
+                        
                         :state="valorState"
                       ></b-form-input>
                     </b-form-group>
@@ -185,28 +189,30 @@
                          :onchange="mostrarCombos()"
                         >
                         <template  #first>
-                          <b-form-select-option  value="FAMILIA" > Família  </b-form-select-option>
+                          <b-form-select-option  value="CPF" > Cliente PF  </b-form-select-option>
                         </template> 
-                        
-                        
-                                <option  value='DOADOR' > Doador  </option>
-                                <option  value='INSTITUICAO' > Instituição  </option>
-
+                                <option  value='FPF' > Fornecedor PF  </option>
+                                <option  value='CPJ' > Cliente PJ  </option>
+                                <option  value='FPJ' > Fornecedor PJ  </option>
+                                <option  value='ANONIMO' > Anônimo  </option>
                         </b-form-select>
                   </b-form-group>
 
               </b-col>
+
+
               <b-col lg="12" sm="12">
-                  <b-form-group
-                    label="Doador"
+                  
+                <b-form-group
+                    label="Cliente PF"
                     label-for="doador"
-                    v-if="mostrarDoador"
+                    v-if="mostrarDoadorCliente"
                   >
                   <model-list-select 
                           id="doador"
                           :plain="true"
                           v-model="transacao.idDoador"
-                          :list="listaDoador"
+                          :list="listaDoadorCliente"
                           option-value="id"
                           placeholder="Pesquise"
                           option-text="nome"
@@ -216,50 +222,70 @@
                           :state="doadorState"
                         >
                         </model-list-select >
-
                   </b-form-group>
 
                   <b-form-group
-                    label="Família"
-                    label-for="familia"
-                    v-if="mostrarFamilia"
+                    label="Fornecedor PF"
+                    label-for="doadorFPF"
+                    v-if="mostrarDoadorFornecedor"
                   >
                   <model-list-select 
-                          id="familia"
-                          :list="listaFamilia"
+                          id="doadorFPF"
+                          :plain="true"
+                          v-model="transacao.idDoador"
+                          :list="listaDoadorFornecedor"
                           option-value="id"
-                          option-text="nomeResponsavel"
                           placeholder="Pesquise"
-                          v-model="transacao.idFamilia"
-                          data-vv-name="familia"
-                          data-vv-as="familia"
-                          :error-messages="errors.collect('familia')"
-                          :state="familiaState"
+                          option-text="nome"
+                          data-vv-name="doador"
+                          data-vv-as="doador"
+                          :error-messages="errors.collect('doadorFPF')"
+                          :state="doadorState"
                         >
                         </model-list-select >
-
                   </b-form-group>
 
 
 
                   <b-form-group
-                    label="Instituição"
-                    label-for="instituicao"
-                    v-if="mostrarInstituicao"
+                    label="Cliente PJ"
+                    label-for="instituicaoCliente"
+                    v-if="mostrarInstituicaoCliente"
                   >
                   <model-list-select 
-                          id="instituicao"
-                          :list="listaInstituicao"
+                          id="instituicaoCliente"
+                          :list="listaInstituicaoCliente"
                           placeholder="Pesquise"
                           option-value="id"
                           option-text="nome"
                           v-model="transacao.idInstituicao"
-                          data-vv-name="instituicao"
-                          data-vv-as="instituicao"
-                          :error-messages="errors.collect('instituicao')"
+                          data-vv-name="instituicaoCliente"
+                          data-vv-as="instituicaoCliente"
+                          :error-messages="errors.collect('instituicaoCliente')"
                           :state="instituicaoState">
                           </model-list-select>
                   </b-form-group>
+
+
+                  <b-form-group
+                    label="Fornecedor PJ"
+                    label-for="instituicaoFornecedor"
+                    v-if="mostrarInstituicaoFornecedor"
+                  >
+                  <model-list-select 
+                          id="instituicaoFornecedor"
+                          :list="listaInstituicaoFornecedor"
+                          placeholder="Pesquise"
+                          option-value="id"
+                          option-text="nome"
+                          v-model="transacao.idInstituicao"
+                          data-vv-name="instituicaoFornecedor"
+                          data-vv-as="instituicaoFornecedor"
+                          :error-messages="errors.collect('instituicaoFornecedor')"
+                          :state="instituicaoState">
+                          </model-list-select>
+                  </b-form-group>
+
               </b-col>
 
               <b-col lg="6" sm="6">
@@ -326,6 +352,8 @@
 
             </b-row>
           </form>
+          
+
         </b-modal>
       </div>
     </b-card>
@@ -366,12 +394,20 @@ export default {
         submittedNames: [],
         contas:[],
         listaCentroCusto:[],
-        listaInstituicao:[],
-        listaDoador:[],
-        listaFamilia:[],
-        mostrarFamilia:true,
-        mostrarDoador:false,
-        mostrarInstituicao:false,
+        
+        listaInstituicaoCliente:[],
+        listaInstituicaoFornecedor:[],
+        
+        listaDoadorCliente:[],
+        listaDoadorFornecedor:[],
+
+
+        mostrarDoadorCliente:true,
+        mostrarDoadorFornecedor:false,
+        mostrarInstituicaoCliente:false,
+        mostrarInstituicaoFornecedor:false,
+        
+        
         listaCategoriaDespesa:[],
         listaCategoriaReceita:[],
         grupoCategoriaCombo:[],
@@ -458,7 +494,10 @@ export default {
         //this.nameState = valid
         return valid
       },
-      resetModal() {
+      resetModalClose(bvModalEvent) {
+        // alert("ddd")
+        // console.log("teste")
+        // bvModalEvent.preventDefault()
         //this.transacao = {}
 
       },
@@ -504,10 +543,19 @@ export default {
 
           this.salvar();
 
-              // Hide the modal manually
+          
+          /*
+          // Hide the modal manually
+
               this.$nextTick(() => {
                 this.$bvModal.hide('modal-prevent-closing')
               })
+          */
+            
+          
+         
+
+
 
      
       },
@@ -516,21 +564,45 @@ export default {
         events.$emit('pesquisarContasPorTipo')
 
       },
-      salvar(){
-        this.transacao.valor = this.formatarMoedaToServer(this.transacao.valor) 
-        Api.salvarTransacao(this.transacao)
-            .then(res => {
-              this.$store.commit('setMessages', {
-                message: 'Sucesso ao salvar Movimentação financeira',
-                variant: 'success'
+    salvar() {
+      console.log(this.transacao.valor)
+      this.transacao.valor = this.formatarMoedaToServer(this.transacao.valor)
+      console.log(this.transacao.valor)
+      Api.salvarTransacao(this.transacao)
+        .then(res => {
+          this.$store.commit('setMessages', {
+            message: 'Sucesso ao salvar Movimentação financeira',
+            variant: 'success'
+          })
+          events.$emit('pesquisarTransacao')
+          events.$emit('pesquisarContasPorTipo')
+
+          if (this.transacao.id !== null){
+            this.$nextTick(() => {
+                this.$bvModal.hide('modal-prevent-closing')
               })
-              events.$emit('pesquisarTransacao')
-              events.$emit('pesquisarContasPorTipo')
-          })
-          .catch(err => {
-            this.$store.commit('setMessages', err.response.data)
-          })
-      },
+          }
+
+          this.resetTransacao()
+          const blob = new Blob([res.data], { type: 'arraybuffer' });
+
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'recibo.pdf');
+          document.body.appendChild(link);
+          link.click();
+
+          
+          
+
+        })
+        .catch(err => {
+          this.$store.commit('setMessages', err.response.data)
+        })
+
+
+    },
 
       montarContas(){
       
@@ -552,45 +624,7 @@ export default {
           }
 
       },
-      montarGrupoCategoriaComboAntigo(){
-        let lista = [];
-      //  if (this.transacao.tipoTransacaoEnum === null || this.transacao.tipoTransacaoEnum === undefined){
-      //   this.transacao.tipoTransacaoEnum = 'RECEITA'
-      //   this.testeTipo = 'RECEITA'
-      //  }
-       
-        if (this.transacao.tipoTransacaoEnum == 'PAGAMENTO' && this.testeTipo != 'PAGAMENTO'){
-          this.listaCategoriaDespesa.forEach(d => {
-            let options = [];
-            d.listaCategoria.forEach( c =>{
-              options.push({value:c,text:c.nome})
-            });
-            
-            lista.push({ label : d.nome, options: options})
-
-          });
-
-          this.testeTipo = 'PAGAMENTO'
-          this.grupoCategoriaCombo = lista;
-
-        } else if(this.transacao.tipoTransacaoEnum == 'RECEITA' && this.testeTipo != 'RECEITA'){
-
-              this.listaCategoriaReceita.forEach(d => {
-                let options = [];
-                d.listaCategoria.forEach( c =>{
-                  options.push({value:c,text:c.nome})
-                });
-                
-                lista.push({ label : d.nome, options: options})
-
-              });
-
-              this.grupoCategoriaCombo = lista;
-              this.testeTipo = 'RECEITA'
-        }
-
-
-      },
+      
       carregarListaCentroCusto(){
         Api.getListaCentroCusto()
             .then(res => {
@@ -604,9 +638,12 @@ export default {
         Api.getParceiros()
             .then(res => {
 
-                this.listaDoador = res.data.listaDoador;
-                this.listaFamilia = res.data.listaFamilia
-                this.listaInstituicao = res.data.listaInstituicaoDTOs
+                this.listaDoadorFornecedor = res.data.listaDoadorFornecedor;
+                this.listaDoadorCliente = res.data.listaDoadorCliente;
+                this.listaInstituicaoFornecedor = res.data.listaInstituicaoFornecedor
+                this.listaInstituicaoCliente = res.data.listaInstituicaoCliente               
+
+
           })
           .catch(err => {
             this.$store.commit('setMessages', err.response.data)
@@ -660,29 +697,43 @@ export default {
         }
       },
       mostrarCombos(){
-        if (this.transacao.tipoParceiro == 'DOADOR'){
-          this.mostrarInstituicao = false
-          this.mostrarFamilia = false
-          this.mostrarDoador = true
+        
+        if (this.transacao.tipoParceiro == 'CPF'){
+          this.mostrarDoadorCliente = true
+          this.mostrarDoadorFornecedor = false
+          this.mostrarInstituicaoCliente = false
+          this.mostrarInstituicaoFornecedor = false
 
-          //this.transacao.familia = {id:null}
-          //this.transacao.instituicao = {id:null}
 
-        } else if(this.transacao.tipoParceiro == 'INSTITUICAO'){
-          this.mostrarInstituicao = true
-          this.mostrarFamilia = false
-          this.mostrarDoador = false
+        } else if(this.transacao.tipoParceiro == 'FPF'){
+          this.mostrarDoadorCliente = false
+          this.mostrarDoadorFornecedor = true
+          this.mostrarInstituicaoCliente = false
+          this.mostrarInstituicaoFornecedor = false
 
-          //this.transacao.familia = {id:null}
-          //this.transacao.doador = {id:null}
 
-        } else {
-          this.mostrarInstituicao = false
-          this.mostrarFamilia = true
-          this.mostrarDoador = false
+        } else if(this.transacao.tipoParceiro == 'CPJ'){
+          this.mostrarDoadorCliente = false
+          this.mostrarDoadorFornecedor = false
+          this.mostrarInstituicaoCliente = true
+          this.mostrarInstituicaoFornecedor = false
 
-          //this.transacao.instituicao = {id:null}
-          //this.transacao.doador = {id:null}
+
+        }  
+        else if(this.transacao.tipoParceiro == 'FPJ'){
+          this.mostrarDoadorCliente = false
+          this.mostrarDoadorFornecedor = false
+          this.mostrarInstituicaoCliente = false
+          this.mostrarInstituicaoFornecedor = true
+
+        }  
+        
+        else {
+          this.mostrarDoadorCliente = false
+          this.mostrarDoadorFornecedor = false
+          this.mostrarInstituicaoCliente = false
+          this.mostrarInstituicaoFornecedor = false
+
 
         }
       },
@@ -716,6 +767,7 @@ export default {
       events.$on('editarTransacao', (t) => {
         this.$bvModal.show('modal-prevent-closing')
       }) 
+
       this.testeTipo = 'PAGAMENTO'
       this.transacao.tipoTransacaoEnum = 'RECEITA'
       this.transacao.centroCusto = {}

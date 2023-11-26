@@ -77,6 +77,27 @@ export default {
         // }
       ]
     },
+    {
+      name: 'Empresas',
+      url: '#',
+      icon: 'fas fa-city',
+      groups: ['ROLE_Administrador','ROLE_Financeiro','ROLE_Estoque'],
+      children: [
+        {
+          name: 'Cadastro',
+          url: '/empresa/editar'
+
+        }, {
+          name: 'Listar',
+          url: '/empresa/listar'
+        },
+        
+        // {
+        //   name: 'Razão',
+        //   url: '/razao'
+        // }
+      ]
+    },
     
   //   {
   //     name: 'Produto',

@@ -70,5 +70,11 @@ export default {
   },
   deletarAluno: (aluno) => {
     return axios.delete(`${apiURL}/alunos/${aluno.idAluno}`)
-  }
+  },
+  salvarEmpresa: (e) => {
+    return axios.post(`${apiURL}instituicoes`, e)
+  },
+  alterarEmpresa: (e) => {
+    return axios.put(`${apiURL}instituicoes`, e)
+  },
 }

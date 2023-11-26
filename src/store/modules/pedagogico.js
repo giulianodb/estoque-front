@@ -2,6 +2,7 @@ export default {
 
   state: {
     aluno: {},
+    empresa: {},
     alunos: [],
     familia: { estadoCivil: "-1" , motivo: {}, listMembroFamilia: [], programas: {}, moradia: {tipoMoradia: "-1",materialMoradia: "-1", propriedadeMoradia: "-1",situacaoMoradia:"-1"  },visitaDomiciliar:{} },
     familias: [],
@@ -106,6 +107,9 @@ export default {
     setContas(state, payload){
       state.contas = payload
     },
+    setEmpresa (state, payload) {
+      state.empresa = payload
+    },
 
     setMessages (state, payload) {
       state.messages = payload
@@ -185,6 +189,9 @@ export default {
     getContas (state) {
       return state.contas
     },
+    getEmpresa (state) {
+      return state.empresa
+    },
 
 
     getMessages (state) {
@@ -199,6 +206,10 @@ export default {
     novaFamilia (state) {
       state.commit('setFamilia', { estadoCivil: "-1" , motivo: {}, listMembroFamilia: [], programas: {}, moradia: {tipoMoradia: "-1",materialMoradia: "-1", propriedadeMoradia: "-1",situacaoMoradia:"-1" },visitaDomiciliar:{}})
 
+    },
+
+    novaEmpresa (state) {
+      state.commit('setEmpresa', {})
     },
     novaCrianca (state) {
       state.commit('setCrianca', {  projeto:"-1", sexo: "-1", listaEspera: false, matriculado: false })

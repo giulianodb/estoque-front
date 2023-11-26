@@ -23,6 +23,9 @@
 
         <template v-slot:cell(acoes)="data">
            <div class="d-flex justify-content-end">
+            <b-link title="Recibo" @click="emitirRecibo(data.item)" class="btn btn-outline-info">
+            <i class="fas fa-receipt"></i>
+            </b-link>&nbsp;
             <b-link title="Alterar" @click="iniciarEditar(data.item)" class="btn btn-outline-info">
             <i class="fas fa-pencil-alt"></i>
             </b-link>&nbsp;
@@ -154,6 +157,25 @@ export default {
       this.$store.commit('setTransacao', objNovo)
       events.$emit('editarTransacao', objNovo)
     },
+
+    emitirRecibo(obj){
+      Api.getRecibo(obj)
+            .then(res => {
+              const blob = new Blob([res.data], { type: 'arraybuffer' });
+
+              const url = window.URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download', 'recibo.pdf');
+              document.body.appendChild(link);
+              link.click();
+
+
+            })
+            .catch(err => {
+              this.$store.commit('setMessages', err.response.data)
+            })
+    }
     }
 }
 </script>
