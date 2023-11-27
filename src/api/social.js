@@ -579,5 +579,34 @@ export default {
     return axios.put(`${apiURL}instituicoes`, e)
   },
 
+  getPessoa : (page, perPage, sortBy, sortDesc, nome, ) => {
+    if (page == null || page === undefined) {
+      page = 1
+    }
+
+    if (perPage == null || perPage === undefined) {
+      perPage = 50
+    }
+
+    if (sortBy == null) {
+      return axios.get(`${apiURL}doadores?nome=${nome}&page=${page}&linesPerPage=${perPage}`)
+    } else {
+      let ordem = 'ASC'
+      if (sortDesc) {
+        ordem = 'DESC'
+      }
+
+      return axios.get(`${apiURL}doadores?nome=${nome}&page=${page}&linesPerPage=${perPage}&direction=${ordem}&orderBy=${sortBy}`)
+    }
+  },
+
+  salvarPessoa: (e) => {
+    return axios.post(`${apiURL}doadores`, e)
+  },
+  alterarPessoa: (e) => {
+    return axios.put(`${apiURL}doadores`, e)
+  },
+
+
   
 }

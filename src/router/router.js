@@ -19,6 +19,8 @@ import Conta from '@/views/conta/Conta'
 import Razao from '@/views/conta/Razao'
 import ListarEmpresa from '@/views/empresa/ListarEmpresa'
 import EditarEmpresa from '@/views/empresa/EditarEmpresa'
+import ListarPessoa from '@/views/pessoa/ListarPessoa'
+import EditarPessoa from '@/views/pessoa/EditarPessoa'
 
 import apiCentralSeguranca from '@/api/centralseguranca'
 
@@ -257,7 +259,29 @@ const router = new Router({
        }
      },
 
+     {
+      path: '/pessoa/listar',
+       name: 'listarPessoa',
+       component: ListarPessoa,
+       meta: {
+         breadcrumb: true,
+         label: 'ListarPessoa',
+         requiresAuth: true,
+         groups: ['ROLE_Administrador','ROLE_Financeiro','ROLE_Estoque']
+       }
+     },
 
+     {
+      path: '/pessoa/editar',
+       name: 'editarPessoa',
+       component: EditarPessoa,
+       meta: {
+         breadcrumb: true,
+         label: 'EditarPessoa',
+         requiresAuth: true,
+         groups: ['ROLE_Administrador','ROLE_Financeiro','ROLE_Estoque']
+       }
+     },
      
 
     // error pages
@@ -307,7 +331,7 @@ router.beforeEach((to, from, next) => {
                 break
               }
             }
-            if (to.meta.groups === ['']) {
+            if (to.meta.groups == ['']) {
               permission = true
             }
             if (permission) { // permission granted

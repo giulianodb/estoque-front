@@ -92,10 +92,23 @@ export default {
           url: '/empresa/listar'
         },
         
-        // {
-        //   name: 'Razão',
-        //   url: '/razao'
-        // }
+      ]
+    },
+    {
+      name: 'Pessoas',
+      url: '#',
+      icon: 'fas fa-users',
+      groups: ['ROLE_Administrador','ROLE_Financeiro','ROLE_Estoque'],
+      children: [
+        {
+          name: 'Cadastro',
+          url: '/pessoa/editar'
+
+        }, {
+          name: 'Listar',
+          url: '/pessoa/listar'
+        },
+        
       ]
     },
     

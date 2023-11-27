@@ -3,6 +3,7 @@ export default {
   state: {
     aluno: {},
     empresa: {},
+    pessoa: {},
     alunos: [],
     familia: { estadoCivil: "-1" , motivo: {}, listMembroFamilia: [], programas: {}, moradia: {tipoMoradia: "-1",materialMoradia: "-1", propriedadeMoradia: "-1",situacaoMoradia:"-1"  },visitaDomiciliar:{} },
     familias: [],
@@ -110,6 +111,9 @@ export default {
     setEmpresa (state, payload) {
       state.empresa = payload
     },
+    setPessoa (state, payload) {
+      state.pessoa = payload
+    },
 
     setMessages (state, payload) {
       state.messages = payload
@@ -192,6 +196,9 @@ export default {
     getEmpresa (state) {
       return state.empresa
     },
+    getPessoa (state) {
+      return state.pessoa
+    },
 
 
     getMessages (state) {
@@ -210,6 +217,9 @@ export default {
 
     novaEmpresa (state) {
       state.commit('setEmpresa', {})
+    },
+    novaPessoa (state) {
+      state.commit('setPessoa', {})
     },
     novaCrianca (state) {
       state.commit('setCrianca', {  projeto:"-1", sexo: "-1", listaEspera: false, matriculado: false })

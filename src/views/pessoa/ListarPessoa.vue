@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="fluid">
-    <h1 class="app-title">Pesquisar Empresas</h1>
+    <h1 class="app-title">Pesquisar Pessoas</h1>
 
     <b-row>
       <b-col md="12">
@@ -15,7 +15,7 @@
             <b-row>
               <b-col lg="3" sm="12">
                 <b-form-group label="Nome:" label-for="nome" class="text-label">
-                  <b-form-input id="nome"  v-model="empresaPesquisa.nome" :autofocus="true"/>
+                  <b-form-input id="nome"  v-model="pessoaPesquisa.nome" :autofocus="true"/>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -23,7 +23,7 @@
           </b-form>
 
           <div slot="footer" class="center-xy">
-            <b-button @click="pesquisarEmpresa()" variant="primary">
+            <b-button @click="pesquisarPessoa()" variant="primary">
               <i class="fas fa-search"></i> Pesquisar
             </b-button>
             &nbsp;
@@ -43,7 +43,7 @@
           hover="hover"
           striped="striped"
           fixed
-          :items="empresas"
+          :items="pessoas"
           :fields="fields"
           :current-page="currentPage"
           :per-page="0"
@@ -73,7 +73,7 @@
         </div>
         </b-table>
 
-        <b-row v-if="empresas.length > 0" class="my-1 center-xy">
+        <b-row v-if="pessoas.length > 0" class="my-1 center-xy">
             <b-pagination
               v-model="currentPage"
               :total-rows="totalRows"
@@ -100,16 +100,16 @@ import Api from '@/api/social'
 import events from '@/util/events'
 
 export default {
-  name: 'ListarEmpresa',
+  name: 'ListarPessoa',
   components: {},
   data() {
     return {
-      empresaPesquisa: {nome:''},
-      empresas: [],
+      pessoaPesquisa: {nome:''},
+      pessoas: [],
       fields: [
         { label: 'Nome', key: 'nome', sortable: false, sortDirection: 'desc' },
         { label: 'Telefone', key: 'telefone', sortable: false, sortDirection: 'desc' },
-        { label: 'Pessoa contato', key: 'nomeContato', sortable: false, sortDirection: 'desc' },
+        // { label: 'Pessoa contato', key: 'nomeContato', sortable: false, sortDirection: 'desc' },
         // { label: 'Estoque', key: 'estoque', sortable: false, sortDirection: 'desc' },
         // { label: 'Cliente', key: 'cliente', sortable: false, sortDirection: 'desc' },
         // { label: 'Fornecedor', key: 'fornecedor', sortable: false, sortDirection: 'desc' },
@@ -135,25 +135,25 @@ export default {
   },
   methods: {
     clear() {
-      this.empresaPesquisa = {nome:''}
+      this.pessoaPesquisa = {nome:''}
       this.currentPage = 1
       this.$store.dispatch('limparMensagens')
     },
 
     handleSubmit(){
-      this.pesquisarEmpresa()
+      this.pesquisarPessoa()
     },
 
-    pesquisarEmpresa() {
+    pesquisarPessoa() {
       this.pesquisando = true
-      let nome = this.empresaPesquisa.nome
-      Api.getEmpresa(this.currentPage, this.perPage, this.sortBy,this.sortDesc, nome)
+      let nome = this.pessoaPesquisa.nome
+      Api.getPessoa(this.currentPage, this.perPage, this.sortBy,this.sortDesc, nome)
         .then(res => {
-          this.empresas = res.data.content
+          this.pessoas = res.data.content
           this.totalRows = res.data.totalElements
         })
         .catch(err => {
-          this.empresas = []
+          this.pessoas = []
           this.$store.commit('setMessages', err.response.data)
         })
 
@@ -161,16 +161,16 @@ export default {
     },
     changePage() {
 
-      let nome = this.empresaPesquisa.nome
+      let nome = this.pessoaPesquisa.nome
 
-      Api.getEmpresa(
+      Api.getPessoa(
         this.currentPage,
         this.perPage,
         this.sortBy,
         this.sortDesc,
         nome,
       ).then(res => {
-        this.empresas = res.data.content
+        this.pessoas = res.data.content
         this.totalRows = res.data.totalElements
       })
     },
@@ -178,7 +178,7 @@ export default {
       this.sortBy = ctx.sortBy
       this.sortDesc = ctx.sortDesc
 
-      let nome = this.empresaPesquisa.nome
+      let nome = this.pessoaPesquisa.nome
 
       Api.getInscricao(
         this.currentPage,
@@ -187,7 +187,7 @@ export default {
         this.sortDesc,
         nome,
       ).then(res => {
-        this.empresas = res.data.content
+        this.pessoas = res.data.content
         this.totalRows = res.data.totalElements
       })
     },
