@@ -137,6 +137,7 @@
                           id="tipoTransacao"
                           v-model="transacao.tipoTransacaoEnum"
                           :onchange="montarGrupoCategoriaCombo()"
+                          :state="tipoTransacaoState"
                         >
                           <option  value='RECEITA' > Receita  </option>
                           <option  value='PAGAMENTO' > Pagamento  </option>
@@ -206,6 +207,7 @@
                 <b-form-group
                     label="Cliente PF"
                     label-for="doador"
+                    invalid-feedback="Selecione uma pessoa"
                     v-if="mostrarDoadorCliente"
                   >
                   <model-list-select 
@@ -218,8 +220,8 @@
                           option-text="nome"
                           data-vv-name="doador"
                           data-vv-as="doador"
-                          :error-messages="errors.collect('doador')"
-                          :state="doadorState"
+                          :error-messages="errors.collect('idDoador')"
+                          :state="cpfState"
                         >
                         </model-list-select >
                   </b-form-group>
@@ -240,7 +242,7 @@
                           data-vv-name="doador"
                           data-vv-as="doador"
                           :error-messages="errors.collect('doadorFPF')"
-                          :state="doadorState"
+                          :state="fpfState"
                         >
                         </model-list-select >
                   </b-form-group>
@@ -262,7 +264,7 @@
                           data-vv-name="instituicaoCliente"
                           data-vv-as="instituicaoCliente"
                           :error-messages="errors.collect('instituicaoCliente')"
-                          :state="instituicaoState">
+                          :state="cpjState">
                           </model-list-select>
                   </b-form-group>
 
@@ -282,7 +284,7 @@
                           data-vv-name="instituicaoFornecedor"
                           data-vv-as="instituicaoFornecedor"
                           :error-messages="errors.collect('instituicaoFornecedor')"
-                          :state="instituicaoState">
+                          :state="fpjState">
                           </model-list-select>
                   </b-form-group>
 
@@ -292,7 +294,7 @@
                   <b-form-group
                       label="Centro de custo"
                       label-for="centroCusto"
-                      invalid-feedback="centroCusto"
+                      invalid-feedback="Centro custo"
                     >
 
                     <b-form-select
@@ -317,7 +319,7 @@
                   <b-form-group
                       label="Categoria"
                       label-for="categoria"
-                      invalid-feedback="categoria"
+                      invalid-feedback="Categoria"
                     >
 
                           <b-form-select
@@ -328,7 +330,7 @@
                             data-vv-name="categoria"
                             data-vv-as="categoria"
                             :error-messages="errors.collect('categoria')"
-                            :state="centroCustoState"
+                            :state="categoriaState"
                             :options="grupoCategoriaReceitaCombo"
                           />
 
@@ -355,6 +357,31 @@
           
 
         </b-modal>
+
+
+
+        <b-modal size="smg"
+          id="mensagem"
+          ref="modal"
+          title="Sucesso"
+          @ok="emitirRecibo"
+          ok-title="Emitir recibo"
+          cancel-title="Fechar"
+        >
+          Deseja realizar o download do recibo?
+        </b-modal>
+
+        <b-modal size="smg"
+          id="erro"
+          ref="modal"
+          title="Erro"
+          ok-title="Ok"
+          cancel-title="Fechar"
+        >
+          Por favor, selecione um Cliente/fornecedor
+        </b-modal>
+
+
       </div>
     </b-card>
   
@@ -384,11 +411,18 @@ export default {
         dataState: null,
         tipoTransacaoState: null,
         contaState: null,
-        centroCustoState: null,
+        categoriaState: null,
         tipoParceiroState: null,
         doadorState: null,
         familiaState: null,
         instituicaoState:null,
+        centroCustoState:null,
+
+        fpfState : null,
+        cpjState : null,
+        fpjState : null,
+        cpfState : null,
+
         erros:[],
         valorState: null,
         submittedNames: [],
@@ -414,7 +448,8 @@ export default {
         grupoCategoriaReceitaCombo:[],
         grupoCategoriaPagamentoCombo:[],
         mostrarComboReceita : true,
-        testeTipo:''
+        testeTipo:'',
+        recibo: null,
     }
   },
   computed: {
@@ -460,6 +495,8 @@ export default {
           this.dataState= true;
         }
 
+
+
         if (this.transacao.tipoTransacaoEnum == null || this.transacao.tipoTransacaoEnum == "" || this.transacao.tipoTransacaoEnum == undefined){
           valid = false;
           this.tipoTransacaoState= false;
@@ -475,12 +512,77 @@ export default {
           this.contaState= true;
         }
 
-        if (this.transacao.conta == null || this.transacao.conta == "" || this.transacao.conta == undefined){
+        if (this.transacao.categoria == null || this.transacao.categoria == "" || this.transacao.categoria == undefined || this.transacao.categoria.id == undefined){
           valid = false;
-          this.contaState= false;
+          this.categoriaState= false;
         } else {
-          this.contaState= true;
+          this.categoriaState= true;
         }
+
+
+        if (this.transacao.tipoParceiro == null || this.transacao.tipoParceiro == "" || this.transacao.tipoParceiro == undefined ){
+          valid = false;
+          this.tipoParceiroState= false;
+        } else {
+          this.tipoParceiroState= true;
+        }
+
+        if (this.transacao.tipoParceiro == 'CPF' ){
+          this.fpfState = null
+          this.cpjState = null
+          this.fpjState = null
+          if (this.transacao.idDoador == null || this.transacao.idDoador == "" || this.transacao.idDoador == undefined ) {
+            this.cpfState = false
+            valid = false;
+          } else {
+            this.cpfState = true
+          }
+
+        } else if(this.transacao.tipoParceiro == 'FPF' ){
+          this.cpfState= null
+          this.cpjState = null
+          this.fpjState = null
+
+          if (this.transacao.idDoador == null || this.transacao.idDoador == "" || this.transacao.idDoador == undefined ) {
+            this.fpfSState = false
+            valid = false;
+          } else {
+            this.fpfState = true
+          }
+
+        } else if(this.transacao.tipoParceiro == 'CPJ' ){
+          this.cpfState = null
+          this.fpfState = null
+          this.fpjState = null
+          
+
+          if (this.transacao.idInstituicao == null || this.transacao.idInstituicao == "" || this.transacao.idInstituicao == undefined ) {
+            this.cpjState= false
+            valid = false;
+          } else {
+            this.cpjState = true
+          }
+
+        }
+        else if(this.transacao.tipoParceiro == 'FPJ' ){
+          this.cpfState = null
+          this.fpfState = null
+          this.cpjState = null
+          
+
+          if (this.transacao.idInstituicao == null || this.transacao.idInstituicao == "" || this.transacao.idInstituicao == undefined ) {
+            this.fpjState = false  
+            valid = false;
+          } else {
+            this.fpjState = true
+          }
+
+        }
+
+
+
+
+
 
 
         if (this.transacao.tipoParceiro == 'FAMILIA' && ((this.transacao.idFamilia == null || this.transacao.idFamilia == "" || this.transacao.idFamilia == undefined))){
@@ -488,6 +590,18 @@ export default {
           this.familiaState= false;
         } else {
           this.familiaState= true;
+        }
+
+
+
+
+
+        if (this.transacao.centroCusto == null || this.transacao.centroCusto == "" || this.transacao.centroCusto == undefined 
+            ||  this.transacao.centroCusto.id == undefined ){
+          valid = false;
+          this.centroCustoState= false;
+        } else {
+          this.centroCustoState= true;
         }
 
 
@@ -524,7 +638,10 @@ export default {
 
         this.transacao.categoria = {}
 
+        this.resetStatus()
+
       },
+
       handleOk(bvModalEvent) {
         //this.salvar();
 
@@ -537,6 +654,10 @@ export default {
       handleSubmit() {
         // Exit when the form isn't valid
         if (!this.checkFormValidity()) {
+          
+          if (!this.cpfState || !this.cpjState || !this.fpfState || !this.fpjState ){
+            this.$bvModal.show('erro')
+          }  
 
           return
         }
@@ -559,15 +680,36 @@ export default {
 
      
       },
+
+      resetStatus(){
+
+        this.nameState = null 
+        this.descricaoState = null 
+        this.valorState = null 
+        this.dataState = null 
+        this.tipoTransacaoState = null 
+        this.contaState = null 
+        this.categoriaState = null 
+        this.tipoParceiroState = null 
+        this.doadorState = null 
+        this.familiaState = null 
+        this.instituicaoState =null 
+        this.centroCustoState =null 
+
+        this.fpfState = null 
+        this.cpjState  = null 
+        this.fpjState  = null 
+        this.cpfState  = null 
+      },
+
+
       atualizarTransacacoes(){
         events.$emit('pesquisarTransacao')
         events.$emit('pesquisarContasPorTipo')
 
       },
     salvar() {
-      console.log(this.transacao.valor)
       this.transacao.valor = this.formatarMoedaToServer(this.transacao.valor)
-      console.log(this.transacao.valor)
       Api.salvarTransacao(this.transacao)
         .then(res => {
           this.$store.commit('setMessages', {
@@ -577,32 +719,40 @@ export default {
           events.$emit('pesquisarTransacao')
           events.$emit('pesquisarContasPorTipo')
 
-          if (this.transacao.id !== null){
+          if (this.transacao.id !== null && this.transacao.id !== undefined){
+            console.log("ESTOU NESSE CARA QUE VAI FECHAR")
+            console.log(this.transacao.id)
             this.$nextTick(() => {
                 this.$bvModal.hide('modal-prevent-closing')
               })
           }
 
           this.resetTransacao()
-          const blob = new Blob([res.data], { type: 'arraybuffer' });
+          this.recibo = new Blob([res.data], { type: 'arraybuffer' }); 
 
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'recibo.pdf');
-          document.body.appendChild(link);
-          link.click();
-
-          
-          
+          this.$bvModal.show('mensagem')
 
         })
         .catch(err => {
+          console.log("ERROOO")
           this.$store.commit('setMessages', err.response.data)
         })
 
 
     },
+
+      emitirRecibo(){
+
+          this.$bvModal.hide('mensagem')
+          const url = window.URL.createObjectURL(this.recibo);
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'recibo.pdf');
+          document.body.appendChild(link);
+          link.click();
+          
+
+      },
 
       montarContas(){
       
