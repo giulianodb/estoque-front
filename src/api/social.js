@@ -607,6 +607,20 @@ export default {
     return axios.put(`${apiURL}doadores`, e)
   },
 
+  getGraficoFinanceiro : () => {
+      return axios.get(`${apiURL}transacoes/grafico`)
+  },
+
+
+  getTotalizadoresInscricao : () => {
+    return axios.get(`${apiURL}inscricao/totalizadores`)
+},
+
+getGraficoEstoque: () => {
+  return axios.get(`${apiURL}lotes/grafico`)
+
+},
+
 
   
 }

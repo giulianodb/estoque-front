@@ -1,5 +1,78 @@
 // ATENÇÃO!
-//
+// 
 // Personalizações específicas do sistema, devem ser declaradas diretamente aqui
-//
+// ou em arquivos SASS (.scss), dentro desta pasta e importados neste arquivo.
 
+  
+.floating {
+    position: absolute !important;
+  }
+
+  .btn-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+    height: 20px;
+    width: 20px;
+  }
+
+// .texto-info{
+//     // border-radius: .5rem;
+//     // background: rgba(#eaf2ff,.5);
+//     // padding: 1rem 1rem 1rem 3rem;
+//     color: $info
+// }
+
+.popover-shadow{
+    box-shadow: 10px 10px 5px rgba(0,0,0,.5);
+}
+
+.info-panels {
+
+    $icon-size: 64px;
+
+    .bg-success {
+        background: url('~@/assets/images/icons/icon-check.svg') no-repeat;
+        background-position: 1rem;
+        background-size: $icon-size;
+    }
+    .bg-info {
+        background: url('~@/assets/images/icons/icon-star.svg') no-repeat;
+        background-position: 1rem;
+        background-size: $icon-size;
+    }
+
+    .bg-morning {
+        background: url('~@/assets/images/icons/icon-play.svg') no-repeat;
+        background-position: 1rem;
+        background-size: $icon-size;
+    }
+    .bg-tarde {
+        background: url('~@/assets/images/icons/day-sunny-icon.svg') no-repeat;
+        background-position: 1rem;
+        background-size: $icon-size;
+    }
+    .bg-primary {
+        background: url('~@/assets/images/icons/icon-play.svg') no-repeat;
+        background-position: 1rem;
+        background-size: $icon-size;
+    }
+    .bg-warning {
+        background: url('~@/assets/images/icons/icon-clock.svg') no-repeat;
+        background-position: 1rem;
+        background-size: $icon-size;
+    }
+    .bg-danger {
+        background: url('~@/assets/images/icons/icon-error.svg') no-repeat;
+        background-position: 1rem;
+        background-size: $icon-size;
+    }
+
+}
+
+.dark{
+    // .texto-info{
+    //     background: rgba(#727881,.5);
+    // }
+}
