@@ -551,6 +551,42 @@ export default {
 
   },
 
+  emitirExtrato(periodo, dataInicial, dataFinal) {
+    let periodo30 = false;
+    let periodo60 = false;
+    let periodoCustomizado = true;
+    if (periodo == "30") {
+      periodo30 = true;
+      periodoCustomizado = false
+    } else if (periodo == "60") {
+      periodo60 = true
+      periodoCustomizado = false
+    }
+    let url;
+    if (periodoCustomizado) {
+      url = (`${apiURL}contas/extrato?dataInicio=${dataInicial}&dataFim=${dataFinal}`)
+    } else {
+      url = (`${apiURL}contas/extrato?&dias30=${periodo30}&dias60=${periodo60}`)
+    }
+
+    axios.get(url, { responseType: 'blob' })
+      .then(response => {
+        const blob = new Blob([response.data], { type: 'arraybuffer' });
+
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Extrato de conta.pdf');
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch(error => {
+        console.error('Erro ao baixar o arquivo', error);
+      });
+
+
+  },
+
   getEmpresa : (page, perPage, sortBy, sortDesc, nome, ) => {
     if (page == null || page === undefined) {
       page = 1

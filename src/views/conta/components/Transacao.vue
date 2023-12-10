@@ -1,5 +1,5 @@
 <template>
-         <b-card :header="`Movimentações - ${contaPesquisa.nomeConta}`" class="text-center">
+         <b-card :header="`Lançamentos - ${contaPesquisa.nomeConta}`" class="text-center">
         <b-table
           show-empty
           stacked="sm"

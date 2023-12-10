@@ -1,5 +1,5 @@
 <template>
-    <b-card header="Período e Nova Movimentação" class="text-left">
+    <b-card header="Período e Lançamentos" class="text-left">
       
       <b-row>
         <b-col lg="2">
@@ -61,10 +61,12 @@
           </b-row>
       
       <div>
-        <b-button v-b-modal.modal-prevent-closing @click="resetTransacao()">Nova Movimentação</b-button>
+        <b-button v-b-modal.modal-prevent-closing @click="resetTransacao()">Novo lançamento</b-button>
         &nbsp; 
      
         <b-button @click="emitirRazao()">Emitir Razão</b-button> 
+        &nbsp; 
+        <b-button @click="emitirExtrato()">Emitir extrato de conta</b-button> 
         
         <b-modal size="lg"
           id="modal-prevent-closing"
@@ -672,10 +674,6 @@ export default {
                 this.$bvModal.hide('modal-prevent-closing')
               })
           */
-            
-          
-         
-
 
 
      
@@ -888,27 +886,21 @@ export default {
         }
       },
 
-      emitirRazao(){
+      emitirRazao() {
 
         let fluxoPesquisa = this.$store.getters.getFluxoCaixaPesquisa
         let contaPesquisa = this.$store.getters.getContaPesquisa
 
         Api.teste22(fluxoPesquisa.periodo, fluxoPesquisa.dataInicial,fluxoPesquisa.dataFinal);
 
-        // Api.emitirRelatorioRazao(fluxoPesquisa.periodo, fluxoPesquisa.dataInicial,fluxoPesquisa.dataFinal)
-        //     .then(res => {
-        //       const blob = new Blob([res.data], { type: 'application/pdf' });
-        //       console.log(blob)
-        //       const url = window.URL.createObjectURL(blob);
-        //       const link = document.createElement('a');
-        //       link.href = url;
-        //       link.setAttribute('download', 'teste.pdf');
-        //       document.body.appendChild(link);
-        //       link.click();
-        //       })
-        //   .catch(err => {
-        //     this.$store.commit('setMessages', err.response.data)
-        //   })
+      },
+        emitirExtrato() {
+
+        let fluxoPesquisa = this.$store.getters.getFluxoCaixaPesquisa
+        let contaPesquisa = this.$store.getters.getContaPesquisa
+
+        Api.emitirExtrato(fluxoPesquisa.periodo, fluxoPesquisa.dataInicial,fluxoPesquisa.dataFinal);
+
       }
       
     },
