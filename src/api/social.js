@@ -612,7 +612,11 @@ export default {
     return axios.post(`${apiURL}instituicoes`, e)
   },
   alterarEmpresa: (e) => {
-    return axios.put(`${apiURL}instituicoes`, e)
+    return axios.put(`${apiURL}instituicoes/${e.id}`, e)
+  },
+
+  deletarEmpresa: (empresa) => {
+    return axios.delete(`${apiURL}instituicoes/${empresa.id}`)
   },
 
   getPessoa : (page, perPage, sortBy, sortDesc, nome, ) => {

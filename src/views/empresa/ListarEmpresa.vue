@@ -68,9 +68,31 @@
 
           <div slot="empty" colspan="2" align="center">Não existe conteúdo a ser exibido</div>
           <div slot="table-busy" class="text-center text-danger my-2">
-          <b-spinner class="align-middle"></b-spinner>
-          <strong> Pesquisando...</strong>
-        </div>
+            <b-spinner class="align-middle"></b-spinner>
+            <strong> Pesquisando...</strong>
+          </div>
+
+          <template v-slot:cell(acoes)="data">
+            <div class="d-flex justify-content-end">
+              <b-link
+                title="Alterar"
+                @click="iniciarEditar(data.item)"
+                class="btn btn-outline-info"
+              >
+                <i class="fas fa-pencil-alt"></i> </b-link
+              >&nbsp;
+              <b-link
+                title="Excluir"
+                @click="deletar(data.item)"
+                class="btn btn-outline-danger"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </b-link>
+            </div>
+
+
+          </template>
+
         </b-table>
 
         <b-row v-if="empresas.length > 0" class="my-1 center-xy">
@@ -146,6 +168,7 @@ export default {
 
     pesquisarEmpresa() {
       this.pesquisando = true
+      this.currentPage = 1
       let nome = this.empresaPesquisa.nome
       Api.getEmpresa(this.currentPage, this.perPage, this.sortBy,this.sortDesc, nome)
         .then(res => {
@@ -190,6 +213,30 @@ export default {
         this.empresas = res.data.content
         this.totalRows = res.data.totalElements
       })
+    },
+    deletar (s) {
+     var resultado = confirm("Deseja excluir o item ?");
+        if (resultado == true) {
+            Api.deletarEmpresa(s)
+              .then(() => {
+                this.currentPage = 1
+                this.perPage = 15
+                this.pesquisarEmpresa()
+                this.$store.commit('setMessages', {
+                  message: 'Sucesso ao excluir empresa',
+                  variant: 'success'
+                })
+              })
+              .catch((err) => {
+                this.$store.commit('setMessages', err)
+              })
+        }
+    },
+    iniciarEditar (empresa) {
+      let obj = JSON.parse(JSON.stringify(empresa))
+      this.$store.commit('setEmpresa', obj)
+      this.$router.push({ name: 'editarEmpresa', params: { idEmpresa: empresa.id , tipo: "editar"} })
+
     },
 
 

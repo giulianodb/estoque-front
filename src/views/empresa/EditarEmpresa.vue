@@ -210,6 +210,7 @@ export default {
               events.$emit('EmpresaAlterada', this.empresa)
               this.clear()
               this.$store.commit('setMessages', { message: 'Sucesso ao cadastrar empresa', variant: 'success' })
+              this.$router.push('/empresa/listar')
             }).catch(err => {
               this.$store.commit('setMessages', err.response.data)
             })
@@ -219,12 +220,13 @@ export default {
     alterar () {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          Api.alterarAluno(this.empresa)
+          Api.alterarEmpresa(this.empresa)
             .then(() => {
               events.$emit('EmpresaAlterada', this.empresa)
               this.clear()
               this.$store.dispatch('novaEmpresa')
               this.$store.commit('setMessages', { message: 'Sucesso ao alterar empresa', variant: 'success' })
+              this.$router.push('/empresa/listar')
             }).catch(err => {
               this.$store.commit('setMessages', err.response.data)
             })
@@ -236,7 +238,12 @@ export default {
       this.$store.dispatch('novaEmpresa')
       this.$store.dispatch('limparMensagens')
     }
-  }
+  },
+  mounted(){
+     //this.$store.dispatch('novaFamilia')
+     console.log(this.$route.params.tipo)
+     
+  },
 }
 </script>
 

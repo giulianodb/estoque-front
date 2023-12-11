@@ -37,6 +37,7 @@ export default {
     showDismissibleAlert: {
       get () {
         if (this.messages.message) {
+          this.teste()
           return true
         } else {
           return false
@@ -67,6 +68,15 @@ export default {
       }
       return icon
     }
+  },methods :{
+    teste(){
+      var self = this;
+      setInterval (function() {
+        self.$store.commit('setMessages', '')
+  	}, 5000);
+      
+    }
+
   }
 }
 </script>
