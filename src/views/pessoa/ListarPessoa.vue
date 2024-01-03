@@ -71,6 +71,28 @@
           <b-spinner class="align-middle"></b-spinner>
           <strong> Pesquisando...</strong>
         </div>
+
+        <template v-slot:cell(acoes)="data">
+            <div class="d-flex justify-content-end">
+              <b-link
+                title="Alterar"
+                @click="iniciarEditar(data.item)"
+                class="btn btn-outline-info"
+              >
+                <i class="fas fa-pencil-alt"></i> </b-link
+              >&nbsp;
+              <b-link
+                title="Excluir"
+                @click="deletar(data.item)"
+                class="btn btn-outline-danger"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </b-link>
+            </div>
+
+
+          </template>
+
         </b-table>
 
         <b-row v-if="pessoas.length > 0" class="my-1 center-xy">
@@ -131,7 +153,8 @@ export default {
   created() {
   },
   mounted() {
-
+    //this.pessoaPesquisa = {nome:''}
+    this.pesquisarPessoa() ;
   },
   methods: {
     clear() {
@@ -146,6 +169,7 @@ export default {
 
     pesquisarPessoa() {
       this.pesquisando = true
+      this.currentPage = 1
       let nome = this.pessoaPesquisa.nome
       Api.getPessoa(this.currentPage, this.perPage, this.sortBy,this.sortDesc, nome)
         .then(res => {
@@ -180,7 +204,7 @@ export default {
 
       let nome = this.pessoaPesquisa.nome
 
-      Api.getInscricao(
+      Api.getPessoa(
         this.currentPage,
         this.perPage,
         this.sortBy,
@@ -190,6 +214,30 @@ export default {
         this.pessoas = res.data.content
         this.totalRows = res.data.totalElements
       })
+    },
+    deletar (s) {
+     var resultado = confirm("Deseja excluir o item ?");
+        if (resultado == true) {
+            Api.deletarPessoa(s)
+              .then(() => {
+                this.currentPage = 1
+                this.perPage = 15
+                this.pesquisarPessoa()
+                this.$store.commit('setMessages', {
+                  message: 'Sucesso ao excluir pessoa',
+                  variant: 'success'
+                })
+              })
+              .catch((err) => {
+                this.$store.commit('setMessages', err)
+              })
+        }
+    },
+    iniciarEditar (pessoa) {
+      let obj = JSON.parse(JSON.stringify(pessoa))
+      this.$store.commit('setPessoa', obj)
+      this.$router.push({ name: 'editarPessoa', params: { idPessoa: pessoa.id , tipo: "editar"} })
+
     },
 
 

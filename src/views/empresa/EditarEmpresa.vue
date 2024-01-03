@@ -13,7 +13,28 @@
           <b-form >
             <!-- Nome Série -->
             <b-row>
-              <b-col lg="6" sm="12">
+
+              <b-col lg="3" sm="12">
+                <b-form-group
+                  label="CNPJ:"
+                  label-for="cnpj"
+                  class="text-label required"
+                >
+                  <b-form-input id="cnpj"
+                  v-model="empresa.cnpj"
+                  v-validate="'required'"
+                  data-vv-name="cnpj"
+                  data-vv-as="Cnpj"
+                  :error-messages="errors.collect('cnpj')"
+                  :state="errors.has('cnpj')==false?null:!errors.has('cnpj')"
+                  trim
+                  :autofocus="true"></b-form-input>
+                  <span v-show="errors.has('cnpj')" class="help is-danger">{{ errors.first('cnpj') }}</span>
+
+                </b-form-group>
+              </b-col>
+
+              <b-col lg="9" sm="12">
                 <b-form-group
                   label="Nome da empresa:"
                   label-for="nome"
@@ -32,28 +53,6 @@
 
                 </b-form-group>
               </b-col>
-
-
-              <b-col lg="6" sm="12">
-                <b-form-group
-                  label="Cnpj:"
-                  label-for="cnpj"
-                  class="text-label required"
-                >
-                  <b-form-input id="cnpj"
-                  v-model="empresa.cnpj"
-                  v-validate="'required'"
-                  data-vv-name="cnpj"
-                  data-vv-as="Cnpj"
-                  :error-messages="errors.collect('cnpj')"
-                  :state="errors.has('cnpj')==false?null:!errors.has('cnpj')"
-                  trim
-                  :autofocus="true"></b-form-input>
-                  <span v-show="errors.has('cnpj')" class="help is-danger">{{ errors.first('cnpj') }}</span>
-
-                </b-form-group>
-              </b-col>
-
                
               <b-col lg="6" sm="12">
                 <b-form-group
@@ -76,7 +75,7 @@
               </b-col> 
 
 
-              <b-col lg="6" sm="12">
+              <b-col lg="3" sm="12">
                 <b-form-group
                   label="Email:"
                   label-for="email"
@@ -96,7 +95,7 @@
                 </b-form-group>
               </b-col> 
 
-              <b-col lg="6" sm="12">
+              <b-col lg="3" sm="12">
                 <b-form-group
                   label="Telefone:"
                   label-for="telefone"

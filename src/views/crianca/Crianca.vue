@@ -110,6 +110,16 @@ export default {
   },
 
   created () {
+
+    var editar = this.$route.query.editar
+    console.log("---")
+    console.log(editar)
+    console.log(this.$route.params)
+    console.log("---")
+    if (editar){
+      this.mostrarEditarCrianca(true)
+    }
+
     console.log("COMPONENTE CRIANCA")
     this.$store.dispatch('novaCriancaPesquisa')
 
@@ -124,6 +134,12 @@ export default {
   },
   mounted () {
 
+  },
+
+  beforeDestroy() {
+    // removing eventBus listener
+    events.$off('iniciarEditarCrianca')
+    events.$off('criancaEditada')
   },
   methods: {
     pesquisarCrianca () {

@@ -153,7 +153,7 @@ export default {
   created() {
   },
   mounted() {
-
+    this.pesquisarEmpresa()
   },
   methods: {
     clear() {

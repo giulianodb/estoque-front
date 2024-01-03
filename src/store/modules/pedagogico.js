@@ -26,7 +26,8 @@ export default {
     contasPorTipo:[],
     conta: {tipoConta:{cod:0  }},
     contas:[{}],
-    messages: Object
+    messages: Object,
+    busy:false
   },
 
   mutations: {
@@ -64,7 +65,9 @@ export default {
     setPlanos (state, payload) {
       state.planos = payload
     },
-
+    setBusy (state, payload) {
+      state.busy = payload
+    },
     setSituacaoIdentificada (state, payload) {
       state.situacaoIdentificada = payload
     },
@@ -153,6 +156,9 @@ export default {
     },
     getPlanos (state) {
       return state.planos
+    },
+    getBusy (state) {
+      return state.busy
     },
 
     getSituacaoIdentificada (state) {

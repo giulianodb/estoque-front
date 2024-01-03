@@ -52,6 +52,10 @@ export default {
         {
           name: 'Listar Inscrição',
           url: '/inscricao'
+        },
+        {
+          name: 'Listar Inscrição Card',
+          url: '/inscricaoCard'
 
         }
       ]

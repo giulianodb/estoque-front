@@ -5,8 +5,9 @@
       <div v-if="messages">
         <Messages />
       </div>
-
-      <router-view />
+      <b-overlay :show="busy" rounded="sm">
+        <router-view />
+      </b-overlay>
   </main>
   <back-to-top bottom="0" right="0">
       <button type="button" class="btn btn-info btn-to-top">
@@ -26,7 +27,12 @@ export default {
       get () {
         return this.$store.getters.getMessages
       }
-    }
+    },
+    busy: {
+      get () {
+        return this.$store.getters.getBusy
+      }
+  }
   }
 }
 </script>

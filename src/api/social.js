@@ -160,6 +160,10 @@ export default {
     console.log(crianca)
     return axios.post(`${apiURL}criancas`, crianca)
   },
+  uploadFotoCrianca: (idCrianca,image) => {
+    return axios.post(`${apiURL}criancas/uploadFoto/${idCrianca}`, image)
+  },
+
   alterarCrianca: (crianca) => {
     console.log(crianca)
     return axios.put(`${apiURL}criancas/${crianca.id}`, crianca)
@@ -644,7 +648,10 @@ export default {
     return axios.post(`${apiURL}doadores`, e)
   },
   alterarPessoa: (e) => {
-    return axios.put(`${apiURL}doadores`, e)
+    return axios.put(`${apiURL}doadores/${e.id}`, e)
+  },
+  deletarPessoa: (e) => {
+    return axios.delete(`${apiURL}doadores/${e.id}`)
   },
 
   getGraficoFinanceiro : () => {

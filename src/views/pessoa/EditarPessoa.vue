@@ -13,28 +13,8 @@
           <b-form >
             <!-- Nome Série -->
             <b-row>
-              <b-col lg="6" sm="12">
-                <b-form-group
-                  label="Nome da pessoa:"
-                  label-for="nome"
-                  class="text-label required"
-                >
-                  <b-form-input id="nome"
-                  v-model="pessoa.nome"
-                  v-validate="'required'"
-                  data-vv-name="nome"
-                  data-vv-as="Nome Pessoa"
-                  :error-messages="errors.collect('nome')"
-                  :state="errors.has('nome')==false?null:!errors.has('nome')"
-                  trim
-                  :autofocus="true"></b-form-input>
-                  <span v-show="errors.has('nome')" class="help is-danger">{{ errors.first('nome') }}</span>
 
-                </b-form-group>
-              </b-col>
-
-
-              <b-col lg="6" sm="12">
+              <b-col lg="3" sm="12">
                 <b-form-group
                   label="CPF:"
                   label-for="cpf"
@@ -54,8 +34,27 @@
                 </b-form-group>
               </b-col>
 
-               
-              <b-col lg="6" sm="12">
+              <b-col lg="9" sm="12">
+                <b-form-group
+                  label="Nome da pessoa:"
+                  label-for="nome"
+                  class="text-label required"
+                >
+                  <b-form-input id="nome"
+                  v-model="pessoa.nome"
+                  v-validate="'required'"
+                  data-vv-name="nome"
+                  data-vv-as="Nome Pessoa"
+                  :error-messages="errors.collect('nome')"
+                  :state="errors.has('nome')==false?null:!errors.has('nome')"
+                  trim
+                  :autofocus="true"></b-form-input>
+                  <span v-show="errors.has('nome')" class="help is-danger">{{ errors.first('nome') }}</span>
+
+                </b-form-group>
+              </b-col>
+
+              <b-col lg="3" sm="12">
                 <b-form-group
                   label="RG:"
                   label-for="rg"
@@ -76,7 +75,7 @@
               </b-col> 
 
 
-              <b-col lg="6" sm="12">
+              <b-col lg="3" sm="12">
                 <b-form-group
                   label="Email:"
                   label-for="email"
@@ -96,7 +95,7 @@
                 </b-form-group>
               </b-col> 
 
-              <b-col lg="6" sm="12">
+              <b-col lg="3" sm="12">
                 <b-form-group
                   label="Telefone:"
                   label-for="telefone"
@@ -116,6 +115,8 @@
                 </b-form-group>
               </b-col> 
 
+            </b-row>
+            <b-row>
               
             <b-col sm="12" lg="3">
                 <b-form-group
@@ -210,6 +211,7 @@ export default {
               events.$emit('PessoaAlterada', this.pessoa)
               this.clear()
               this.$store.commit('setMessages', { message: 'Sucesso ao cadastrar pessoa', variant: 'success' })
+              this.$router.push({ name: 'listarPessoa'})
             }).catch(err => {
               this.$store.commit('setMessages', err.response.data)
             })
@@ -219,12 +221,13 @@ export default {
     alterar () {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          Api.alterarAluno(this.pessoa)
+          Api.alterarPessoa (this.pessoa)
             .then(() => {
               events.$emit('PessoaAlterada', this.pessoa)
               this.clear()
               this.$store.dispatch('novaPessoa')
               this.$store.commit('setMessages', { message: 'Sucesso ao alterar pessoa', variant: 'success' })
+              this.$router.push({ name: 'listarPessoa'})
             }).catch(err => {
               this.$store.commit('setMessages', err.response.data)
             })

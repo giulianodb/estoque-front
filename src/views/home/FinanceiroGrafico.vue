@@ -54,7 +54,15 @@
           tooltip: {
             y: {
               formatter: function (val) {
-                return 'R$ ' + val  
+                const formatoMoeda = new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+              });
+
+              // Formata o número como moeda
+                const valorFormatado = formatoMoeda.format(val);
+                
+               return valorFormatado
               }
             }
           }

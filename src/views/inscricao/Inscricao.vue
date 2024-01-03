@@ -92,6 +92,8 @@
           <span v-if="ma.item.matriculado">Sim</span>
           <span v-else>Não</span>
          </template>
+
+
           <div slot="empty" colspan="2" align="center">Não existe conteúdo a ser exibido</div>
           <div slot="table-busy" class="text-center text-danger my-2">
           <b-spinner class="align-middle"></b-spinner>
@@ -172,6 +174,9 @@ export default {
 
   },
   methods: {
+    testeAvatar(foto){
+      return "data:image/png;base64," +foto
+    },
     clear () {
 
       this.inscricaoPesquisa = { nomeCrianca : '' , projeto: "-1", matriculado: true, espera: false , ano : this.getAno()}

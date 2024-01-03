@@ -193,6 +193,7 @@ export default {
     },
     listarCriancas () {
       console.log("Chamei listar crianças")
+      this.$store.commit('setBusy', true)
       this.pesquisando = true
        // console.log("testeee")
         if (!this.porFamilia) {
@@ -224,10 +225,12 @@ export default {
               console.log(res.data.content)
               console.log("111111")
               this.totalRows = res.data.totalElements
+              this.$store.commit('setBusy', false)
             })
             .catch(err => {
               this.$store.commit('setCriancas', [])
               this.$store.commit('setMessages', err.response.data)
+              this.$store.commit('setBusy', false)
             })
         } else {
              Api.getCriancasPorFamilia(
@@ -239,6 +242,7 @@ export default {
           ).then(res => {
             this.$store.commit('setCriancas', res.data.content)
             this.totalRows = res.data.totalElements
+            this.$store.commit('setBusy', false)
           })
       }
 

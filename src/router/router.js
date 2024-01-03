@@ -13,6 +13,7 @@ import PlanoFamiliar from '@/views/plano_familiar/PlanoFamiliar'
 import SituacaoIdentificada from '@/views/situacao/Situacao'
 import InscricaoCrianca from '@/views/inscricao/InscricaoCrianca'
 import Inscricao from '@/views/inscricao/Inscricao'
+import InscricaoCard from '@/views/inscricao/InscricaoCard'
 import Login from '@/views/login/Login'
 import FluxoCaixa from '@/views/conta/FluxoCaixa'
 import Conta from '@/views/conta/Conta'
@@ -193,6 +194,17 @@ const router = new Router({
       path: '/inscricao',
       name: 'inscricao',
       component: Inscricao,
+      meta: {
+        breadcrumb: true,
+        label: 'Inscrição',
+        requiresAuth: true,
+        groups: ['ROLE_Administrador','ROLE_AssistenteSocial']
+      }
+    },
+    {
+      path: '/inscricaocard',
+      name: 'inscricaoCard',
+      component: InscricaoCard,
       meta: {
         breadcrumb: true,
         label: 'Inscrição',
